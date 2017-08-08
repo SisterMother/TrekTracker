@@ -4,6 +4,7 @@ var app = express();
 
 var bodyParser = require('body-parser');
 var post = require('../database');
+var GmapsAPI = require('../client/src/googleSearch');
 
 
 app.use(express.static(__dirname + '/../client/dist'));
@@ -21,6 +22,15 @@ app.post('/images', (req, res) => {
 //     }
 //   });
 // });
+
+app.get('/places', function (req, res) {
+  console.log('getting');
+  GmapsAPI.getGooglePlaces((results) => {
+    console.log('result from google places', results);
+    res.send(results);
+  })
+
+});
 
 app.listen(3000, function() {
   console.log('listening on port 3000...');

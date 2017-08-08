@@ -6,6 +6,7 @@ import Login from './components/Login.jsx';
 import Upload from './components/Upload.jsx';
 import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
+import Map from './components/Gmaps.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -14,7 +15,12 @@ class App extends React.Component {
       posts: [],
       logged: false,
       image: null,
-      photo: null
+      photo: null,
+      mapCenter: {
+        lat: 37.7836966,
+        lng: -122.4089664
+      },
+      trails: []
     }
     this.submitImage = this.submitImage.bind(this);
     this.updateImageDisplay = updateImage.updateImage.bind(this);
@@ -32,14 +38,35 @@ class App extends React.Component {
     this.preview = document.querySelector('.preview');
   }
 
-  render() {
-    return (
-      <div>
-        <h2>Lets Trek!</h2>
+  componentDidMount() {
+    var context = this;
+    $.ajax({
+      method: 'GET',
+      url: '/places',
+      success: (data) => {
+        console.log('on sucessful get request', data);
+        context.setState({trails: data.results})
+        console.log(this.state.trails);
+      },
+      error: (err) => {
+        console.log('Error on get request', err);
+      }
+    });
+  }
+
+  onMarkerClick(targetMarker) {
+    //Take us to the trail homepage here.
+}
+}
+
+ReactDOM.render(
+<App/>, document.getElementById('app'));
+
         <Switch>
           <Route path='/' component={Login}/>
         </Switch>
         <Upload update={this.updateImageDisplay} submit={this.submitImage}/>
+        <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>} locations={this.state.trails} mapCenter={this.state.mapCenter} onMarkerClick={this.onMarkerClick.bind(this)}/>
       </div>
     )
   }
