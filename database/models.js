@@ -93,6 +93,7 @@ var Posts = sequelize.define('posts', {
     allowNull: false
   }
   // TODO - Add post location
+  // TODO - Somehow store image metadata
 });
 Posts.belongsTo(Users, {
   foreignKey: 'poster_user_id'
