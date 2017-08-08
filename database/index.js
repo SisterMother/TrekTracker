@@ -18,8 +18,9 @@ var selectAll = function(callback) {
     }
   });
 };
-*/
+
 
 module.exports = {
-  query: query
+  selectAll: selectAll
 };
+*/
