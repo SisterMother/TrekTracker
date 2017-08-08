@@ -57,11 +57,12 @@ class App extends React.Component {
   onMarkerClick(targetMarker) {
     //Take us to the trail homepage here.
 }
-}
 
-ReactDOM.render(
-<App/>, document.getElementById('app'));
 
+  render() {
+    return (
+      <div>
+        <h2>Lets Trek!</h2>
         <Switch>
           <Route path='/' component={Login}/>
         </Switch>

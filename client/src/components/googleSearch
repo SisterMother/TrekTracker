@@ -5,7 +5,7 @@ let getGooglePlaces = (callback) => {
 
 
 
- let url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=hiking&key=AIzaSyCD-p-TbPJ35ULnDIOL8X1cmBlEdqTNmb4';
+ let url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurants&key=AIzaSyCD-p-TbPJ35ULnDIOL8X1cmBlEdqTNmb4';
 
   request(url, (err, res, body) => {
     if (err) {
