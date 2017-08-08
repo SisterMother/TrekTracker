@@ -1,3 +1,5 @@
+version: 2
+
 ## Customize the test machine
 machine:
 
@@ -18,10 +20,29 @@ machine:
   environment:
     CIRCLE_ENV: test
     DATABASE_URL: mysql://ubuntu:@127.0.0.1:5432/circle_test
-    
+
+jobs:
+  test:
+    steps:
+      - run:
+          name: test
+          command: npm test
+
 ## Customize deployment commands
 deployment:
   staging:
     branch: master
     heroku:
       appname: foo-bar-123
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
