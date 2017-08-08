@@ -67,7 +67,12 @@ class App extends React.Component {
           <Route path='/' component={Login}/>
         </Switch>
         <Upload update={this.updateImageDisplay} submit={this.submitImage}/>
-        <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>} locations={this.state.trails} mapCenter={this.state.mapCenter} onMarkerClick={this.onMarkerClick.bind(this)}/>
+          <div style={{
+            width: '700px',
+            height: '600px'
+          }}>
+       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>} trails={this.state.trails} mapCenter={this.state.mapCenter} onMarkerClick={this.onMarkerClick.bind(this)}/>
+       </div>
       </div>
     )
   }

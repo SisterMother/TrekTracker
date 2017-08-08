@@ -4,7 +4,7 @@ var app = express();
 
 var bodyParser = require('body-parser');
 var post = require('../database');
-var GmapsAPI = require('../client/src/googleSearch');
+var GmapsAPI = require('../client/src/components/googleSearch');
 
 
 app.use(express.static(__dirname + '/../client/dist'));

@@ -11,12 +11,8 @@ class Map extends Component {
 				defaultCenter={this.props.mapCenter}>
 
 
-				{this.props.positions.map((business, i) => {
+				{this.props.trails.map((business, i) => {
 		      let coords = business.geometry.location;
-		      let name = business.name;
-		      let rating = business.rating;
-		      let hours = business.opening_hours;
-		      let address = business.vicinity;
 
       		return <Marker
       		name={name}
