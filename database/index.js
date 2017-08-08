@@ -1,26 +1,39 @@
-var mysql = require('mysql');
+var helpers = require('./helpers.js');
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'progressPundit'
-});
+module.exports.getUserById = () => {
+};
 
-/*ADD QUERY FUNCTIONS HERE
+module.exports.getUserByEmail = () => {
+};
 
-var selectAll = function(callback) {
-  connection.query('SELECT * FROM items', function(err, results, fields) {
-    if(err) {
-      callback(err, null);
-    } else {
-      callback(null, results);
-    }
-  });
+module.exports.getAllUsers = () => {
 };
 
 
-module.exports = {
-  selectAll: selectAll
+module.exports.getTrailById = () => {
 };
-*/
+
+module.exports.getTrailByName = () => {
+};
+
+module.exports.getAllTrails = () => {
+};
+
+module.exports.createTrail = () => {
+};
+
+
+module.exports.getPostsByUserId = () => {
+};
+
+module.exports.getPostsByUserEmail = () => {
+};
+
+module.exports.getPostsByTrailId = () => {
+};
+
+module.exports.getPostsByTrailName = () => {
+};
+
+module.exports.createPost = () => {
+};

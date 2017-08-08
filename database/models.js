@@ -53,6 +53,7 @@ var Trails = sequelize.define('trails', {
   },
   name: {
     type: Sequelize.STRING,
+    unique: true,
     notEmpty: true,
     allowNull: false
   }
