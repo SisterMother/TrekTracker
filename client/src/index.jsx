@@ -25,6 +25,7 @@ class App extends React.Component {
     this.submitImage = this.submitImage.bind(this);
     this.updateImageDisplay = updateImage.updateImage.bind(this);
   }
+  
 
   submitImage(e) {
     e.preventDefault();
