@@ -1,26 +1,5 @@
 version: 2
 
-## Customize the test machine
-machine:
-
-  timezone:
-    America/Los_Angeles # Set the timezone
-
-  # Version of ruby to use
-  node:
-    version:
-      6.11.1
-
-  # Override /etc/hosts
-  hosts:
-    circlehost: 127.0.0.1
-    dev.mycompany.com: 127.0.0.1
-
-  # Add some environment variables
-  environment:
-    CIRCLE_ENV: test
-    DATABASE_URL: mysql://ubuntu:@127.0.0.1:5432/circle_test
-
 jobs:
   build:
     docker:
