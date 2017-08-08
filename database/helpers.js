@@ -5,6 +5,7 @@ var db = {};
 
 // Gets all users that strictly match non-unique data (firstname and lastname in the case of users)
 // See db.getUser() docs for details and examples
+// If no object is passed in, the promise will resolve to all users
 //
 // Exceptions:
 // 1. userInfoObj is not an object
@@ -97,7 +98,8 @@ db.getPost = (postInfoObj) => {
 //
 // Exceptions:
 // TODO - Add exceptions
-db.createPost = () => {
+db.createPost = (posterId, trailId, title, text, imageUrl) => {
+  // TODO - Make viewcount and flagcount default to zero
 };
 
 
