@@ -1,0 +1,23 @@
+{
+    "development": {
+        "username": "student",
+        "password": "student",
+        "database": "trektracker",
+        "host": "localhost",
+        "dialect": "mysql"
+    },
+    "test": {
+        "username": "",
+        "password": null,
+        "database": "",
+        "host": "",
+        "dialect": "mysql"
+    },
+    "production": {
+        "username": "",
+        "password": null,
+        "database": "",
+        "host": "localhost",
+        "dialect": "mysql"
+    }
+}
