@@ -7,7 +7,8 @@ var db = {};
 // See db.getUser() docs for details and examples
 //
 // Exceptions:
-// 1. userInfoObj references data that is not stored for users (Check the models.js file to see what you can reference)
+// 1. userInfoObj is not an object
+// 2. userInfoObj references data that is not stored for users (Check the models.js file to see what you can reference)
 db.getUsers = (userInfoObj) => {
 };
 
@@ -39,35 +40,63 @@ db.getUsers = (userInfoObj) => {
 // }
 //
 // Exceptions:
-// 1. userInfoObj references data that is not stored for users (Check the models.js file to see what you can reference, IE: db.getUser({qwerty: 'test}) since users does not store any data referenced by the name 'qwerty')
-// 2. userInfoObj maps to more than one user
-// 3. userInfoObj maps to no users
+// 1. userInfoObj is not an object
+// 2. userInfoObj references data that is not stored for users (Check the models.js file to see what you can reference, IE: db.getUser({qwerty: 'test}) would not work since users does not store any data referenced by the name 'qwerty')
+// 3. userInfoObj maps to more than one user
+// 4. userInfoObj maps to no users
 db.getUser = (userInfoObj) => {
 };
 
 
-
+// Similar to getUsers(), but for trails
+//
+// Exceptions:
+// 1. trailInfoObj is not an object
+// 2. trailInfoObj references data that is not stored for trails (Check the models.js file to see what you can reference)
 db.getTrails = (trailInfoObj) => {
 };
 
+// Similar to getUser(), but for trails
+//
+// Exceptions:
+// 1. trailInfoObj is not an object
+// 2. trailInfoObj references data that is not stored for trails (Check the models.js file to see what you can reference)
+// 3. trailInfoObj maps to more than one trail
+// 4. trailInfoObj maps to no trails
 db.getTrail = (trailInfoObj) => {
 };
 
 // Returns a promise containing the stored trail data
 //
 // Exception:
-// 1. trailName has already been taken (names must be unique)
+// 1. trailName is not a string/is empty string
+// 2. trailName has already been taken (names must be unique)
 db.createTrail = (trailName) => {
 };
 
 
 
-db.getPosts = (infoObj) => {
+// Similar to getUsers(), but for posts
+//
+// Exceptions:
+// 1. postInfoObj is not an object
+// 2. postInfoObj references data that is not stored for posts (Check the models.js file to see what you can reference)
+db.getPosts = (postInfoObj) => {
 };
 
-db.getPost = (infoObj) => {
+// Similar to getUser(), but for posts
+//
+// Exceptions:
+// 1. postInfoObj is not an object
+// 2. postInfoObj references data that is not stored for posts (Check the models.js file to see what you can reference)
+db.getPost = (postInfoObj) => {
 };
 
+// Returns a promise that will resolve to the
+// post data that has been stored to the database
+//
+// Exceptions:
+// TODO - Add exceptions
 db.createPost = () => {
 };
 
