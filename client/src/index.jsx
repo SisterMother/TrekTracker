@@ -19,51 +19,12 @@ class App extends React.Component {
     this.submitImage = this.submitImage.bind(this);
     this.updateImageDisplay = updateImage.updateImage.bind(this);
   }
-  
-  // var form = new FormData();
-  //   form.append("image", this.state.photo[0]);
-  //   //post to the database: 
-  //   $.ajax({
-  //     "async": true,
-  //     "crossDomain": true,
-  //     "url": "https://api.imgur.com/3/image",
-  //     "method": "POST",
-  //     "headers": {
-  //       "authorization": "Client-ID 3ec73e8df33fffc"
-  //     },
-  //     "processData": false,
-  //     "contentType": false,
-  //     "data": form
-  //   }).done((response) => {
-  //     //then add the link and other metadata to mysql database
-  //     var name = this.state.photo[0].name;
-  //     axios.post('/images', {image: response['data'], state: this.state, name: name})
-  //       .then((res) => {
-  //         console.log('success!: ', res);
-  //       })
-  //   });
 
   submitImage(e) {
     e.preventDefault();
     var form = new FormData();
     form.append('image', this.state.image)
     console.log('event: ', e);
-    // axios.post('https://api.imgur.com/3/image', {
-    //   headers: {
-    //     authorization: 'Client-ID 19f99ae10e881f3'
-    //   },
-    //   crossDomain: true,
-    //   processData: false,
-    //   contentType: false,
-    //   data: form
-    // })
-    // .then((res) => {
-    //   var name = this.state.photo.name;
-    //   axios.post('/images', {image: res.data, state: this.state, name: name})
-    //     .then((res) => {
-    //       console.log('success!: ', res);
-    //   })
-    // })
   }
 
   componentDidMount() {
