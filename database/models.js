@@ -16,9 +16,8 @@ models.Sequelize = Sequelize;
 // USERS SCHEMA
 var Users = sequelize.define('users', {
   id: {
-    autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.INTEGER
+    type: Sequelize.STRING
   },
   firstname: {
     type: Sequelize.STRING,
@@ -35,11 +34,6 @@ var Users = sequelize.define('users', {
     validate: {
       isEmail: true
     }
-  },
-  password: {
-    type: Sequelize.STRING,
-    notEmpty: true,
-    allowNull: false
   }
 });
 models.users = Users;

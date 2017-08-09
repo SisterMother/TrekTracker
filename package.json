@@ -15,17 +15,22 @@
     "babel": "^6.23.0",
     "babel-core": "^6.25.0",
     "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.15.4",
+    "express-session": "^1.15.5",
     "jquery": "^3.2.1",
     "mysql": "^2.14.1",
     "mysql2": "^1.4.0",
+    "passport": "^0.3.2",
+    "passport-google-oauth2": "^0.1.6",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-google-maps": "^7.2.0",
     "react-router": "^4.1.2",
     "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
-    "sequelize": "^4.4.2"
+    "sequelize": "^4.4.2",
+    "sessionstore": "^1.2.18"
   },
   "devDependencies": {
     "babel-loader": "^7.1.1",
