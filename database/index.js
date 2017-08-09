@@ -39,7 +39,7 @@ module.exports.getPostById = (id) => {
 };
 
 module.exports.getPostsByUserId = (id) => {
-  return helpers.getPosts({user_id: id});
+  return helpers.getPosts({user_id: id.toString()});
 };
 
 module.exports.getPostsByUserEmail = (email) => {
@@ -60,12 +60,13 @@ module.exports.getPostsByTrailName = (name) => {
   });
 };
 
-// posterData can be either a user ID or a user email
+// posterData can be either a user ID or a user email (REMEMBER: user IDs are STRINGS, NOT numbers)
 // trailData can be either a trail ID or a trail name
-module.exports.createPost = (posterData, trailData, title, text, imageUrl) => {
+// posterDataType should either be 'id' or 'email'
+module.exports.createPost = (posterData, posterDataType, trailData, title, text, imageUrl) => {
   var posterId;
   var trailId;
-  if (posterData.constructor === Number) {
+  if (posterDataType === 'id') {
     posterId = posterData;
   }
   if (trailData.constructor === Number) {
