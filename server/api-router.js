@@ -26,13 +26,18 @@ router.get('/currentUser', (req, res) => {
 // a timestamp that the database will create automatically
 router.post('/posts', (req, res) => {
   var post = req.body.photo;
+<<<<<<< HEAD
   db.createPost(req.user.id, 'id', post.trail_name, post.title, post.text, post.image_url).then((post) => {
+=======
+  db.createPost(post.id, post.trailName, post.title, post.text, post.image_url).then((post) => {
+>>>>>>> fixed api post route
     res.end(JSON.stringify(post));
   });
 });
 
 router.get('/posts/users/:useremail', (req, res) => {
-  var userEmail = req.params.useremail;
+  var userEmail = req.params;
+  console.log('this should be the request parameters: ', userEmail);
   db.getPostsByUserEmail(userEmail).then((posts) => {
     res.end(JSON.stringify(posts));
   });
