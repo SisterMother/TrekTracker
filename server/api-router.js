@@ -29,8 +29,8 @@ router.post('/posts', (req, res) => {
 <<<<<<< HEAD
   db.createPost(req.user.id, 'id', post.trail_name, post.title, post.text, post.image_url).then((post) => {
 =======
-  db.createPost(post.id, post.trailName, post.title, post.text, post.image_url).then((post) => {
->>>>>>> fixed api post route
+  db.createPost(req.user.id, post.trailName, post.title, post.text, post.image_url).then((post) => {
+>>>>>>> changed back to req.user
     res.end(JSON.stringify(post));
   });
 });
