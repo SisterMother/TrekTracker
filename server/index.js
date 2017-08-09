@@ -1,37 +1,23 @@
 var express = require('express');
 var axios = require('axios');
 var app = express();
-
 var bodyParser = require('body-parser');
-var post = require('../database');
-var GmapsAPI = require('../client/src/components/googleSearch');
+var db = require('../database');
+var apiRouter = require('./api-router.js');
+var path = require('path');
 
+// Setup API routes
+app.use('/api', apiRouter);
 
-app.use(express.static(__dirname + '/../client/dist'));
-
-app.post('/images', (req, res) => {
-  axios.post()
+// Serve static files
+app.get('/bundle.js', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/../client/dist/bundle.js'));
+});
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
 });
 
-// app.get('/post', function (req, res) {
-//   post.selectAll(function(err, data) {
-//     if(err) {
-//       res.sendStatus(500);
-//     } else {
-//       res.json(data);
-//     }
-//   });
-// });
-
-app.get('/places', function (req, res) {
-  console.log('getting');
-  GmapsAPI.getGooglePlaces((results) => {
-    console.log('result from google places', results);
-    res.send(results);
-  })
-
-});
-
+// Start server
 app.listen(3000, function() {
   console.log('listening on port 3000...');
 });
