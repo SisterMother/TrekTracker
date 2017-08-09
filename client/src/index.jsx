@@ -6,6 +6,7 @@ import Login from './components/Login.jsx';
 import Upload from './components/Upload.jsx';
 import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
+import Map from './components/Gmaps.jsx'
 
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -16,11 +17,19 @@ class App extends React.Component {
     this.state = {
       posts: [],
       logged: false,
-      photo: null
+      image: null,
+      photo: null,
+      mapCenter: {
+        lat: 37.7836966,
+        lng: -122.4089664
+      },
+      trails: []
+
     }
     this.submitImage = this.submitImage.bind(this);
     this.updateImageDisplay = updateImage.updateImage.bind(this);
   }
+  
 
   submitImage(e) {
     e.preventDefault();
@@ -53,6 +62,27 @@ class App extends React.Component {
     this.preview = document.querySelector('.preview');
   }
 
+  componentDidMount() {
+    var context = this;
+    $.ajax({
+      method: 'GET',
+      url: '/places',
+      success: (data) => {
+        console.log('on sucessful get request', data);
+        context.setState({trails: data.results})
+        console.log(this.state.trails);
+      },
+      error: (err) => {
+        console.log('Error on get request', err);
+      }
+    });
+  }
+
+  onMarkerClick(targetMarker) {
+    //Take us to the trail homepage here.
+}
+
+
   render() {
     return (
       <div>
@@ -61,6 +91,12 @@ class App extends React.Component {
           <Route path='/' component={Login}/>
         </Switch>
         <Upload update={this.updateImageDisplay} submit={this.submitImage}/>
+          <div style={{
+            width: '700px',
+            height: '600px'
+          }}>
+       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>} trails={this.state.trails} mapCenter={this.state.mapCenter} onMarkerClick={this.onMarkerClick.bind(this)}/>
+       </div>
       </div>
     )
   }
