@@ -25,6 +25,13 @@ class Map extends Component {
 			<GoogleMap
 				defaultZoom={15}
 				center={this.props.mapCenter}>
+        {this.props.markers.map((marker, index) => (
+        <Marker
+          key={index}
+          position={marker.position}
+          onClick={() => this.props.onMarkerClick(marker)}
+        />
+        ))}
 				<SearchBox
 				  ref={this.props.onSearchBoxMounted}
 				  onPlacesChanged={this.props.onPlacesChanged}
@@ -35,7 +42,7 @@ class Map extends Component {
 
 			</GoogleMap>
 			)
-		}
-	}
+    }
+  }
 
-export default withGoogleMap(Map);
+  export default withGoogleMap(Map);
