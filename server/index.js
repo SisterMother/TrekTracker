@@ -8,6 +8,7 @@ var path = require('path');
 
 // Setup API routes
 app.use('/api', apiRouter);
+app.use(bodyParser.json());
 
 // Serve static files
 app.get('/bundle.js', (req, res) => {
@@ -15,6 +16,12 @@ app.get('/bundle.js', (req, res) => {
 });
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
+});
+
+// createPost = (posterData, trailData, title, text, imageUrl)
+app.post('/api/photo', (req, res) => {
+  var body = req.body;
+  res.send();
 });
 
 // Start server
