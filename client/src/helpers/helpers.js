@@ -51,7 +51,6 @@ const returnFileSize = function(number) {
 const updateImage = function() {
   //preview and input defined in index.jsx, they are 
   //DOM elements selected using query selectors. 
-  console.log('this: ', this.preview);
   while(this.preview.firstChild) {
     //if the preview element has a child populating it,
     //remove it, then check again
