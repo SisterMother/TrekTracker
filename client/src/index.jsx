@@ -61,23 +61,20 @@ class App extends React.Component {
     this.input = document.querySelector('.input');
     this.preview = document.querySelector('.preview');
     var context = this;
-    $.ajax({
-      method: 'GET',
-      url: '/places',
-      success: (data) => {
+    axios.get('/places')
+      .then(res => {
         console.log('on sucessful get request', data);
         context.setState({trails: data.results})
         console.log(this.state.trails);
-      },
-      error: (err) => {
+      })
+      .catch(err => {
         console.log('Error on get request', err);
-      }
-    });
+      });
   }
 
   onMarkerClick(targetMarker) {
     //Take us to the trail homepage here.
-}
+  }
 
 
   render() {
