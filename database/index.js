@@ -68,6 +68,7 @@ module.exports.createTrail = (name, directions='', latitude=0, longitude=0) => {
 
 
 
+<<<<<<< HEAD
 // posterData can be either a user ID or a user email (REMEMBER: user IDs are STRINGS, NOT numbers)
 // trailData can be either a trail ID or a trail name
 // posterDataType should either be 'id' or 'email'
@@ -108,6 +109,15 @@ module.exports.createPost = (posterEmail, trailId, title, text, imageUrl, latitu
     });
   });
 };
+=======
+// module.exports.getPostById = (id) => {
+//   return helpers.getPost({id});
+// };
+
+// module.exports.getPostsByUserId = (id) => {
+//   return helpers.getPosts({poster_user_id: id});
+// };
+>>>>>>> Has unuseful functions commented out
 
 module.exports.getPostsByUserEmail = (email) => {
   return module.exports.getUserByEmail(email)
@@ -128,9 +138,20 @@ module.exports.getPostsByUserEmail = (email) => {
   });
 };
 
+<<<<<<< HEAD
 module.exports.getPostsByTrailId = (id) => {
   return models.posts.findAll({
     where: {trail_id: id}
+=======
+// module.exports.getPostsByTrailId = (id) => {
+//   return helpers.getPosts({trail_id: id});
+// };
+
+module.exports.getPostsByTrailName = (name) => {
+  return module.exports.getTrailByName(name)
+  .then((trail) => {
+    return helpers.getPosts({trail_id: trail.id});
+>>>>>>> Has unuseful functions commented out
   })
   .then((posts) => {
     for (let i = 0; i < posts.length; i++) {
