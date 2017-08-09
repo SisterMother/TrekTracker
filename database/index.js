@@ -39,13 +39,13 @@ module.exports.getPostById = (id) => {
 };
 
 module.exports.getPostsByUserId = (id) => {
-  return helpers.getPosts({user_id: id.toString()});
+  return helpers.getPosts({poster_user_id: id});
 };
 
 module.exports.getPostsByUserEmail = (email) => {
   return module.exports.getUserByEmail(email)
   .then((user) => {
-    return helpers.getPosts({user_id: user.id});
+    return helpers.getPosts({poster_user_id: user.id});
   });
 };
 

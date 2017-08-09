@@ -8,11 +8,42 @@ router.get('/places', function (req, res) {
   })
 });
 
-router.post('/api/photo', (req, res) => {
-  var post = req.body.photo;
-  db.createPost(1, 1, post.title, post.text, post.image_url).then((post) => {
-    res.send(post);
+// Saves a post to the database and returns it as the response
+// The input data should look like this...
+//
+// {
+//   trailName: 'test trail',
+//   title: 'example post',
+//   text: 'this is an example of a post',
+//   image_url: 'https://somewebsite.com/example'
+// }
+//
+// And the HTTP response will contain all of this data plus
+// a timestamp that the database will create automatically
+router.post('/posts', (req, res) => {
+  var post = req.body.post;
+  db.createPost(req.user.id, post.trailName, post.title, post.text, post.image_url).then((post) => {
+    res.end(JSON.stringify(post));
   });
+});
+
+router.get('/posts/users/:useremail', (req, res) => {
+  var userEmail = req.params.useremail;
+  db.getPostsByUserEmail(userEmail).then((posts) => {
+    res.end(JSON.stringify(posts));
+  });
+});
+
+router.get('/posts/trails/:trail', (req, res) => {
+  var trailName = req.params.trail;
+  console.log(trailName);
+  db.getPostsByTrailName(trailName).then((posts) => {
+    res.end(JSON.stringify(posts));
+  });
+});
+
+router.get('/*', (req, res) => {
+  res.end('Invalid API request');
 });
 
 module.exports = router;
