@@ -8,7 +8,13 @@ import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
+<<<<<<< HEAD
 import SearchBox from 'react-google-maps/lib/places/SearchBox'
+=======
+import Map from './components/Gmaps.jsx'
+import SearchBox from 'react-google-maps/lib/places/SearchBox'
+
+>>>>>>> reconfigured to rebase
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -25,9 +31,7 @@ class App extends React.Component {
         lng: -122.4089664
       },
       trails: [],
-      markers:[  {
-        position: new google.maps.LatLng(37.78369346901092,-122.40897059440613)
-      },]
+      markers:[]
 
     }
     this.submitImage = this.submitImage.bind(this);
