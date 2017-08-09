@@ -1,13 +1,38 @@
 var express = require('express');
 var axios = require('axios');
-var app = express();
 var bodyParser = require('body-parser');
 var db = require('../database');
 var apiRouter = require('./api-router.js');
 var path = require('path');
+var passport = require('passport');
+var cookieParser = require('cookie-parser');
+var authRouter = require('./auth-router.js');
+var Session = require('express-session');
 
-// Setup API routes
+var app = express();
+
+// Activates Google OAuth passport strategy
+require('../passport/google-auth-strategy.js')(passport);
+
+app.use(cookieParser());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+app.use(Session({
+  secret: 'thisisasecret',
+  resave: true,
+  saveUninitialized: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Setup routes
 app.use('/api', apiRouter);
+app.use('/', authRouter);
 
 // Serve static files
 app.get('/bundle.js', (req, res) => {
