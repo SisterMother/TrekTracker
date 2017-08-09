@@ -1,4 +1,5 @@
 var helpers = require('./helpers.js');
+var models = require('./models');
 
 
 
@@ -46,7 +47,7 @@ module.exports.getPostsByUserEmail = (email) => {
   return module.exports.getUserByEmail(email)
   .then((user) => {
     return helpers.getPosts({poster_user_id: user.id});
-  });
+    });
 };
 
 module.exports.getPostsByTrailId = (id) => {
@@ -105,4 +106,32 @@ module.exports.createPost = (posterData, posterDataType, trailData, title, text,
       return createPost();
     });
   }
+};
+
+// Used when getting an array of models that contain foreign keys
+// and, for each instance in the array, will replace the foreign
+// key with the model it is pointing to
+//
+// modelArray - the array of existing models where each model contains a foreign ID
+// idToReplace - a string representing the name of the foreign key that will be replaced
+// modelToReplaceWith - the sequelize model that will be searched for using the foreign key
+// modelKey - the key where the new foreign-referenced model will be replaced within each element of modelArray
+var replaceReferenceModelIdsWithModels = (modelArray, idToReplace, modelToReplaceWith, modelKey) => {
+  var getModelPromises = []; // An array of promises, one for each model in the model array
+  modelArray.forEach((model) => {
+    var referenceModelId = model[idToReplace];
+    delete model[idToReplace];
+    getModelPromises.push(
+      modelToReplaceWith.findOne({
+        where: {
+          id: referenceModelId
+        }
+      })
+      .then((referenceModel) => {
+        model[modelKey] = referenceModel;
+        return model;
+      })
+    );
+  });
+  return Promise.all(getModelPromises);
 };
