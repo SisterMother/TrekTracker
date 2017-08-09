@@ -4,11 +4,11 @@ import axios from 'axios';
 import reactDOM from 'react-dom';
 import Login from './components/Login.jsx';
 import Upload from './components/Upload.jsx';
+import Map from './components/Gmaps.jsx';
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
-import Map from './components/Gmaps.jsx'
 import SearchBox from 'react-google-maps/lib/places/SearchBox'
-
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -25,13 +25,16 @@ class App extends React.Component {
         lng: -122.4089664
       },
       trails: [],
-      markers:[]
+      markers:[  {
+        position: new google.maps.LatLng(37.78369346901092,-122.40897059440613)
+      },]
 
     }
     this.submitImage = this.submitImage.bind(this);
     this.updateImageDisplay = updateImage.updateImage.bind(this);
     this.handlePlacesChanged = this.handlePlacesChanged.bind(this);
     this.handleSearchBoxMounted = this.handleSearchBoxMounted.bind(this);
+    this.onMarkerClick = this.onMarkerClick.bind(this);
   }
   handleSearchBoxMounted(searchBox) {
   this._searchBox = searchBox;
@@ -109,6 +112,7 @@ class App extends React.Component {
   }
 
   onMarkerClick(targetMarker) {
+    console.log("clicking the marker!!!")
     //Take us to the trail homepage here.
   }
 
@@ -125,7 +129,7 @@ class App extends React.Component {
             width: '700px',
             height: '600px'
           }}>
-       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}    onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} onMarkerClick={this.onMarkerClick.bind(this)}/>
+       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers}  onMarkerClick={this.onMarkerClick}/>
        </div>
       </div>
     )
