@@ -1,10 +1,42 @@
-const expect = require('chai').use(require('chai-as-promised')).expect;
-let models = require('../database/models.js');
-let sequelize = models.sequelize;
-let dbFuncs = require('../database/index.js');
-let db = require('./mockdb.json');
+var expect = require('chai').expect;
+var sinon = require('sinon');
+var path = require('path');
+
+var models = require('../database/models.js');
+var helpers = require('../database/helpers.js');
+var exports = require('../database/index.js');
+var sequelizeMockingMocha = require('sequelize-mocking').sequelizeMockingMocha;
+
+console.log(models.users);
 
 module.exports.run = () => {
+  describe('Sequelize Test', () => {
+    var sandbox = null;
+    beforeEach(() => {
+      sandbox = sinon.sandbox.create();
+    });
+    afterEach(() => {
+      sandbox = sinon.sandbox.restore();
+    });
+    sequelizeMockingMocha(models.sequelize, path.resolve(path.join(__dirname, './fake-database.json')), {logging: false});
+
+    it('should test', () => {
+      return models.users.findAll()
+      .then((users) => {
+        expect(users).depp.equals(
+          [
+            {
+              id: 'test',
+              firstname: 'example',
+              lastname: 'person',
+            }
+          ]
+        );
+      });
+    });
+  });
+
+
   describe('Models', () => {
     describe('Users', () => {
       it('Should exist', () => {
