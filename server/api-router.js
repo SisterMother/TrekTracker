@@ -1,6 +1,11 @@
 var router = require('express').Router();
 var db = require('../database');
+var googleMaps = require('./foreign-apis/google-maps');
 
-// TODO - Add some API routes
+router.get('/places', function (req, res) {
+  googleMaps.getPlaces((results) => {
+    res.send(results);
+  })
+});
 
 module.exports = router;
