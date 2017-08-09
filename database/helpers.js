@@ -147,7 +147,7 @@ db.createPost = (posterId, trailId, title, text, imageUrl) => {
     image_url: imageUrl,
     view_count: 0,
     flag_count: 0,
-    poster_user_id: posterId,
+    user_id: posterId,
     trail_id: trailId
   });
 };

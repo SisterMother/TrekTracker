@@ -20,7 +20,7 @@ class App extends React.Component {
       image: null,
       photo: null,
       mapCenter: {
-        lat: 37.7836966,
+        lat: 64.7836966,
         lng: -122.4089664
       },
       trails: []
@@ -29,7 +29,7 @@ class App extends React.Component {
     this.submitImage = this.submitImage.bind(this);
     this.updateImageDisplay = updateImage.updateImage.bind(this);
   }
-  
+
 
   submitImage(e) {
     e.preventDefault();
@@ -62,6 +62,19 @@ class App extends React.Component {
     this.input = document.querySelector('.input');
     this.preview = document.querySelector('.preview');
     var context = this;
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+          let newObj = {
+            lat : position.coords.latitude,
+            lng : position.coords.longitude
+          }
+          console.log('found location')
+        var initialPosition = (position);
+        context.setState({mapCenter: newObj})
+      },
+        (error) => alert(error.message),
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+       );
     axios.get('/places')
       .then(res => {
         console.log('on sucessful get request', data);

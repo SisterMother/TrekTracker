@@ -20,7 +20,10 @@ app.get('/*', (req, res) => {
 
 // createPost = (posterData, trailData, title, text, imageUrl)
 app.post('/api/photo', (req, res) => {
-  var body = req.body;
+  var photo = req.body.photo;
+  //the first two parameters passed need to have a  
+  //corresponding row in the user and trail tables, respectively. 
+  db.createPost(1, 1, photo.title, photo.text, photo['image_url']);
   res.send();
 });
 
