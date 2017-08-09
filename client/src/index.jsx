@@ -8,6 +8,9 @@ import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import Map from './components/Gmaps.jsx'
 
+axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -21,6 +24,7 @@ class App extends React.Component {
         lng: -122.4089664
       },
       trails: []
+
     }
     this.submitImage = this.submitImage.bind(this);
     this.updateImageDisplay = updateImage.updateImage.bind(this);
@@ -30,8 +34,27 @@ class App extends React.Component {
   submitImage(e) {
     e.preventDefault();
     var form = new FormData();
-    form.append('image', this.state.image)
-    console.log('event: ', e);
+    form.append('image', this.state.photo[0])
+    console.log('photo: ', this.state.photo[0]);
+    axios.post('https://api.imgur.com/3/image', form)
+    .then((res) => {
+      var metaPhoto = {
+        title: this.state.photo[0].name,
+        text: document.getElementsByTagName('textarea')[0].value,
+        image_url: res.data.link,
+        view_count: 0,
+        flag_count: 0,
+        flag_comments: []
+      };
+      console.log('Success!: ', metaPhoto);
+      //now make an axios post request to our server
+      //to them store the metaPhoto in the db
+    })
+    .catch((err, res) => {
+      if(err) {
+        console.log('error: ', err);
+      }
+    })
   }
 
   componentDidMount() {
