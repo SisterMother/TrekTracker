@@ -8,4 +8,11 @@ router.get('/places', function (req, res) {
   })
 });
 
+router.post('/api/photo', (req, res) => {
+  var post = req.body.photo;
+  db.createPost(1, 1, post.title, post.text, post.image_url).then((post) => {
+    res.send(post);
+  });
+});
+
 module.exports = router;
