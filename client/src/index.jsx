@@ -35,12 +35,57 @@ class App extends React.Component {
       markers:[]
 
     }
-    this.submitImage = submitImage.bind(this);
-    this.updateImageDisplay = updateImage.bind(this);
-    this.handlePlacesChanged = handlePlacesChanged.bind(this);
-    this.handleSearchBoxMounted = handleSearchBoxMounted.bind(this);
-    this.onMarkerClick = onMarkerClick.bind(this);
-    this.onMapClick = onMapClick.bind(this);
+    this.submitImage = this.submitImage.bind(this);
+    this.updateImageDisplay = updateImage.updateImage.bind(this);
+    this.handlePlacesChanged = this.handlePlacesChanged.bind(this);
+    this.handleSearchBoxMounted = this.handleSearchBoxMounted.bind(this);
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+  }
+  handleSearchBoxMounted(searchBox) {
+  this._searchBox = searchBox;
+}
+
+  handlePlacesChanged() {
+   const places = this._searchBox.getPlaces();
+//    Right now, everything below is not goin to be implemented
+//   Add a marker for each place returned from search bar
+   const markers = places.map(place => ({
+     position: place.geometry.location,
+   }));
+   // Set markers; set map center to first search result
+  const mapCenter = markers.length > 0 ? markers[0].position : this.state.center;
+  this.setState({
+    mapCenter: mapCenter,
+    markers,
+  });
+ }
+
+
+  submitImage(e) {
+    e.preventDefault();
+    var form = new FormData();
+    form.append('image', this.state.photo[0])
+    console.log('photo: ', this.state.photo[0]);
+    axios.post('https://api.imgur.com/3/image', form)
+    .then((res) => {
+      console.log('response data: ', res.data);
+
+      var metaPhoto = {
+        title: this.state.photo[0].name,
+        text: document.getElementsByTagName('textarea')[0].value,
+        image_url: res.data.data.link,
+        flag_comments: []
+      };
+      console.log('Success!: ', metaPhoto);
+      axios.post('/api/posts', {photo: metaPhoto})
+        .then(res => console.log('success: ', res))
+        .catch(err => console.log('error in the /api/posts endpoint: ', err));
+    })
+    .catch((err, res) => {
+      if(err) {
+        console.log('error: ', err);
+      }
+    })
   }
 
   componentDidMount() {
