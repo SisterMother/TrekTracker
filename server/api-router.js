@@ -36,8 +36,7 @@ router.post('/posts', (req, res) => {
 });
 
 router.get('/posts/users/:useremail', (req, res) => {
-  var userEmail = req.params;
-  console.log('this should be the request parameters: ', userEmail);
+  var userEmail = req.params.useremail;
   db.getPostsByUserEmail(userEmail).then((posts) => {
     res.end(JSON.stringify(posts));
   });
