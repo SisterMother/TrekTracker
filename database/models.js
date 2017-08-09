@@ -15,10 +15,11 @@ models.Sequelize = Sequelize;
 
 // USERS SCHEMA
 var Users = sequelize.define('users', {
+  // This is the Google account ID of the user
   id: {
-    autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.INTEGER
+    type: Sequelize.STRING,
+    unique: true
   },
   firstname: {
     type: Sequelize.STRING,
@@ -35,11 +36,6 @@ var Users = sequelize.define('users', {
     validate: {
       isEmail: true
     }
-  },
-  password: {
-    type: Sequelize.STRING,
-    notEmpty: true,
-    allowNull: false
   }
 });
 models.users = Users;

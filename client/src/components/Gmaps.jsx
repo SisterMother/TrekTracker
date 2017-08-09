@@ -1,5 +1,21 @@
 import React, {Component} from 'react'
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
+import SearchBox from 'react-google-maps/lib/places/SearchBox'
+
+const INPUT_STYLE = {
+  boxSizing: `border-box`,
+  MozBoxSizing: `border-box`,
+  border: `1px solid transparent`,
+  width: `240px`,
+  height: `32px`,
+  marginTop: `27px`,
+  padding: `0 12px`,
+  borderRadius: `1px`,
+  boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+  fontSize: `14px`,
+  outline: `none`,
+  textOverflow: `ellipses`,
+};
 
 class Map extends Component {
 
@@ -9,26 +25,13 @@ class Map extends Component {
 			<GoogleMap
 				defaultZoom={15}
 				center={this.props.mapCenter}>
-
-
-				{this.props.trails.map((business, i) => {
-		      let coords = business.geometry.location;
-
-      		return <Marker
-      		name={name}
-      		showInfo={false}
-      		infoContent=
-	      		{<svg
-	            id="Layer_1"
-	            xmlns="http://www.w3.org/2000/svg"
-	            width="16"
-	            height="16"
-	            viewBox="0 0 16 16"
-	          />}
-      		onClick={() => this.props.onMarkerClick(business)}
-      		position={{lat: coords.lat, lng: coords.lng}}
-      		key={i}/>
-    		})}
+				<SearchBox
+				  ref={this.props.onSearchBoxMounted}
+				  onPlacesChanged={this.props.onPlacesChanged}
+		 			controlPosition={google.maps.ControlPosition.TOP_LEFT}
+		 			inputPlaceholder="Search For Locations!!"
+					inputStyle={INPUT_STYLE}
+	 			/>
 
 			</GoogleMap>
 			)
