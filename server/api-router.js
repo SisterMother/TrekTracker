@@ -21,7 +21,7 @@ router.get('/places', function (req, res) {
 // And the HTTP response will contain all of this data plus
 // a timestamp that the database will create automatically
 router.post('/posts', (req, res) => {
-  var post = req.body.post;
+  var post = req.body.photo;
   db.createPost(req.user.id, post.trailName, post.title, post.text, post.image_url).then((post) => {
     res.end(JSON.stringify(post));
   });

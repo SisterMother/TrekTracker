@@ -69,9 +69,9 @@ class App extends React.Component {
         flag_comments: []
       };
       console.log('Success!: ', metaPhoto);
-      axios.post('/api/photo', {photo: metaPhoto})
+      axios.post('/api/posts', {photo: metaPhoto})
         .then(res => console.log('success: ', res))
-        .catch(err => console.log('error in the /api/photo endpoint: ', err));
+        .catch(err => console.log('error in the /api/posts endpoint: ', err));
     })
     .catch((err, res) => {
       if(err) {
@@ -125,6 +125,7 @@ class App extends React.Component {
             width: '700px',
             height: '600px'
           }}>
+          {console.log('posts: ', this.state.posts)}
        <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}    onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} onMarkerClick={this.onMarkerClick.bind(this)}/>
        </div>
       </div>

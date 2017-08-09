@@ -63,36 +63,45 @@ const updateImage = function() {
   //bound to the App in index.jsx
   this.setState({photo: curFiles})
   if(curFiles.length === 0) {
-    //while there are no files staged,
+    //if there are no files staged,
     //display a text element indicating the empty input
     let para = document.createElement('h2');
     para.textContent = 'No files currently selected for upload';
     this.preview.appendChild(para);
   } else {
+    //otherwise, if there is a file staged,
+    //create a new div called 'list' and append 
+    //it to the now empty preview
     let list = document.createElement('div');
     this.preview.appendChild(list);
     for(let i = 0; i < curFiles.length; i++) {
       let listItem = document.createElement('div');
       let para = document.createElement('p');
-      let desc = document.createElement('textarea');
       if(validFileType(curFiles[i])) {
+        //if the currently uploaded files are of the valid type,
+        //make elements for the image display, subtitle paragraph,
+        //and description input
         para.textContent = `File name: ${curFiles[i].name}; File size: ${returnFileSize(curFiles[i].size)}.`;
+        let desc = document.createElement('textarea');
         let image = document.createElement('img');
-        image.style = 'height:200px;border:5px groove black';
+        image.style = 'height:200px;border:5px groove darkslategray';
         image.src = window.URL.createObjectURL(curFiles[i]);
         desc.placeholder = 'Describe what you see!';
         desc.rows = '4';
         desc.cols = '50';
 
-
+        //then append them to the list item
         listItem.appendChild(image);
         listItem.appendChild(para);
         listItem.appendChild(desc);
 
       } else {
+        //otherwise, if the file type is not valid, 
+        //make only a paragraph element and append to the list item
         para.textContent = `File name: ${curFiles[i].name}: Not a valid file type. Update your selection.`;
         listItem.appendChild(para);
       }
+    //then append the list item to the list
     list.appendChild(listItem);
     }
   }
