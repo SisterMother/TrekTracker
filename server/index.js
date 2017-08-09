@@ -4,16 +4,17 @@ var app = express();
 var bodyParser = require('body-parser');
 var db = require('../database');
 var apiRouter = require('./api-router.js');
+var path = require('path');
 
 // Setup API routes
 app.use('/api', apiRouter);
 
 // Serve static files
 app.get('/bundle.js', (req, res) => {
-  res.sendFile('../client/dist/bundle.js');
+  res.sendFile(path.resolve(__dirname + '/../client/dist/bundle.js'));
 });
 app.get('/*', (req, res) => {
-  res.sendFile('../client/dist/');
+  res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
 });
 
 // Start server
