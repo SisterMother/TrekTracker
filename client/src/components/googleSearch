@@ -1,0 +1,22 @@
+const request = require('request');
+// const GoogleMapsLoader = require('google-maps');
+
+let getGooglePlaces = (callback) => {
+
+
+
+ let url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=boba&location=37.7836966,-122.4089664&radius=4828.03&key=AIzaSyCD-p-TbPJ35ULnDIOL8X1cmBlEdqTNmb4';
+
+  request(url, (err, res, body) => {
+    if (err) {
+      console.log('error from google request');
+    } else {
+      console.log('response from google places API', body);
+      let parsed = JSON.parse(body);
+      callback(parsed);
+    }
+
+  })
+}
+
+module.exports.getGooglePlaces = getGooglePlaces;
