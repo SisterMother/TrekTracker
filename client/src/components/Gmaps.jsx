@@ -8,7 +8,7 @@ class Map extends Component {
 		return (
 			<GoogleMap
 				defaultZoom={15}
-				defaultCenter={this.props.mapCenter}>
+				center={this.props.mapCenter}>
 
 
 				{this.props.trails.map((business, i) => {
