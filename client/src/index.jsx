@@ -60,9 +60,6 @@ class App extends React.Component {
   componentDidMount() {
     this.input = document.querySelector('.input');
     this.preview = document.querySelector('.preview');
-  }
-
-  componentDidMount() {
     var context = this;
     $.ajax({
       method: 'GET',
