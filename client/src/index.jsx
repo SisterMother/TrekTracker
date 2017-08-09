@@ -72,9 +72,9 @@ class App extends React.Component {
         flag_comments: []
       };
       console.log('Success!: ', metaPhoto);
-      axios.post('/api/photo', {photo: metaPhoto})
+      axios.post('/api/posts', {photo: metaPhoto})
         .then(res => console.log('success: ', res))
-        .catch(err => console.log('error in the /api/photo endpoint: ', err));
+        .catch(err => console.log('error in the /api/posts endpoint: ', err));
     })
     .catch((err, res) => {
       if(err) {
