@@ -7,6 +7,7 @@ import Upload from './components/Upload.jsx';
 import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import Map from './components/Gmaps.jsx'
+import SearchBox from 'react-google-maps/lib/places/SearchBox'
 
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -23,12 +24,33 @@ class App extends React.Component {
         lat: 64.7836966,
         lng: -122.4089664
       },
-      trails: []
+      trails: [],
+      markers:[]
 
     }
     this.submitImage = this.submitImage.bind(this);
     this.updateImageDisplay = updateImage.updateImage.bind(this);
+    this.handlePlacesChanged = this.handlePlacesChanged.bind(this);
+    this.handleSearchBoxMounted = this.handleSearchBoxMounted.bind(this);
   }
+  handleSearchBoxMounted(searchBox) {
+  this._searchBox = searchBox;
+}
+
+  handlePlacesChanged() {
+   const places = this._searchBox.getPlaces();
+//    Right now, everything below is not goin to be implemented
+//   Add a marker for each place returned from search bar
+   const markers = places.map(place => ({
+     position: place.geometry.location,
+   }));
+   // Set markers; set map center to first search result
+  const mapCenter = markers.length > 0 ? markers[0].position : this.state.center;
+  this.setState({
+    mapCenter: mapCenter,
+    markers,
+  });
+ }
 
 
   submitImage(e) {
@@ -103,7 +125,7 @@ class App extends React.Component {
             width: '700px',
             height: '600px'
           }}>
-       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>} trails={this.state.trails} mapCenter={this.state.mapCenter} onMarkerClick={this.onMarkerClick.bind(this)}/>
+       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}    onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} onMarkerClick={this.onMarkerClick.bind(this)}/>
        </div>
       </div>
     )
