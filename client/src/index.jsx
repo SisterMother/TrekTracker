@@ -66,7 +66,8 @@ class App extends React.Component {
         title: this.state.photo[0].name,
         text: document.getElementsByTagName('textarea')[0].value,
         image_url: res.data.data.link,
-        flag_comments: []
+        flag_comments: [],
+        trail_name: 'rainbow trails'
       };
       console.log('Success!: ', metaPhoto);
       axios.post('/api/posts', {photo: metaPhoto})
