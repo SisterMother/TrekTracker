@@ -38,17 +38,18 @@ class App extends React.Component {
     console.log('photo: ', this.state.photo[0]);
     axios.post('https://api.imgur.com/3/image', form)
     .then((res) => {
+      console.log('response data: ', res.data);
+
       var metaPhoto = {
         title: this.state.photo[0].name,
         text: document.getElementsByTagName('textarea')[0].value,
-        image_url: res.data.link,
-        view_count: 0,
-        flag_count: 0,
+        image_url: res.data.data.link,
         flag_comments: []
       };
       console.log('Success!: ', metaPhoto);
-      //now make an axios post request to our server
-      //to them store the metaPhoto in the db
+      axios.post('/api/photo', {photo: metaPhoto})
+        .then(res => console.log('success: ', res))
+        .catch(err => console.log('error in the /api/photo endpoint: ', err));
     })
     .catch((err, res) => {
       if(err) {

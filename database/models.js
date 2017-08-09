@@ -105,4 +105,13 @@ Posts.belongsTo(Trails, {
 models.posts = Posts;
 
 
+// Sync database
+models.sequelize.sync().then(() => {
+  console.log('Nice! Database looks fine.');
+}).catch((err) => {
+  console.log('Uh oh. something went wrong when updating the database.');
+  console.error(err);
+});
+
+
 module.exports = models;
