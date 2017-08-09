@@ -42,6 +42,15 @@ app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
 });
 
+// createPost = (posterData, trailData, title, text, imageUrl)
+app.post('/api/photo', (req, res) => {
+  var photo = req.body.photo;
+  //the first two parameters passed need to have a  
+  //corresponding row in the user and trail tables, respectively. 
+  db.createPost(1, 1, photo.title, photo.text, photo['image_url']);
+  res.send();
+});
+
 // Start server
 app.listen(3000, function() {
   console.log('listening on port 3000...');
