@@ -47,7 +47,14 @@ module.exports.getPostsByUserEmail = (email) => {
   return module.exports.getUserByEmail(email)
   .then((user) => {
     return helpers.getPosts({poster_user_id: user.id});
+  })
+  .then((posts) => {
+    var nonreferencedPosts = JSON.parse(JSON.stringify(posts));
+    return replaceReferenceModelIdsWithModels(nonreferencedPosts, 'trail_id', models.trails, 'trail')
+    .then((posts) => {
+      return replaceReferenceModelIdsWithModels(nonreferencedPosts, 'poster_user_id', models.users, 'poster');
     });
+  });
 };
 
 module.exports.getPostsByTrailId = (id) => {
@@ -58,6 +65,13 @@ module.exports.getPostsByTrailName = (name) => {
   return module.exports.getTrailByName(name)
   .then((trail) => {
     return helpers.getPosts({trail_id: trail.id});
+  })
+  .then((posts) => {
+    var nonreferencedPosts = JSON.parse(JSON.stringify(posts));
+    return replaceReferenceModelIdsWithModels(nonreferencedPosts, 'trail_id', models.trails, 'trail')
+    .then((posts) => {
+      return replaceReferenceModelIdsWithModels(nonreferencedPosts, 'poster_user_id', models.users, 'poster');
+    });
   });
 };
 
