@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 
-//&#9776; is a special unicode value which renders to the 
+//note: &#9776; is a special unicode value which renders to the 
 //icon of the three horizonal bars representing the menu
 const Nav = (props) => (
   <div className="nav">
@@ -10,8 +10,9 @@ const Nav = (props) => (
       <div className="dropdown">
         <button className="dropbtn">&#9776;</button>
         <div className="dropdown-content">
-          <Link to='/upload'><a>Upload</a></Link>
-          <Link to='/profile'><a>Profile</a></Link>
+          <div><Link style={{ textDecoration: 'none', color:'black' }} to='/upload'>Upload</Link></div>
+          <div><Link style={{ textDecoration: 'none', color:'black' }} to='/profile'>Profile</Link></div>
+          <div><Link style={{ textDecoration: 'none', color:'black' }} to='/logout'>Logout</Link></div>
         </div>
       </div>
     </ul>

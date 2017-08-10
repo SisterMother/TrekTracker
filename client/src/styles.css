@@ -35,19 +35,23 @@ ul {
     display: none;
     position: relative;
     background-color: #f9f9f9;
-    min-width: 100px;
 }
 
-.dropdown-content a {
-    color: black;
-    background-color: mintcream;
+.dropdown-content div {
+    position: relative;
+    width: 100px;
+    height: 30px;
     padding: 4px;
+    padding-top: 12px;
+    font-weight: bold;
+    background-color: mintcream;
+    border: 0.5px solid black;
+    border-top: none;
     /*as a link, the text is auto-decorated with an underline, unless set to none*/
-    text-decoration: none;
     display: block;
 }
 
-.dropdown-content a:hover {
+.dropdown-content div:hover {
   background-color: #f1f1f1
 }
 
