@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha spec",
-    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js"
   },
