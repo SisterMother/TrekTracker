@@ -142,7 +142,6 @@ class App extends React.Component {
     return (
       <div>
         <h2>TrekTracker</h2>
-        <Posts posts={this.state.posts}/>
         <Switch>
           <Route exact path='/'>
             <Home logged={this.state.logged}/>
