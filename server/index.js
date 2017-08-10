@@ -43,6 +43,15 @@ app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
 });
 
+//Get existing markers.
+app.post('/markers', (req, res) => {
+  var location = req.body.location;
+  //We need to search within a certain area of this location.
+  //Just returns blank right now, put a db call here in order to load saved markers. See index.jsx for more.
+  res.send()
+})
+
+
 // Start server
 app.listen(3000, function() {
   console.log('listening on port 3000...');
