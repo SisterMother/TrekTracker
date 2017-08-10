@@ -12,10 +12,6 @@ import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import Map from './components/Gmaps.jsx'
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Home from './page-components/Home.jsx';
-<<<<<<< HEAD
->>>>>>> reconfigured to rebase
-=======
->>>>>>> 50662f3192652e0d32aa2992606fa206e0bf6b3a
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -103,10 +99,23 @@ class App extends React.Component {
         (error) => alert(error.message),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
        );
+    axios.get('/markers', {location:context.state.mapCenter})
+    .then(res => {
+      context.setState({markers:res.markers})
+      /*
+      Within this post we can send markers on componentDidMount. I will put a dummy call in the server as well
+      Marker locations can be added using the following format. They should be returned in an array with objects enlosed
+      with the following format: [{position:{lat:LATITUDE, lng:LONGITUDE}}].
+      */
+
+    })
+    .catch(err => {
+      console.log('not getting markers', err)
+    })
     axios.get('/places')
       .then(res => {
         console.log('on sucessful get request', data);
-        context.setState({trails: data.results})
+        context.setState({trails: res.results})
         console.log(this.state.trails);
       })
       .catch(err => {
@@ -144,18 +153,14 @@ class App extends React.Component {
   render() {
     return (
       <div>
-<<<<<<< HEAD
-        <h2>Lets Trek!</h2>
-=======
         <h2>TrekTracker</h2>
->>>>>>> 50662f3192652e0d32aa2992606fa206e0bf6b3a
         <UserPosts posts={this.state.posts}/>
         <Switch>
           <Route path='/'>
             <Home logged={this.state.logged}/>
           </Route>
         </Switch>
-        {/*<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
+        {<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
           <div style={{
             width: '700px',
             height: '600px'
