@@ -7,7 +7,6 @@ import Posts from './components/Posts.jsx';
 import Login from './components/Login.jsx';
 import UserPosts from './components/UserPosts.jsx';
 import Upload from './components/Upload.jsx';
-import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import { updateImage, handleSearchBoxMounted, handlePlacesChanged, submitImage, onMarkerClick, onMapClick } from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
@@ -103,7 +102,6 @@ class App extends React.Component {
         (error) => alert(error.message),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
        );
-<<<<<<< HEAD
        axios.post('/markers', {location: context.state.mapCenter})
        .then(res=> {
         //I'm adding this get into the componentDidMount. The data that we receive
@@ -116,21 +114,6 @@ class App extends React.Component {
       .catch(err => {
         console.log('Error getting markers')
       })
-=======
-    axios.get('/markers', {location:context.state.mapCenter})
-    .then(res => {
-      context.setState({markers:res.markers})
-      /*
-      Within this post we can send markers on componentDidMount. I will put a dummy call in the server as well
-      Marker locations can be added using the following format. They should be returned in an array with objects enlosed
-      with the following format: [{position:{lat:LATITUDE, lng:LONGITUDE}}].
-      */
-
-    })
-    .catch(err => {
-      console.log('not getting markers', err)
-    })
->>>>>>> About to start testing dummy helpers.
     axios.get('/places')
       .then(res => {
         console.log('on sucessful get request', data);
@@ -179,8 +162,12 @@ class App extends React.Component {
           </Route>
         </Switch>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         {<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
+=======
+        <Upload update={this.updateImageDisplay} submit={this.submitImage}/>
+>>>>>>> Added helper functions
           <div style={{
             width: '700px',
             height: '600px'
