@@ -30,7 +30,6 @@
     "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
     "sequelize": "^4.4.2",
-    "sequelize-mocking": "^1.0.0",
     "sessionstore": "^1.2.18",
     "sinon": "^3.1.0"
   },
