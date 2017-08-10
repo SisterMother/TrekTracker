@@ -18,6 +18,7 @@ var isNotLoggedIn = (req, res, next) => {
   }
 };
 
+
 // Needed for Google OAuth
 router.get('/auth/google', passport.authenticate('google', {
   scope: ['email', 'profile']
