@@ -1,16 +1,17 @@
 import React from 'react';
+import './styles.css';
 import $ from 'jquery';
 import axios from 'axios';
 import reactDOM from 'react-dom';
-import Login from './components/Login.jsx';
+import UserPosts from './components/UserPosts.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import Map from './components/Gmaps.jsx'
-import SearchBox from 'react-google-maps/lib/places/SearchBox'
-
+import SearchBox from 'react-google-maps/lib/places/SearchBox';
+import Home from './page-components/Home.jsx';
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -60,11 +61,8 @@ class App extends React.Component {
     e.preventDefault();
     var form = new FormData();
     form.append('image', this.state.photo[0])
-    console.log('photo: ', this.state.photo[0]);
     axios.post('https://api.imgur.com/3/image', form)
     .then((res) => {
-      console.log('response data: ', res.data);
-
       var metaPhoto = {
         title: this.state.photo[0].name,
         text: document.getElementsByTagName('textarea')[0].value,
@@ -72,7 +70,6 @@ class App extends React.Component {
         flag_comments: [],
         trail_name: 'rainbow trails'
       };
-      console.log('Success!: ', metaPhoto);
       axios.post('/api/posts', {photo: metaPhoto})
         .then(res => console.log('success: ', res))
         .catch(err => console.log('error in the /api/posts endpoint: ', err));
@@ -110,8 +107,18 @@ class App extends React.Component {
       .catch(err => {
         console.log('Error on get request', err);
       });
+    axios.get('/api/currentUser')
+      .then(res => {
+        var email = res.data.email;
+        axios.get(`/api/posts/users/${email}`)
+          .then(res => {
+            this.setState({posts: res.data});
+          })
+          .catch(err => console.log('error in get api/users/:id: ', err));
+      })
+      .catch(err => console.log('error in get api/currentUser endpoint: ', err));
   }
-
+    
   onMarkerClick(targetMarker) {
     console.log("clicking the marker!!!")
     //Eventually, this is going to need to do things. Still, nice that it works. Will get built out later.
@@ -132,11 +139,14 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h2>Lets Trek!</h2>
+        <h2>TrekTracker</h2>
+        <UserPosts posts={this.state.posts}/>
         <Switch>
-          <Route path='/' component={Login}/>
+          <Route path='/'>
+            <Home logged={this.state.logged}/>
+          </Route>
         </Switch>
-        <Upload update={this.updateImageDisplay} submit={this.submitImage}/>
+        {/*<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
           <div style={{
             width: '700px',
             height: '600px'

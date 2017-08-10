@@ -16,6 +16,7 @@
     "babel-core": "^6.25.0",
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
+    "css-loader": "^0.28.4",
     "express": "^4.15.4",
     "express-session": "^1.15.5",
     "jquery": "^3.2.1",
@@ -30,7 +31,9 @@
     "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
     "sequelize": "^4.4.2",
-    "sessionstore": "^1.2.18"
+    "sessionstore": "^1.2.18",
+    "sinon": "^3.1.0",
+    "style-loader": "^0.18.2"
   },
   "devDependencies": {
     "babel-loader": "^7.1.1",
