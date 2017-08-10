@@ -151,10 +151,10 @@ class App extends React.Component {
             <Login exact logged={this.state.logged}/>
           </Route>
           <Route path='/users'>
-            <User exact logged={this.state.logged}/>
+            <User logged={this.state.logged}/>
           </Route>
           <Route path='/trails'>
-            <Trail exact logged={this.state.logged}/>
+            <Trail logged={this.state.logged}/>
           </Route>
         </Switch>
         {/*<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
