@@ -11,6 +11,9 @@ var Session = require('express-session');
 
 var app = express();
 
+// Sets port to env variable for deployment
+app.set('port', process.env.PORT || 3000);
+
 // Activates Google OAuth passport strategy
 require('../passport/google-auth-strategy.js')(passport);
 
@@ -44,6 +47,6 @@ app.get('/*', (req, res) => {
 });
 
 // Start server
-app.listen(3000, function() {
-  console.log('listening on port 3000...');
+app.listen(process.env.PORT || 3000, function() {
+  console.log('listening on port', process.env.PORT || 3000, '...');
 });
