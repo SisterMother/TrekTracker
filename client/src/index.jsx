@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.css';
 import $ from 'jquery';
 import axios from 'axios';
 import reactDOM from 'react-dom';
