@@ -3,7 +3,7 @@ import './styles.css';
 import $ from 'jquery';
 import axios from 'axios';
 import reactDOM from 'react-dom';
-import UserPosts from './components/UserPosts.jsx';
+import Posts from './components/Posts.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
@@ -151,10 +151,10 @@ class App extends React.Component {
             <Login exact logged={this.state.logged}/>
           </Route>
           <Route path='/users'>
-            <User exact logged={this.state.logged}/>
+            <User logged={this.state.logged}/>
           </Route>
           <Route path='/trails'>
-            <Trail exact logged={this.state.logged}/>
+            <Trail logged={this.state.logged}/>
           </Route>
         </Switch>
         {/*<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
