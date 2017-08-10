@@ -47,6 +47,6 @@ app.get('/*', (req, res) => {
 });
 
 // Start server
-app.listen(process.env.PORT, function() {
-  console.log('listening on port ' + process.env.PORT + '...');
+app.listen(process.env.PORT || 3000, function() {
+  console.log('listening on port', process.env.PORT || 3000, '...');
 });
