@@ -3,7 +3,7 @@ import './styles.css';
 import $ from 'jquery';
 import axios from 'axios';
 import reactDOM from 'react-dom';
-import UserPosts from './components/UserPosts.jsx';
+import Posts from './components/Posts.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
@@ -142,7 +142,7 @@ class App extends React.Component {
     return (
       <div>
         <h2>TrekTracker</h2>
-        <UserPosts posts={this.state.posts}/>
+        <Posts posts={this.state.posts}/>
         <Switch>
           <Route exact path='/'>
             <Home logged={this.state.logged}/>
