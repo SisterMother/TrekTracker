@@ -107,8 +107,6 @@ class App extends React.Component {
       .catch(err => {
         console.log('Error on get request', err);
       });
-    //objet with the id
-    console.log('this is where the console.logs will show up');
     axios.get('/api/currentUser')
       .then(res => {
         var email = res.data.email;
@@ -120,7 +118,6 @@ class App extends React.Component {
       })
       .catch(err => console.log('error in get api/currentUser endpoint: ', err));
   }
-// , email, firstname, lastname
 
   onMarkerClick(targetMarker) {
     console.log("clicking the marker!!!")
@@ -132,6 +129,7 @@ class App extends React.Component {
     return (
       <div>
         <h2>Lets Trek!</h2>
+        <UserPosts posts={this.state.posts}/>
         <Switch>
           <Route path='/' component={Home}/>
         </Switch>
