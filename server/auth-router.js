@@ -17,6 +17,7 @@ router.get('/authtest', isLoggedIn, (req, res) => {
   res.end(JSON.stringify(req.user));
 });
 
+
 // Needed for Google OAuth
 router.get('/auth/google', passport.authenticate('google', {
   scope: ['email', 'profile']

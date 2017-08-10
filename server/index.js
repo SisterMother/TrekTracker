@@ -43,11 +43,20 @@ app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
 });
 
+<<<<<<< HEAD
 app.get('/markers', (req, res) => {
 var location = req.body.location;
 //This should be a pair of coords that we can search from. Return back an array of markers.
 res.send();
 
+=======
+//Get existing markers.
+app.post('/markers', (req, res) => {
+  var location = req.body.location;
+  //We need to search within a certain area of this location.
+  //Just returns blank right now, put a db call here in order to load saved markers. See index.jsx for more.
+  res.send()
+>>>>>>> 69e063e214aa10cf0166c6d2d34a583ef5f064bc
 })
 
 
