@@ -132,7 +132,9 @@ class App extends React.Component {
         <h2>Lets Trek!</h2>
         <UserPosts posts={this.state.posts}/>
         <Switch>
-          <Route path='/' component={Home}/>
+          <Route path='/'>
+            <Home logged={this.state.logged}/>
+          </Route>
         </Switch>
         {/*<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
           <div style={{
