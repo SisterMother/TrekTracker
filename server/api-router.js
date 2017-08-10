@@ -40,7 +40,7 @@ router.get('/posts/users/:useremail', (req, res) => {
 
 router.get('/posts/trails/:trail', (req, res) => {
   var trailName = req.params.trail;
-  // console.log(trailName);
+  console.log(trailName);
   db.getPostsByTrailName(trailName).then((posts) => {
     res.end(JSON.stringify(posts));
   });
