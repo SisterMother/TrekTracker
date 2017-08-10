@@ -9,6 +9,7 @@ import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
+import Map from './components/Gmaps.jsx'
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Home from './page-components/Home.jsx';
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
@@ -27,9 +28,7 @@ class App extends React.Component {
         lng: -122.4089664
       },
       trails: [],
-      markers:[  {
-        position: new google.maps.LatLng(37.78369346901092,-122.40897059440613)
-      },]
+      markers:[]
 
     }
     this.submitImage = this.submitImage.bind(this);
@@ -37,6 +36,7 @@ class App extends React.Component {
     this.handlePlacesChanged = this.handlePlacesChanged.bind(this);
     this.handleSearchBoxMounted = this.handleSearchBoxMounted.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
+    this.onMapClick = this.onMapClick.bind(this);
   }
   handleSearchBoxMounted(searchBox) {
   this._searchBox = searchBox;
@@ -52,8 +52,7 @@ class App extends React.Component {
    // Set markers; set map center to first search result
   const mapCenter = markers.length > 0 ? markers[0].position : this.state.center;
   this.setState({
-    mapCenter: mapCenter,
-    markers,
+    mapCenter: mapCenter
   });
  }
 
@@ -122,9 +121,20 @@ class App extends React.Component {
     
   onMarkerClick(targetMarker) {
     console.log("clicking the marker!!!")
-    //Take us to the trail homepage here.
+    //Eventually, this is going to need to do things. Still, nice that it works. Will get built out later.
   }
 
+  onMapClick(event) {
+    const nextMarkers = [
+      ...this.state.markers,
+      {
+         position: event.latLng
+       },
+     ];
+     this.setState({
+       markers: nextMarkers,
+     });
+   }
 
   render() {
     return (
@@ -142,8 +152,8 @@ class App extends React.Component {
             height: '600px'
           }}>
           {console.log('posts: ', this.state.posts)}
-       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers}  onMarkerClick={this.onMarkerClick}/>
-       </div>*/}
+       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick}  onMarkerClick={this.onMarkerClick}/>
+       </div>
       </div>
     )
   }
