@@ -11,6 +11,9 @@ import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Home from './page-components/Home.jsx';
+import Login from './page-components/Login.jsx';
+import User from './page-components/User.jsx';
+import Trail from './page-components/Trail.jsx';
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -141,8 +144,17 @@ class App extends React.Component {
         <h2>TrekTracker</h2>
         <UserPosts posts={this.state.posts}/>
         <Switch>
-          <Route path='/'>
+          <Route exact path='/'>
             <Home logged={this.state.logged}/>
+          </Route>
+          <Route exact path='/login'>
+            <Login exact logged={this.state.logged}/>
+          </Route>
+          <Route path='/users'>
+            <User exact logged={this.state.logged}/>
+          </Route>
+          <Route path='/trails'>
+            <Trail exact logged={this.state.logged}/>
           </Route>
         </Switch>
         {/*<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
