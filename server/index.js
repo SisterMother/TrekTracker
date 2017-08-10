@@ -39,7 +39,7 @@ app.use('/api', apiRouter);
 app.use('/', authRouter);
 
 // Serve static files
-app.get('/bundle.js', (req, res) => {
+app.get('*/bundle.js', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../client/dist/bundle.js'));
 });
 app.get('/*', (req, res) => {
