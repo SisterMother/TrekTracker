@@ -54,6 +54,7 @@ class App extends React.Component {
     this.handlePlacesChanged = this.handlePlacesChanged.bind(this);
     this.handleSearchBoxMounted = this.handleSearchBoxMounted.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
+    this.onMapClick = this.onMapClick.bind(this);
   }
   handleSearchBoxMounted(searchBox) {
   this._searchBox = searchBox;
@@ -69,8 +70,7 @@ class App extends React.Component {
    // Set markers; set map center to first search result
   const mapCenter = markers.length > 0 ? markers[0].position : this.state.center;
   this.setState({
-    mapCenter: mapCenter,
-    markers,
+    mapCenter: mapCenter
   });
  }
 
