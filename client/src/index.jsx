@@ -3,18 +3,27 @@ import './styles.css';
 import $ from 'jquery';
 import axios from 'axios';
 import reactDOM from 'react-dom';
+<<<<<<< HEAD
 import Posts from './components/Posts.jsx';
+=======
+>>>>>>> Homepage has login button
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import { updateImage, handleSearchBoxMounted, handlePlacesChanged, submitImage, onMarkerClick, onMapClick } from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
+<<<<<<< HEAD
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from './components/Nav.jsx';
 import Home from './page-components/Home.jsx';
 import Login from './page-components/Login.jsx';
 import User from './page-components/User.jsx';
 import Trail from './page-components/Trail.jsx';
+=======
+import Map from './components/Gmaps.jsx'
+import SearchBox from 'react-google-maps/lib/places/SearchBox';
+import Home from './page-components/Home.jsx';
+>>>>>>> Homepage has login button
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
