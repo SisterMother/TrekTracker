@@ -138,12 +138,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-<<<<<<< HEAD
         <Nav />
-=======
-        <h2>TrekTracker</h2>
-        <UserPosts posts={this.state.posts}/>
->>>>>>> About to start testing dummy helpers.
         <Switch>
           <Route exact path='/'>
             <Home logged={this.state.logged}/>
@@ -161,21 +156,6 @@ class App extends React.Component {
             <Upload submit={this.submitImage} update={this.updateImageDisplay}/>
           </Route>
         </Switch>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        {<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
-=======
-        <Upload update={this.updateImageDisplay} submit={this.submitImage}/>
->>>>>>> Added helper functions
-          <div style={{
-            width: '700px',
-            height: '600px'
-          }}>
-          {console.log('posts: ', this.state.posts)}
-       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick}  onMarkerClick={this.onMarkerClick}/>
-       </div>
->>>>>>> About to start testing dummy helpers.
       </div>
     )
   }
