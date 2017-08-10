@@ -14,3 +14,6 @@ cache:
 
 services:
   - mysql
+
+env:
+  - NODE_ENV=test
