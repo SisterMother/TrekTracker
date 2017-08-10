@@ -12,10 +12,7 @@ import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import Map from './components/Gmaps.jsx'
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Home from './page-components/Home.jsx';
-<<<<<<< HEAD
->>>>>>> reconfigured to rebase
-=======
->>>>>>> 50662f3192652e0d32aa2992606fa206e0bf6b3a
+
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -144,11 +141,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-<<<<<<< HEAD
-        <h2>Lets Trek!</h2>
-=======
         <h2>TrekTracker</h2>
->>>>>>> 50662f3192652e0d32aa2992606fa206e0bf6b3a
         <UserPosts posts={this.state.posts}/>
         <Switch>
           <Route path='/'>
