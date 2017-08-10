@@ -27,12 +27,67 @@ module.exports.run = () => {
     });
   });
   describe('Helpers', () => {
+    var personOne = {
+      id: '123456789',
+      firstname: 'Hello',
+      lastname: 'World',
+      email: 'hello@world.com'
+    };
+    var personTwo = {
+      id: '1234567890',
+      firstname: 'Test',
+      lastname: 'Person',
+      email: 'test@person.com'
+    };
+
+    before(() => {
+      return models.sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
+      .then(() => {
+        return models.sequelize.sync({force: true});
+      })
+      .then(() => {
+        return models.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
+      })
+      .then(() => {
+        return models.sequelize.sync();
+      })
+      .then(() => {
+        return models.users.create(personOne)
+        .then(() => {
+          return models.users.create(personTwo);
+        });
+      });
+    });
+
+    beforeEach(() => {
+    });
+
     describe('getUsers()', () => {
       it('Should exist', () => {
         expect(helpers.getUsers).to.exist;
       });
       it('Should be a function', () => {
         expect(helpers.getUsers).to.be.a('function');
+      });
+      it('Should retrieve correct number of users', () => {
+        return helpers.getUsers()
+        .then((users) => {
+          expect(users.length).to.equal(2);
+        });
+      });
+      it('Should retrieve all users when no input parameter is provided', () => {
+        return helpers.getUsers()
+        .then((users) => {
+          let nonRefUsers = JSON.parse(JSON.stringify(users)); // So that we can edit the users
+          nonRefUsers.forEach((user) => {
+            delete user.createdAt;
+            delete user.updatedAt;
+          });
+          return nonRefUsers;
+        })
+        .then((users) => {
+          expect(users).to.eql([personOne, personTwo]);
+        });
       });
     });
     describe('getUser()', () => {
@@ -41,6 +96,30 @@ module.exports.run = () => {
       });
       it('Should be a function', () => {
         expect(helpers.getUser).to.be.a('function');
+      });
+      it('Should return a user that matches requirements', () => {
+        return helpers.getUser({id: '123456789'})
+        .then((user) => {
+          let nonRefUser = JSON.parse(JSON.stringify(user));
+          delete nonRefUser.createdAt;
+          delete nonRefUser.updatedAt;
+          return nonRefUser;
+        })
+        .then((user) => {
+          expect(user).to.eql(personOne);
+        });
+      });
+      it('Should return null-resolving promise when no user matches requrements', () => {
+        return helpers.getUser({id: 'thisisafakeid'})
+        .then((user) => {
+          expect(user).to.equal(null);
+        });
+      });
+      it('Should return null-resolving promise when nothing is passed into the function', () => {
+        return helpers.getUser()
+        .then((user) => {
+          expect(user).to.equal(null);
+        });
       });
     });
     describe('getTrails()', () => {
