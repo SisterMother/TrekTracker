@@ -1,3 +1,56 @@
 body {
   font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  /*margin & padding set to 0 force the bar to the top of the screen*/
+  margin: 0;
+  padding: 0;
+  background-color: #333333;
+}
+
+.title {
+  position: relative;
+  padding: 16px;
+  left: 37%;
+  color: white;
+}
+
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown {
+    position: absolute;
+    top: 0;
+}
+
+.dropdown-content {
+    display: none;
+    position: relative;
+    background-color: #f9f9f9;
+    min-width: 100px;
+}
+
+.dropdown-content a {
+    color: black;
+    background-color: mintcream;
+    padding: 4px;
+    /*as a link, the text is auto-decorated with an underline, unless set to none*/
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
