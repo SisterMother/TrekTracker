@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.css';
 import $ from 'jquery';
 import axios from 'axios';
 import reactDOM from 'react-dom';
@@ -121,7 +122,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h2>Lets Trek!</h2>
+        <h2>TrekTracker</h2>
         <Switch>
           <Route path='/' component={Home}/>
         </Switch>
