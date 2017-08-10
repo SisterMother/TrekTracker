@@ -5,7 +5,6 @@ var path = require('path');
 var models = require('../database/models.js');
 var helpers = require('../database/helpers.js');
 var exports = require('../database/index.js');
-var SequelizeMock = require('sequelize-mock');
 
 console.log(models.users);
 
