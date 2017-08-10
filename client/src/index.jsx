@@ -2,7 +2,6 @@ import React from 'react';
 import $ from 'jquery';
 import axios from 'axios';
 import reactDOM from 'react-dom';
-import Login from './components/Login.jsx';
 import UserPosts from './components/UserPosts.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
