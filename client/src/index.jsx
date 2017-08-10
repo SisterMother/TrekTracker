@@ -103,6 +103,7 @@ class App extends React.Component {
         (error) => alert(error.message),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
        );
+<<<<<<< HEAD
        axios.post('/markers', {location: context.state.mapCenter})
        .then(res=> {
         //I'm adding this get into the componentDidMount. The data that we receive
@@ -115,6 +116,21 @@ class App extends React.Component {
       .catch(err => {
         console.log('Error getting markers')
       })
+=======
+    axios.get('/markers', {location:context.state.mapCenter})
+    .then(res => {
+      context.setState({markers:res.markers})
+      /*
+      Within this post we can send markers on componentDidMount. I will put a dummy call in the server as well
+      Marker locations can be added using the following format. They should be returned in an array with objects enlosed
+      with the following format: [{position:{lat:LATITUDE, lng:LONGITUDE}}].
+      */
+
+    })
+    .catch(err => {
+      console.log('not getting markers', err)
+    })
+>>>>>>> About to start testing dummy helpers.
     axios.get('/places')
       .then(res => {
         console.log('on sucessful get request', data);
@@ -139,7 +155,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
+<<<<<<< HEAD
         <Nav />
+=======
+        <h2>TrekTracker</h2>
+        <UserPosts posts={this.state.posts}/>
+>>>>>>> About to start testing dummy helpers.
         <Switch>
           <Route exact path='/'>
             <Home logged={this.state.logged}/>
@@ -157,6 +178,17 @@ class App extends React.Component {
             <Upload submit={this.submitImage} update={this.updateImageDisplay}/>
           </Route>
         </Switch>
+<<<<<<< HEAD
+=======
+        {<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
+          <div style={{
+            width: '700px',
+            height: '600px'
+          }}>
+          {console.log('posts: ', this.state.posts)}
+       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick}  onMarkerClick={this.onMarkerClick}/>
+       </div>
+>>>>>>> About to start testing dummy helpers.
       </div>
     )
   }
