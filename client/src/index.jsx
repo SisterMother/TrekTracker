@@ -124,7 +124,9 @@ class App extends React.Component {
       <div>
         <h2>TrekTracker</h2>
         <Switch>
-          <Route path='/' component={Home}/>
+          <Route path='/'>
+            <Home logged={this.state.logged}/>
+          </Route>
         </Switch>
         {/*<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
           <div style={{
