@@ -10,6 +10,7 @@ import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
+import Nav from './components/Nav.jsx';
 import Home from './page-components/Home.jsx';
 import Login from './page-components/Login.jsx';
 import User from './page-components/User.jsx';
@@ -141,7 +142,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h2>TrekTracker</h2>
+        <Nav />
         <Switch>
           <Route exact path='/'>
             <Home logged={this.state.logged}/>
