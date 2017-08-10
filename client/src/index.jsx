@@ -95,7 +95,6 @@ class App extends React.Component {
         (error) => alert(error.message),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
        );
-<<<<<<< HEAD
     axios.get('/markers', {location:context.state.mapCenter})
     .then(res => {
       console.log('getting marker data')
@@ -109,21 +108,6 @@ class App extends React.Component {
     })
     .catch(err => {
       console.log('not getting markers', err)
-    })
-=======
-       axios.post('/markers', {location: context.state.mapCenter})
-       .then(res=> {
-        //I'm adding this get into the componentDidMount. The data that we receive
-        //needs to be in the following format: {position:{lat: LATITUDE, lng: LONGITUDE}}
-        //Any other data from the posts can be added when markers are clicked on.
-        //I added in the location because we should be able to only get back markers within a certain area range.
-        //I will make a dummy call on the server as well.
-        context.setState({markers: res.markers})
-      })
-      .catch(err => {
-        console.log('Error getting markers')
-      })
->>>>>>> 69e063e214aa10cf0166c6d2d34a583ef5f064bc
     axios.get('/places')
       .then(res => {
         console.log('on sucessful get request', data);
