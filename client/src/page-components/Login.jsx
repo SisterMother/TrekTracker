@@ -6,6 +6,9 @@ import GoogleButton from 'react-google-button';
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    if (props.logged) {
+      window.location.href = '/'
+    }
   }
 
   loginRedirect() {
@@ -15,7 +18,9 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        This is the homepage
+        {
+          this.props.logged ? <div>You are already logged in</div> : <GoogleButton onClick={this.loginRedirect} />
+        }
       </div>
     );
   }

@@ -9,13 +9,14 @@ var isLoggedIn = (req, res, next) => {
     res.redirect('/login');
   }
 };
-
-// Just a test to see if authentication works
-// ------------------------------------------
-// This page should display basic info about the user once they have signed in through Google
-router.get('/authtest', isLoggedIn, (req, res) => {
-  res.end(JSON.stringify(req.user));
-});
+// Middleware to check if a user is NOT authenticated
+var isNotLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return next();
+  } else {
+    res.redirect('/');
+  }
+};
 
 
 // Needed for Google OAuth

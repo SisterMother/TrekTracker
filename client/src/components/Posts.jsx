@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserPosts = (props) => (
+const Posts = (props) => (
   <div>
     {props.posts.map((post, i) => (
       <div key={i}>
@@ -15,4 +15,4 @@ const UserPosts = (props) => (
   </div>
 );
 
-export default UserPosts;
+export default Posts;
