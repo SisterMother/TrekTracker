@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.css';
 import $ from 'jquery';
 import axios from 'axios';
 import reactDOM from 'react-dom';
@@ -9,7 +10,8 @@ import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
-import SearchBox from 'react-google-maps/lib/places/SearchBox'
+import SearchBox from 'react-google-maps/lib/places/SearchBox';
+import Home from './page-components/Home.jsx';
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -128,19 +130,21 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h2>Lets Trek!</h2>
+        <h2>TrekTracker</h2>
         <UserPosts posts={this.state.posts}/>
         <Switch>
-          <Route path='/' component={Login}/>
+          <Route path='/'>
+            <Home logged={this.state.logged}/>
+          </Route>
         </Switch>
-        <Upload update={this.updateImageDisplay} submit={this.submitImage}/>
+        {/*<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
           <div style={{
             width: '700px',
             height: '600px'
           }}>
           {console.log('posts: ', this.state.posts)}
        <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers}  onMarkerClick={this.onMarkerClick}/>
-       </div>
+       </div>*/}
       </div>
     )
   }
