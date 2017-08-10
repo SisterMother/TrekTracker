@@ -15,9 +15,11 @@ models.Sequelize = Sequelize;
 
 // USERS SCHEMA
 var Users = sequelize.define('users', {
+  // This is the Google account ID of the user
   id: {
     primaryKey: true,
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    unique: true
   },
   firstname: {
     type: Sequelize.STRING,
