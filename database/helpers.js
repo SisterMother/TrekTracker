@@ -13,7 +13,7 @@ var getModelsWithInfo = (model, infoObj) => {
     });
   }
   return new Promise((resolve, reject) => {
-    reject('Info should be either undefined or an object');
+    resolve(null);
   });
 };
 var getModelWithInfo = (getModelsHelperFn, infoObj) => {
@@ -24,13 +24,13 @@ var getModelWithInfo = (getModelsHelperFn, infoObj) => {
         return models[0];
       } else {
         return new Promise((resolve, reject) => {
-          reject('Model info resolved to ' + models.length + ' models instead of 1');
+          resolve(null);
         });
       }
     });
   } else {
     return new Promise((resolve, reject) => {
-      reject('Invalid info was passed in');
+      resolve(null);
     });
   }
 };
