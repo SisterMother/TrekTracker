@@ -30,7 +30,8 @@
     "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
     "sequelize": "^4.4.2",
-    "sessionstore": "^1.2.18"
+    "sessionstore": "^1.2.18",
+    "sinon": "^3.1.0"
   },
   "devDependencies": {
     "babel-loader": "^7.1.1",
