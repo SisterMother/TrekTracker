@@ -9,13 +9,14 @@ var isLoggedIn = (req, res, next) => {
     res.redirect('/login');
   }
 };
-
-// Just a test to see if authentication works
-// ------------------------------------------
-// This page should display basic info about the user once they have signed in through Google
-router.get('/authtest', isLoggedIn, (req, res) => {
-  res.end(JSON.stringify(req.user));
-});
+// Middleware to check if a user is NOT authenticated
+var isNotLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return next();
+  } else {
+    res.redirect('/');
+  }
+};
 
 // Needed for Google OAuth
 router.get('/auth/google', passport.authenticate('google', {
@@ -31,5 +32,12 @@ router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
+
+// User cannot login if they are already logged in
+router.get('/login', isNotLoggedIn);
+
+// Redirect any pages here back to login
+router.get('/upload', isLoggedIn);
+router.get('/profile', isLoggedIn);
 
 module.exports = router;
