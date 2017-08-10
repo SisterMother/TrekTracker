@@ -5,7 +5,6 @@ import axios from 'axios';
 import reactDOM from 'react-dom';
 import UserPosts from './components/UserPosts.jsx';
 import Upload from './components/Upload.jsx';
-import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
@@ -101,11 +100,12 @@ class App extends React.Component {
        );
     axios.get('/markers', {location:context.state.mapCenter})
     .then(res => {
-      context.setState({markers:res.markers})
+      console.log('getting marker data')
       /*
       Within this post we can send markers on componentDidMount. I will put a dummy call in the server as well
       Marker locations can be added using the following format. They should be returned in an array with objects enlosed
       with the following format: [{position:{lat:LATITUDE, lng:LONGITUDE}}].
+      Use the following call to set the markers. context.setState({markers:res.markers})
       */
 
     })
@@ -160,7 +160,7 @@ class App extends React.Component {
             <Home logged={this.state.logged}/>
           </Route>
         </Switch>
-        {<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
+        <Upload update={this.updateImageDisplay} submit={this.submitImage}/>
           <div style={{
             width: '700px',
             height: '600px'
