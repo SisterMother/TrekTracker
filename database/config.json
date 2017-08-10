@@ -9,8 +9,8 @@
     "test": {
         "username": "root",
         "password": null,
-        "database": "",
-        "host": "",
+        "database": "trektracker",
+        "host": "localhost",
         "dialect": "mysql"
     },
     "production": {
