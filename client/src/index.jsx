@@ -3,6 +3,7 @@ import './styles.css';
 import $ from 'jquery';
 import axios from 'axios';
 import reactDOM from 'react-dom';
+import Login from './components/Login.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
