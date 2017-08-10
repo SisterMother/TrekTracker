@@ -8,6 +8,10 @@ router.get('/places', function (req, res) {
   })
 });
 
+router.get('/currentUser', (req, res) => {
+  res.send(req.user || null);
+});
+
 // Saves a post to the database and returns it as the response
 // The input data should look like this...
 //
