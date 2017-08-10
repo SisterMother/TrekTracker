@@ -8,7 +8,6 @@ import Upload from './components/Upload.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
-import Map from './components/Gmaps.jsx'
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Home from './page-components/Home.jsx';
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
@@ -163,7 +162,7 @@ class App extends React.Component {
           }}>
           {console.log('posts: ', this.state.posts)}
        <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick}  onMarkerClick={this.onMarkerClick}/>
-       </div>
+       </div>*/}
       </div>
     )
   }
