@@ -43,6 +43,14 @@ app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
 });
 
+app.get('/markers', (req, res) => {
+var location = req.body.location;
+//This should be a pair of coords that we can search from. Return back an array of markers.
+res.send();
+
+})
+
+
 // Start server
 app.listen(3000, function() {
   console.log('listening on port 3000...');

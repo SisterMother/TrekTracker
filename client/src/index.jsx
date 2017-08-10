@@ -5,7 +5,6 @@ import axios from 'axios';
 import reactDOM from 'react-dom';
 import UserPosts from './components/UserPosts.jsx';
 import Upload from './components/Upload.jsx';
-import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import updateImage from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
@@ -69,6 +68,7 @@ class App extends React.Component {
         flag_comments: [],
         trail_name: 'rainbow trails'
       };
+      console.log('Success!: ', metaPhoto);
       axios.post('/api/posts', {photo: metaPhoto})
         .then(res => console.log('success: ', res))
         .catch(err => console.log('error in the /api/posts endpoint: ', err));
@@ -97,10 +97,24 @@ class App extends React.Component {
         (error) => alert(error.message),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
        );
+    axios.get('/markers', {location:context.state.mapCenter})
+    .then(res => {
+      console.log('getting marker data')
+      /*
+      Within this post we can send markers on componentDidMount. I will put a dummy call in the server as well
+      Marker locations can be added using the following format. They should be returned in an array with objects enlosed
+      with the following format: [{position:{lat:LATITUDE, lng:LONGITUDE}}].
+      Use the following call to set the markers. context.setState({markers:res.markers})
+      */
+
+    })
+    .catch(err => {
+      console.log('not getting markers', err)
+    })
     axios.get('/places')
       .then(res => {
         console.log('on sucessful get request', data);
-        context.setState({trails: data.results})
+        context.setState({trails: res.results})
         console.log(this.state.trails);
       })
       .catch(err => {
@@ -117,7 +131,7 @@ class App extends React.Component {
       })
       .catch(err => console.log('error in get api/currentUser endpoint: ', err));
   }
-    
+
   onMarkerClick(targetMarker) {
     console.log("clicking the marker!!!")
     //Eventually, this is going to need to do things. Still, nice that it works. Will get built out later.
@@ -145,7 +159,7 @@ class App extends React.Component {
             <Home logged={this.state.logged}/>
           </Route>
         </Switch>
-        {/*<Upload update={this.updateImageDisplay} submit={this.submitImage}/>
+        <Upload update={this.updateImageDisplay} submit={this.submitImage}/>
           <div style={{
             width: '700px',
             height: '600px'
