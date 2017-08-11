@@ -108,9 +108,10 @@ db.getTrail = (trailInfoObj) => {
 // Exception:
 // 1. trailName is not a string/is empty string
 // 2. trailName has already been taken (names must be unique)
-db.createTrail = (trailName, latitude, longitude) => {
+db.createTrail = (trailName, directions, latitude, longitude) => {
   return models.trails.create({
     name: trailName,
+    directions: directions,
     latitude: latitude,
     longitude: longitude
   });

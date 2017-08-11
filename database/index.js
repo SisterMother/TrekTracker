@@ -17,8 +17,8 @@ module.exports.getAllTrails = () => {
   return helpers.getTrails();
 };
 
-module.exports.createTrail = (name, latitude=0, longitude=0) => {
-  return helpers.createTrail(name, latitude, longitude);
+module.exports.createTrail = (name, directions='', latitude=0, longitude=0) => {
+  return helpers.createTrail(name, directions, latitude, longitude);
 };
 
 
