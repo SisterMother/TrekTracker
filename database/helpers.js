@@ -108,9 +108,11 @@ db.getTrail = (trailInfoObj) => {
 // Exception:
 // 1. trailName is not a string/is empty string
 // 2. trailName has already been taken (names must be unique)
-db.createTrail = (trailName) => {
+db.createTrail = (trailName, latitude, longitude) => {
   return models.trails.create({
-    name: trailName
+    name: trailName,
+    latitude: latitude,
+    longitude: longitude
   });
 };
 
@@ -139,7 +141,7 @@ db.getPost = (postInfoObj) => {
 //
 // Exceptions:
 // TODO - Add exceptions
-db.createPost = (posterId, trailId, title, text, imageUrl) => {
+db.createPost = (posterId, trailId, title, text, imageUrl, latitude, longitude) => {
   // TODO - Make viewcount and flagcount default to zero
   models.posts.create({
     title: title,
@@ -148,7 +150,9 @@ db.createPost = (posterId, trailId, title, text, imageUrl) => {
     view_count: 0,
     flag_count: 0,
     poster_user_id: posterId,
-    trail_id: trailId
+    trail_id: trailId,
+    latitude: latitude.toString(),
+    longitude: longitude.toString()
   });
 };
 

@@ -52,8 +52,20 @@ var Trails = sequelize.define('trails', {
     unique: true,
     notEmpty: true,
     allowNull: false
+  },
+  directions: {
+    type: Sequelize.STRING
+  },
+  latitude: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
+  },
+  longitude: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
   }
-  // TODO - Add trail location
 });
 models.trails = Trails;
 
@@ -88,8 +100,17 @@ var Posts = sequelize.define('posts', {
     type: Sequelize.INTEGER,
     notEmpty: true,
     allowNull: false
+  },
+  latitude: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
+  },
+  longitude: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
   }
-  // TODO - Add post location
   // TODO - Somehow store image metadata
 });
 Posts.belongsTo(Users, {

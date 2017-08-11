@@ -17,8 +17,8 @@ module.exports.getAllTrails = () => {
   return helpers.getTrails();
 };
 
-module.exports.createTrail = (name) => {
-  return helpers.createTrail(name);
+module.exports.createTrail = (name, latitude=0, longitude=0) => {
+  return helpers.createTrail(name, latitude, longitude);
 };
 
 
@@ -54,7 +54,7 @@ module.exports.getPostsByTrailName = (name) => {
 // posterData can be either a user ID or a user email (REMEMBER: user IDs are STRINGS, NOT numbers)
 // trailData can be either a trail ID or a trail name
 // posterDataType should either be 'id' or 'email'
-module.exports.createPost = (posterData, posterDataType, trailData, title, text, imageUrl) => {
+module.exports.createPost = (posterData, posterDataType, trailData, title, text, imageUrl, latitude=0, longitude=0) => {
   var posterId;
   var trailId;
   if (posterDataType === 'id') {
@@ -64,7 +64,7 @@ module.exports.createPost = (posterData, posterDataType, trailData, title, text,
     trailId = trailData;
   }
   var createPost = () => {
-    return helpers.createPost(posterId, trailId, title, text, imageUrl);
+    return helpers.createPost(posterId, trailId, title, text, imageUrl, latitude, longitude);
   };
 
   if (posterId && trailId) {
