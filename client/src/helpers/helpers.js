@@ -107,7 +107,70 @@ const updateImage = function() {
   }
 }
 
+const handleSearchBoxMounted = (searchBox) => {
+    this._searchBox = searchBox;
+  }
+
+const handlePlacesChanged = () => {
+   const places = this._searchBox.getPlaces();
+//    Right now, everything below is not goin to be implemented
+//   Add a marker for each place returned from search bar
+   const markers = places.map(place => ({
+     position: place.geometry.location,
+   }));
+   // Set markers; set map center to first search result
+  const mapCenter = markers.length > 0 ? markers[0].position : this.state.center;
+  this.setState({
+    mapCenter: mapCenter
+  });
+ }
+
+const submitImage = (e) => {
+    e.preventDefault();
+    var form = new FormData();
+    form.append('image', this.state.photo[0])
+    axios.post('https://api.imgur.com/3/image', form)
+    .then((res) => {
+      var metaPhoto = {
+        title: this.state.photo[0].name,
+        text: document.getElementsByTagName('textarea')[0].value,
+        image_url: res.data.data.link,
+        flag_comments: [],
+        trail_name: 'rainbow trails'
+      };
+      axios.post('/api/posts', {photo: metaPhoto})
+        .then(res => console.log('success: ', res))
+        .catch(err => console.log('error in the /api/posts endpoint: ', err));
+    })
+    .catch((err, res) => {
+      if(err) {
+        console.log('error: ', err);
+      }
+    })
+  }
+const onMarkerClick = (targetMarker) => {
+    console.log("clicking the marker!!!")
+    //Eventually, this is going to need to do things. Still, nice that it works. Will get built out later.
+  }
+
+const onMapClick = (event) => {
+    const nextMarkers = [
+      ...this.state.markers,
+      {
+         position: event.latLng
+       },
+     ];
+     this.setState({
+       markers: nextMarkers,
+     });
+   }
+
 
 module.exports = {
-  updateImage: updateImage
+  updateImage: updateImage,
+  handleSearchBoxMounted: handleSearchBoxMounted,
+  handlePlacesChanged: handlePlacesChanged,
+  submitImage: submitImage,
+  onMarkerClick: onMarkerClick,
+  onMapClick: onMapClick
 }
