@@ -89,7 +89,15 @@ db.getUser = (userInfoObj) => {
 // 1. trailInfoObj is not either an object or undefined
 // 2. trailInfoObj references data that is not stored for trails (Check the models.js file to see what you can reference)
 db.getTrails = (trailInfoObj) => {
-  return getModelsWithInfo(models.trails, trailInfoObj);
+  return getModelsWithInfo(models.trails, trailInfoObj)
+  .then((trailArray) => {
+    let trailsNonRef = JSON.parse();
+    trailsNonRef.forEach((trail) => {
+      trail.latitude = parseFloat(trail.latitude);
+      trail.longitude = parseFloat(trail.longitude);
+    });
+    return trailsNonRef;
+  });
 };
 
 // Similar to getUser(), but for trails
@@ -100,7 +108,13 @@ db.getTrails = (trailInfoObj) => {
 // 3. trailInfoObj maps to more than one trail
 // 4. trailInfoObj maps to no trails
 db.getTrail = (trailInfoObj) => {
-  return getModelWithInfo(db.getTrails, trailInfoObj);
+  return getModelWithInfo(db.getTrails, trailInfoObj)
+  .then((trail) => {
+    let trailNonRef = JSON.parse(JSON.stringify(trail));
+    trailNonRef.latitude = parseFloat(trailNonRef.latitude);
+    trailNonRef.longitude = parseFloat(trailNonRef.longitude);
+    return trailNonRef;
+  });
 };
 
 // Returns a promise containing the stored trail data
