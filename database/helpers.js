@@ -93,8 +93,8 @@ db.getTrails = (trailInfoObj) => {
   .then((trailArray) => {
     let trailsNonRef = JSON.parse();
     trailsNonRef.forEach((trail) => {
-      trail.latitude = parseFloat(trail.latitude);
-      trail.longitude = parseFloat(trail.longitude);
+      trailNonRef.latitude = parseFloat(trailNonRef.latitude);
+      trailNonRef.longitude = parseFloat(trailNonRef.longitude);
     });
     return trailsNonRef;
   });
@@ -139,7 +139,15 @@ db.createTrail = (trailName, directions, latitude, longitude) => {
 // 1. postInfoObj is not an object
 // 2. postInfoObj references data that is not stored for posts (Check the models.js file to see what you can reference)
 db.getPosts = (postInfoObj) => {
-  return getModelsWithInfo(models.posts, postInfoObj);
+  return getModelsWithInfo(models.posts, postInfoObj)
+  .then((postArray) => {
+    let postsNonRef = JSON.parse();
+    postsNonRef.forEach((post) => {
+      postNonRef.latitude = parseFloat(postNonRef.latitude);
+      postNonRef.longitude = parseFloat(postNonRef.longitude);
+    });
+    return postsNonRef;
+  });
 };
 
 // Similar to getUser(), but for posts
@@ -148,7 +156,13 @@ db.getPosts = (postInfoObj) => {
 // 1. postInfoObj is not an object
 // 2. postInfoObj references data that is not stored for posts (Check the models.js file to see what you can reference)
 db.getPost = (postInfoObj) => {
-  return getModelWithInfo(db.getPosts, postInfoObj);
+  return getModelWithInfo(db.getPosts, postInfoObj)
+  .then((post) => {
+    let postNonRef = JSON.parse(JSON.stringify(post));
+    postNonRef.latitude = parseFloat(postNonRef.latitude);
+    postNonRef.longitude = parseFloat(postNonRef.longitude);
+    return postNonRef;
+  });
 };
 
 // Returns a promise that will resolve to the
