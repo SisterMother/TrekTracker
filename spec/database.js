@@ -1,6 +1,9 @@
-var expect = require('chai').expect;
 var sinon = require('sinon');
 var path = require('path');
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+var expect = chai.expect;
 
 var models = require('../database/models.js');
 var helpers = require('../database/helpers.js');
@@ -110,16 +113,10 @@ module.exports.run = () => {
         });
       });
       it('Should return null-resolving promise when no user matches requrements', () => {
-        return helpers.getUser({id: 'thisisafakeid'})
-        .then((user) => {
-          expect(user).to.equal(null);
-        });
+        return expect(helpers.getUser({id: 'thisisafakeid'})).to.be.rejected;
       });
       it('Should return null-resolving promise when nothing is passed into the function', () => {
-        return helpers.getUser()
-        .then((user) => {
-          expect(user).to.equal(null);
-        });
+        return expect(helpers.getUser()).to.be.rejected;
       });
     });
     describe('getTrails()', () => {
