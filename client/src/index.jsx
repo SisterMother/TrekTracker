@@ -85,7 +85,7 @@ class App extends React.Component {
     return (
       <div>
         <Nav />
-        <Upload submit={this.submitImage} update={this.updateImageDisplay} />
+        <Upload submit={this.submitImage} update={this.updateImageDisplay}/>
         <Switch>
           <Route exact path='/'>
             <Home logged={this.state.logged}/>
@@ -98,6 +98,9 @@ class App extends React.Component {
           </Route>
           <Route path='/trails'>
             <Trail logged={this.state.logged}/>
+          </Route>
+          <Route path='/upload'>
+            <Upload submit={this.submitImage} update={this.updateImageDisplay}/>
           </Route>
         </Switch>
       </div>
