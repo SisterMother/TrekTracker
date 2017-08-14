@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstname": "Test",
+      "lastname": "Person",
+      "email": "test@example.com"
+    },
+    {
+      "id": 2,
+      "firstname": "Hello",
+      "lastname": "World",
+      "email": "hello@world.com"
+    },
+    {
+      "id": 3,
+      "firstname": "Whereis",
+      "lastname": "Waldo",
+      "email": "whereis@waldo.com"
+    }
+  ],
+  "trails": [
+    {
+      "id": 1,
+      "name": "testtrail",
+      "latitude": 1234,
+      "longitude": 5678
+    }
+  ]
+}

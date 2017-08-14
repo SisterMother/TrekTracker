@@ -1,102 +1,120 @@
-var helpers = require('./helpers.js');
 var models = require('./models');
 
 
 
 module.exports.getUserByEmail = (email) => {
-  return helpers.getUser({email});
-};
-
-
-
-module.exports.getTrailByName = (name) => {
-  return helpers.getTrail({name});
-};
-
-module.exports.getAllTrails = () => {
-  return helpers.getTrails();
-};
-
-module.exports.createTrail = (name, directions='', latitude=0, longitude=0) => {
-  return helpers.createTrail(name, directions, latitude, longitude);
-};
-
-
-
-module.exports.getPostsByUserEmail = (email) => {
-  return module.exports.getUserByEmail(email)
+  return models.users.findOne({
+    where: {email}
+  })
   .then((user) => {
-    return helpers.getPosts({poster_user_id: user.id});
-  })
-  .then((posts) => {
-    var nonreferencedPosts = JSON.parse(JSON.stringify(posts));
-    return replaceReferenceModelIdsWithModels(nonreferencedPosts, 'trail_id', models.trails, 'trail')
-    .then((posts) => {
-      return replaceReferenceModelIdsWithModels(nonreferencedPosts, 'poster_user_id', models.users, 'poster');
-    });
+    if (user) {
+      return user;
+    } else {
+      return new Promise((resolve, reject) => {
+        reject('There is no user registered under the email ' + email);
+      });
+    }
   });
 };
 
-module.exports.getPostsByTrailName = (name) => {
-  return module.exports.getTrailByName(name)
-  .then((trail) => {
-    return helpers.getPosts({trail_id: trail.id});
-  })
-  .then((posts) => {
-    var nonreferencedPosts = JSON.parse(JSON.stringify(posts));
-    return replaceReferenceModelIdsWithModels(nonreferencedPosts, 'trail_id', models.trails, 'trail')
-    .then((posts) => {
-      return replaceReferenceModelIdsWithModels(nonreferencedPosts, 'poster_user_id', models.users, 'poster');
+
+
+module.exports.getTrailsByName = (name) => {
+  if (!name || name.constructor !== String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected a string but instead was passed in ' + name);
     });
+  }
+  
+  return models.trails.findAll({
+    where: {name}
   });
 };
+
+// module.exports.getAllTrails = () => {
+//   return helpers.getTrails();
+// };
+
+// module.exports.createTrail = (name, directions='', latitude=0, longitude=0) => {
+//   return helpers.createTrail(name, directions, latitude, longitude);
+// };
+
+
+
+// module.exports.getPostsByUserEmail = (email) => {
+//   return module.exports.getUserByEmail(email)
+//   .then((user) => {
+//     return helpers.getPosts({poster_user_id: user.id});
+//   })
+//   .then((posts) => {
+//     var nonreferencedPosts = JSON.parse(JSON.stringify(posts));
+//     return replaceReferenceModelIdsWithModels(nonreferencedPosts, 'trail_id', models.trails, 'trail')
+//     .then((posts) => {
+//       return replaceReferenceModelIdsWithModels(nonreferencedPosts, 'poster_user_id', models.users, 'poster');
+//     });
+//   });
+// };
+
+// module.exports.getPostsByTrailName = (name) => {
+//   return module.exports.getTrailByName(name)
+//   .then((trail) => {
+//     return helpers.getPosts({trail_id: trail.id});
+//   })
+//   .then((posts) => {
+//     var nonreferencedPosts = JSON.parse(JSON.stringify(posts));
+//     return replaceReferenceModelIdsWithModels(nonreferencedPosts, 'trail_id', models.trails, 'trail')
+//     .then((posts) => {
+//       return replaceReferenceModelIdsWithModels(nonreferencedPosts, 'poster_user_id', models.users, 'poster');
+//     });
+//   });
+// };
 
 // posterData can be either a user ID or a user email (REMEMBER: user IDs are STRINGS, NOT numbers)
 // trailData can be either a trail ID or a trail name
 // posterDataType should either be 'id' or 'email'
-module.exports.createPost = (posterData, posterDataType, trailData, title, text, imageUrl, latitude=0, longitude=0) => {
-  var posterId;
-  var trailId;
-  if (posterDataType === 'id') {
-    posterId = posterData;
-  }
-  if (trailData.constructor === Number) {
-    trailId = trailData;
-  }
-  var createPost = () => {
-    return helpers.createPost(posterId, trailId, title, text, imageUrl, latitude, longitude);
-  };
+// module.exports.createPost = (posterData, posterDataType, trailData, title, text, imageUrl, latitude=0, longitude=0) => {
+//   var posterId;
+//   var trailId;
+//   if (posterDataType === 'id') {
+//     posterId = posterData;
+//   }
+//   if (trailData.constructor === Number) {
+//     trailId = trailData;
+//   }
+//   var createPost = () => {
+//     return helpers.createPost(posterId, trailId, title, text, imageUrl, latitude, longitude);
+//   };
 
-  if (posterId && trailId) {
-    // posterData and trailData were both IDs
-    return createPost();
-  } else if (posterId) {
-    // posterData was an ID and trailData was a trail name
-    return module.exports.getTrailByName(trailData)
-    .then((trail) => {
-      trailId = trail.id;
-      return createPost();
-    });
-  } else if (trailId) {
-    // trailData was an ID and posterData was a user email
-    return module.exports.getUserByEmail(posterData)
-    .then((user) => {
-      posterId = user.id;
-      return createPost();
-    });
-  } else {
-    // posterData was an email and trailData was a trail name
-    return module.exports.getUserByEmail(posterData)
-    .then((user) => {
-      posterId = user.id;
-      return module.exports.getTrailByName(trailData);
-    })
-    .then((trail) => {
-      trailId = trail.id;
-      return createPost();
-    });
-  }
-};
+//   if (posterId && trailId) {
+//     // posterData and trailData were both IDs
+//     return createPost();
+//   } else if (posterId) {
+//     // posterData was an ID and trailData was a trail name
+//     return module.exports.getTrailByName(trailData)
+//     .then((trail) => {
+//       trailId = trail.id;
+//       return createPost();
+//     });
+//   } else if (trailId) {
+//     // trailData was an ID and posterData was a user email
+//     return module.exports.getUserByEmail(posterData)
+//     .then((user) => {
+//       posterId = user.id;
+//       return createPost();
+//     });
+//   } else {
+//     // posterData was an email and trailData was a trail name
+//     return module.exports.getUserByEmail(posterData)
+//     .then((user) => {
+//       posterId = user.id;
+//       return module.exports.getTrailByName(trailData);
+//     })
+//     .then((trail) => {
+//       trailId = trail.id;
+//       return createPost();
+//     });
+//   }
+// };
 
 // Used when getting an array of models that contain foreign keys
 // and, for each instance in the array, will replace the foreign
