@@ -143,14 +143,37 @@ module.exports.run = () => {
       });
     });
 
-    // describe('createTrail()', () => {
-    //   it('Should exist', () => {
-    //     expect(exports.createTrail).to.exist;
-    //   });
-    //   it('Should be a function', () => {
-    //     expect(exports.createTrail).to.be.a('function');
-    //   });
-    // });
+    describe('createTrail()', () => {
+      it('Should exist', () => {
+        expect(dbFuncs.createTrail).to.exist;
+      });
+      it('Should be a function', () => {
+        expect(dbFuncs.createTrail).to.be.a('function');
+      });
+      it('Should create a trail when using all valid parameters', () => {
+        let name = 'new trail';
+        let directions = 'just look it up on google maps';
+        let latitude = 4;
+        let longitude = 8;
+        return dbFuncs.createTrail(name, directions, latitude, longitude)
+        .then((trail) => {
+          expect(trail).to.exist;
+          expect(trail.id).to.exist;
+          expect(trail.createdAt).to.exist;
+          expect(trail.updatedAt).to.exist;
+          expect(trail.name).to.equal(name);
+          expect(trail.directions).to.equal(directions);
+          expect(trail.latitude).to.equal(latitude);
+          expect(trail.longitude).to.equal(longitude);
+        });
+      });
+      it('Should reject when name is not a string', () => {
+        return expect(dbFuncs.createTrail(null, 'directions', 1, 1)).to.be.rejected;
+      });
+      it('Should reject when directions is not a string', () => {
+        return expect(dbFuncs.createTrail('name', null, 1, 1)).to.be.rejected;
+      });
+    });
 
     // describe('getPostsByUserEmail()', () => {
     //   it('Should exist', () => {
