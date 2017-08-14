@@ -25,6 +25,12 @@
       "name": "testtrail",
       "latitude": 1234,
       "longitude": 5678
+    },
+    {
+      "id": 2,
+      "name": "testtrail2",
+      "latitude": 12345,
+      "longitude": 56789
     }
   ]
 }

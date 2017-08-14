@@ -101,7 +101,12 @@ module.exports.run = () => {
         .then((trails) => {
           expect(trails).to.exist;
           expect(trails.length).to.equal(1);
+          expect(trails[0].createdAt).to.exist;
+          expect(trails[0].updatedAt).to.exist;
+          expect(trails[0].id).to.equal(db.trails[0].id);
           expect(trails[0].name).to.equal(db.trails[0].name);
+          expect(trails[0].latitude).to.equal(db.trails[0].latitude);
+          expect(trails[0].longitude).to.equal(db.trails[0].longitude);
         });
       });
       it('Should retrieve an empty array if querying a trail name that corresponds to no trails', () => {
@@ -115,14 +120,28 @@ module.exports.run = () => {
       });
     });
 
-    // describe('getAllTrails()', () => {
-    //   it('Should exist', () => {
-    //     expect(exports.getAllTrails).to.exist;
-    //   });
-    //   it('Should be a function', () => {
-    //     expect(exports.getAllTrails).to.be.a('function');
-    //   });
-    // });
+    describe('getAllTrails()', () => {
+      it('Should exist', () => {
+        expect(dbFuncs.getAllTrails).to.exist;
+      });
+      it('Should be a function', () => {
+        expect(dbFuncs.getAllTrails).to.be.a('function');
+      });
+      it('Should retrieve all trails', () => {
+        return dbFuncs.getAllTrails()
+        .then((trails) => {
+          expect(trails.length).to.equal(db.trails.length);
+          for (let i = 0; i < trails.length; i++) {
+            expect(trails[i].createdAt).to.exist;
+            expect(trails[i].updatedAt).to.exist;
+            expect(trails[i].id).to.equal(db.trails[i].id);
+            expect(trails[i].name).to.equal(db.trails[i].name);
+            expect(trails[i].latitude).to.equal(db.trails[i].latitude);
+            expect(trails[i].longitude).to.equal(db.trails[i].longitude);
+          }
+        });
+      });
+    });
 
     // describe('createTrail()', () => {
     //   it('Should exist', () => {

@@ -25,15 +25,29 @@ module.exports.getTrailsByName = (name) => {
       reject('Expected a string but instead was passed in ' + name);
     });
   }
-  
+
   return models.trails.findAll({
     where: {name}
+  })
+  .then((trails) => {
+    for (let i = 0; i < trails.length; i++) {
+      trails[i].latitude = parseFloat(trails[i].latitude);
+      trails[i].longitude = parseFloat(trails[i].longitude);
+    }
+    return trails;
   });
 };
 
-// module.exports.getAllTrails = () => {
-//   return helpers.getTrails();
-// };
+module.exports.getAllTrails = () => {
+  return models.trails.findAll()
+  .then((trails) => {
+    for (let i = 0; i < trails.length; i++) {
+      trails[i].latitude = parseFloat(trails[i].latitude);
+      trails[i].longitude = parseFloat(trails[i].longitude);
+    }
+    return trails;
+  });
+};
 
 // module.exports.createTrail = (name, directions='', latitude=0, longitude=0) => {
 //   return helpers.createTrail(name, directions, latitude, longitude);
