@@ -1,7 +1,3 @@
-const sinon = require('sinon');
-const env = process.env.NODE_ENV || 'development';
-const Sequelize = require('sequelize');
-const dbConfig = require('../database/config.json')[env];
 const expect = require('chai').use(require('chai-as-promised')).expect;
 let models = require('../database/models.js');
 let sequelize = models.sequelize;
@@ -175,31 +171,96 @@ module.exports.run = () => {
       });
     });
 
-    // describe('getPostsByUserEmail()', () => {
-    //   it('Should exist', () => {
-    //     expect(exports.getPostsByUserEmail).to.exist;
-    //   });
-    //   it('Should be a function', () => {
-    //     expect(exports.getPostsByUserEmail).to.be.a('function');
-    //   });
-    // });
+    describe('createPost()', () => {
+      it('Should exist', () => {
+        expect(dbFuncs.createPost).to.exist;
+      });
+      it('Should be a function', () => {
+        expect(dbFuncs.createPost).to.be.a('function');
+      });
+      it('Should create a post with all valid parameters', () => {
+        let title = 'Example post title';
+        let text = 'Example post text';
+        let imageUrl = 'http://exampleurl.com/';
+        return dbFuncs.createPost(db.users[0].email, db.trails[0].id, title, text, imageUrl, 0, 0)
+        .then((post) => {
+          expect(post).to.exist;
+          expect(post.createdAt).to.exist;
+          expect(post.updatedAt).to.exist;
+          expect(post.title).to.equal(title);
+          expect(post.text).to.equal(text);
+          expect(post.image_url).to.equal(imageUrl);
+        });
+      });
+      it('Should reject when title is not a string', () => {
+        return expect(dbFuncs.createPost(db.users[1].email, db.trails[0].id, null, 'text', 'url', 0, 0)).to.be.rejected;
+      });
+      it('Should reject when text is not a string', () => {
+        return expect(dbFuncs.createPost(db.users[1].email, db.trails[0].id, 'title', null, 'url', 0, 0)).to.be.rejected;
+      });
+      it('Should reject when image url is not a string', () => {
+        return expect(dbFuncs.createPost(db.users[1].email, db.trails[0].id, 'title', 'text', null, 0, 0)).to.be.rejected;
+      });
+    });
 
-    // describe('getPostsByTrailName()', () => {
-    //   it('Should exist', () => {
-    //     expect(exports.getPostsByTrailName).to.exist;
-    //   });
-    //   it('Should be a function', () => {
-    //     expect(exports.getPostsByTrailName).to.be.a('function');
-    //   });
-    // });
+    describe('getPostsByUserEmail()', () => {
+      it('Should exist', () => {
+        expect(dbFuncs.getPostsByUserEmail).to.exist;
+      });
+      it('Should be a function', () => {
+        expect(dbFuncs.getPostsByUserEmail).to.be.a('function');
+      });
+      it('Should get posts by a particular user', () => {
+        let title = 'Example post title';
+        let text = 'Example post text';
+        let imageUrl = 'http://exampleurl.com/';
+        return dbFuncs.getPostsByUserEmail(db.users[0].email)
+        .then((posts) => {
+          expect(posts).to.exist;
+          expect(posts.length).to.equal(1);
+          expect(posts[0].createdAt).to.exist;
+          expect(posts[0].updatedAt).to.exist;
+          expect(posts[0].title).to.equal(title);
+          expect(posts[0].text).to.equal(text);
+          expect(posts[0].image_url).to.equal(imageUrl);
+          expect(posts[0].view_count).to.exist;
+          expect(posts[0].flag_count).to.exist;
+          expect(posts[0].latitude).to.equal(0);
+          expect(posts[0].longitude).to.equal(0);
+          expect(posts[0].poster).to.exist;
+          expect(posts[0].poster.email).to.equal(db.users[0].email);
+        });
+      });
+    });
 
-    // describe('createPost()', () => {
-    //   it('Should exist', () => {
-    //     expect(exports.createPost).to.exist;
-    //   });
-    //   it('Should be a function', () => {
-    //     expect(exports.createPost).to.be.a('function');
-    //   });
-    // });
+    describe('getPostsByTrailName()', () => {
+      it('Should exist', () => {
+        expect(dbFuncs.getPostsByTrailId).to.exist;
+      });
+      it('Should be a function', () => {
+        expect(dbFuncs.getPostsByTrailId).to.be.a('function');
+      });
+      it('Should get posts for a particular trail', () => {
+        let title = 'Example post title';
+        let text = 'Example post text';
+        let imageUrl = 'http://exampleurl.com/';
+        return dbFuncs.getPostsByTrailId(db.trails[0].id)
+        .then((posts) => {
+          expect(posts).to.exist;
+          expect(posts.length).to.equal(1);
+          expect(posts[0].createdAt).to.exist;
+          expect(posts[0].updatedAt).to.exist;
+          expect(posts[0].title).to.equal(title);
+          expect(posts[0].text).to.equal(text);
+          expect(posts[0].image_url).to.equal(imageUrl);
+          expect(posts[0].view_count).to.exist;
+          expect(posts[0].flag_count).to.exist;
+          expect(posts[0].latitude).to.equal(0);
+          expect(posts[0].longitude).to.equal(0);
+          expect(posts[0].poster).to.exist;
+          expect(posts[0].poster.email).to.equal(db.users[0].email);
+        });
+      });
+    });
   });
 };
