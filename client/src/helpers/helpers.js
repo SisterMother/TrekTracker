@@ -1,3 +1,4 @@
+
 /*
 * In order to further modularize, functions not directly
 * interacting with the DOM or passed between files are placed
