@@ -85,6 +85,7 @@ class App extends React.Component {
     return (
       <div>
         <Nav />
+        <Upload submit={this.submitImage.bind(this)} update={this.updateImageDisplay}/>
         <Switch>
           <Route exact path='/'>
             <Home logged={this.state.logged}/>
