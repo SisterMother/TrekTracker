@@ -15,6 +15,7 @@ import Home from './page-components/Home.jsx';
 import Login from './page-components/Login.jsx';
 import User from './page-components/User.jsx';
 import Trail from './page-components/Trail.jsx';
+import gps from './helpers/gps.js';
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -47,19 +48,7 @@ class App extends React.Component {
     this.input = document.querySelector('.input');
     this.preview = document.querySelector('.preview');
     var context = this;
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-          let newObj = {
-            lat : position.coords.latitude,
-            lng : position.coords.longitude
-          }
-          console.log('found location')
-        var initialPosition = (position);
-        context.setState({mapCenter: newObj})
-      },
-        (error) => alert(error.message),
-        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-       );
+    gps.getLocation().then(console.log);
     axios.get('/places')
       .then(res => {
         console.log('on sucessful get request', data);
