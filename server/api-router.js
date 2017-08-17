@@ -56,7 +56,7 @@ router.get('/trails', (req, res) => {
   getTrailsByLoc(lat, long, radius, limit, (err, data) => {
     if(err) {
       res.end(JSON.stringify(err));
-    } else { 
+    } else {
       res.end(JSON.stringify(data));
     }
   })

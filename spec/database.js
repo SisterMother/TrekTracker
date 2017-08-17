@@ -1,8 +1,12 @@
-const expect = require('chai').use(require('chai-as-promised')).expect;
-let models = require('../database/models.js');
-let sequelize = models.sequelize;
-let dbFuncs = require('../database/index.js');
-let db = require('./mockdb.json');
+var expect = require('chai').expect;
+var sinon = require('sinon');
+var path = require('path');
+
+var models = require('../database/models.js');
+var helpers = require('../database/helpers.js');
+var exports = require('../database/index.js');
+
+console.log(models.users);
 
 module.exports.run = () => {
   describe('Models', () => {
