@@ -108,12 +108,22 @@ const updateImage = function() {
   }
 }
 
+
+  const handleMapMounted = function (map) {
+    this._map = map
+  }
+
 const handleSearchBoxMounted = function (searchBox)  {
     this._searchBox = searchBox;
   }
 
 const handlePlacesChanged = function ()  {
    const places = this._searchBox.getPlaces();
+   let newCenter = this._map.getCenter()
+   let newCenterLat = newCenter.lat();
+   let newCenterLng = newCenter.lng();
+   console.log(newCenterLng)
+   console.log(newCenterLat)
 //    Right now, everything below is not goin to be implemented
 //   Add a marker for each place returned from search bar
    const markers = places.map(place => ({
@@ -167,6 +177,13 @@ const onMapClick = function (event) {
      });
    }
 
+  const onDragEnd = function (event) {
+    //This finds the map center when the map is moved, will probably need an api call eventually.
+    let newCenter = this._map.getCenter()
+    let newCenterLat = newCenter.lat();
+    let newCenterLng = newCenter.lng();
+  }
+
 
 module.exports = {
   updateImage: updateImage,
@@ -175,4 +192,6 @@ module.exports = {
   submitImage: submitImage,
   onMarkerClick: onMarkerClick,
   onMapClick: onMapClick,
+  onDragEnd: onDragEnd,
+  handleMapMounted: handleMapMounted,
 }
