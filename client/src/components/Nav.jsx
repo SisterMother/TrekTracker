@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 //note: &#9776; is a special unicode value which renders to the 
 //icon of the three horizonal bars representing the menu
@@ -10,9 +10,9 @@ const Nav = (props) => (
       <div className="dropdown">
         <button className="dropbtn">&#9776;</button>
         <div className="dropdown-content">
-          <div><Link style={{ textDecoration: 'none', color:'black' }} to='/upload'>Upload</Link></div>
-          <div><Link style={{ textDecoration: 'none', color:'black' }} to='/profile'>Profile</Link></div>
-          <div><Link style={{ textDecoration: 'none', color:'black' }} to='/logout'>Logout</Link></div>
+          <a style={{ textDecoration: 'none', color:'black' }} href='/upload'>Upload</a>
+          <a style={{ textDecoration: 'none', color:'black' }} href='/profile'>Profile</a>
+          <a style={{ textDecoration: 'none', color:'black' }} href='/logout'>Logout</a>
         </div>
       </div>
     </ul>

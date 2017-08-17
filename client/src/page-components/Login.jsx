@@ -1,4 +1,4 @@
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import React from 'react';
 import axios from 'axios';
 import GoogleButton from 'react-google-button';
@@ -6,9 +6,6 @@ import GoogleButton from 'react-google-button';
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    if (props.logged) {
-      window.location.href = '/'
-    }
   }
 
   loginRedirect() {
@@ -19,7 +16,7 @@ class Home extends React.Component {
     return (
       <div>
         {
-          this.props.logged ? <div>You are already logged in</div> : <GoogleButton onClick={this.loginRedirect} />
+          <GoogleButton onClick={this.loginRedirect} />
         }
       </div>
     );

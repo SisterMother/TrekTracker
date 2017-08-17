@@ -2,7 +2,7 @@ var router = require('express').Router();
 var passport = require('passport');
 
 // Middleware to check if a user is authenticated
-var isLoggedIn = (req, res, next) => {
+let isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   } else {
@@ -10,7 +10,7 @@ var isLoggedIn = (req, res, next) => {
   }
 };
 // Middleware to check if a user is NOT authenticated
-var isNotLoggedIn = (req, res, next) => {
+let isNotLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     return next();
   } else {
@@ -30,7 +30,7 @@ router.get('/auth/google/callback', passport.authenticate('google', {
 // Destroys current OAuth session
 router.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/');
+  res.redirect('/login');
 });
 
 // User cannot login if they are already logged in
