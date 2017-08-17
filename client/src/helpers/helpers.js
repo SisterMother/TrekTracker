@@ -132,14 +132,14 @@ const submitImage = function(e) {
   form.append('image', this.state.photo[0])
   axios.post('https://api.imgur.com/3/image', form)
   .then((res) => {
-    var metaPhoto = {
+    let metaPhoto = {
       title: this.state.photo[0].name,
       text: document.getElementsByTagName('textarea')[0].value,
       image_url: res.data.data.link,
       flag_comments: [],
-      trail_name: 'rainbow trails'
+      trail_id: 1
     };
-    axios.post('/api/posts', {photo: metaPhoto})
+    return axios.post('/api/posts', {photo: metaPhoto})
       .then(res => console.log('success: ', res))
       .catch(err => console.log('error in the /api/posts endpoint: ', err));
   })
