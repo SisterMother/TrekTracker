@@ -29,8 +29,8 @@ class App extends React.Component {
       image: null,
       photo: null,
       mapCenter: {
-        lat: 64.7836966,
-        lng: -122.4089664
+        lat: 34.7836966,
+        lng: -115.4089664
       },
       trails: [],
       markers:[]
@@ -49,15 +49,17 @@ class App extends React.Component {
     this.preview = document.querySelector('.preview');
     var context = this;
     gps.getLocation().then(console.log);
-    axios.get('/places')
-      .then(res => {
-        console.log('on sucessful get request', data);
-        context.setState({trails: data.results})
-        console.log(this.state.trails);
-      })
-      .catch(err => {
-        console.log('Error on get request', err);
-      });
+    //was this to populate the trails? that's being handled through
+    //the /api/trails route. Do we still need this?:
+    // axios.get('/places')
+    //   .then(data => {
+    //     console.log('on sucessful get request', data);
+    //     context.setState({trails: data.results})
+    //     console.log(this.state.trails);
+    //   })
+    //   .catch(err => {
+    //     console.log('Error on get request', err);
+    //   });
     axios.get('/api/currentUser')
       .then(res => {
         var email = res.data.email;
@@ -68,6 +70,22 @@ class App extends React.Component {
           .catch(err => console.log('error in get api/users/:id: ', err));
       })
       .catch(err => console.log('error in get api/currentUser endpoint: ', err));
+    // const getTrailsByLoc = (lat='34', long='-105', limit='25', radius='100')
+    axios.get('/api/trails', 
+      {
+        params: {
+          lat: this.state.mapCenter.lat,
+          lng: this.state.mapCenter.lng,
+          radius: 100
+        }
+      })
+      .then(res => {
+        console.log('trails state: ', res.data.places);
+        this.setState({trails: res.data.places});
+      })
+      .catch(err => {
+        console.log('oops, error in the trails call: ', err);
+      });
   }
 
   render() {
