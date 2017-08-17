@@ -16,7 +16,7 @@ class Home extends React.Component {
     return (
       <div>
         {
-          <GoogleButton onClick={this.loginRedirect} />
+          <GoogleButton className='loginBtn' onClick={this.loginRedirect} />
         }
       </div>
     );
