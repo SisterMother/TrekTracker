@@ -10,9 +10,9 @@ const Nav = (props) => (
       <div className="dropdown">
         <button className="dropbtn">&#9776;</button>
         <div className="dropdown-content">
-          <a style={{ textDecoration: 'none', color:'black' }} href='/upload'>Upload</a>
-          <a style={{ textDecoration: 'none', color:'black' }} href='/profile'>Profile</a>
-          <a style={{ textDecoration: 'none', color:'black' }} href='/logout'>Logout</a>
+          <a href='/upload'>Upload</a>
+          <a href='/profile'>Profile</a>
+          <a href='/logout'>Logout</a>
         </div>
       </div>
     </ul>

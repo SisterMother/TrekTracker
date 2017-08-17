@@ -48,11 +48,11 @@ ul {
     border: 0.5px solid black;
     border-top: none;
     display: block;
-    text-decoration: 'none';
-    color:'black';
+    text-decoration: none;
+    color: black;
 }
 
-.dropdown-content div:hover {
+.dropdown-content a:hover {
   background-color: #f1f1f1
 }
 
