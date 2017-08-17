@@ -172,11 +172,10 @@ const onMapClick = function (event) {
   }
 
   const onDragEnd = function (event) {
+    //This finds the map center when the map is moved, will probably need an api call eventually. 
     let newCenter = this._map.getCenter()
     let newCenterLat = newCenter.lat();
     let newCenterLng = newCenter.lng();
-
-    //Not sure how to find the map center from here.
   }
 
 
