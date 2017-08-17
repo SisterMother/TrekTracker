@@ -8,7 +8,7 @@
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
     "start": "node server/index.js",
-    "prod": "NODE_ENV=production node server.js",
+    "prod": "NODE_ENV=production node server/index.js",
     "postinstall": "webpack -p"
   },
   "author": "",
