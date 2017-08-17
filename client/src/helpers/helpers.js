@@ -1,4 +1,4 @@
-
+const axios = require('axios');
 /*
 * In order to further modularize, functions not directly
 * interacting with the DOM or passed between files are placed
@@ -126,29 +126,30 @@ const handlePlacesChanged = () => {
   });
  }
 
-const submitImage = (e) => {
-    e.preventDefault();
-    var form = new FormData();
-    form.append('image', this.state.photo[0])
-    axios.post('https://api.imgur.com/3/image', form)
-    .then((res) => {
-      var metaPhoto = {
-        title: this.state.photo[0].name,
-        text: document.getElementsByTagName('textarea')[0].value,
-        image_url: res.data.data.link,
-        flag_comments: [],
-        trail_name: 'rainbow trails'
-      };
-      axios.post('/api/posts', {photo: metaPhoto})
-        .then(res => console.log('success: ', res))
-        .catch(err => console.log('error in the /api/posts endpoint: ', err));
-    })
-    .catch((err, res) => {
-      if(err) {
-        console.log('error: ', err);
-      }
-    })
-  }
+const submitImage = function(e) {
+  e.preventDefault();
+  var form = new FormData();
+  form.append('image', this.state.photo[0])
+  axios.post('https://api.imgur.com/3/image', form)
+  .then((res) => {
+    let metaPhoto = {
+      title: this.state.photo[0].name,
+      text: document.getElementsByTagName('textarea')[0].value,
+      image_url: res.data.data.link,
+      flag_comments: [],
+      trail_id: 1
+    };
+    return axios.post('/api/posts', {photo: metaPhoto})
+      .then(res => console.log('success: ', res))
+      .catch(err => console.log('error in the /api/posts endpoint: ', err));
+  })
+  .catch((err, res) => {
+    if(err) {
+      console.log('error: ', err);
+    }
+  })
+}
+
 const onMarkerClick = (targetMarker) => {
     console.log("clicking the marker!!!")
     //Eventually, this is going to need to do things. Still, nice that it works. Will get built out later.
@@ -173,5 +174,5 @@ module.exports = {
   handlePlacesChanged: handlePlacesChanged,
   submitImage: submitImage,
   onMarkerClick: onMarkerClick,
-  onMapClick: onMapClick
+  onMapClick: onMapClick,
 }

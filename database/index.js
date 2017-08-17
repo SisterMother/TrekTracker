@@ -49,15 +49,15 @@ module.exports.getAllTrails = () => {
   });
 };
 
-module.exports.createTrail = (name, directions='', latitude=0, longitude=0) => {
-  if (!name || name.constructor !== String || name === '') {
+module.exports.createTrail = (name, directions = '', latitude = 0, longitude = 0) => {
+  if (!name || name.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected trail name to be a non-empty string, but instead got ' + name);
     });
   }
-  if (!directions || directions.constructor !== String) {
+  if (directions === undefined || directions === null || directions.constructor !== String) {
     return new Promise((resolve, reject) => {
-      reject('Expected trail description to be a string, but instead got ' + description);
+      reject('Expected trail directions to be a string, but instead got ' + directions);
     });
   }
 
@@ -77,17 +77,17 @@ module.exports.createPost = (posterEmail, trailId, title, text, imageUrl, latitu
       reject('Expected poster email to be a string, but instead it was ' + posterEmail);
     });
   }
-  if (!title || title.constructor !== String || title === '') {
+  if (!title || title.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected title to be a string, but instead it was ' + title);
     });
   }
-  if (!text || text.constructor !== String || text === '') {
+  if (!text || text.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected text to be a string, but instead it was ' + text);
     });
   }
-  if (!imageUrl || imageUrl.constructor !== String || imageUrl === '') {
+  if (!imageUrl || imageUrl.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected image url to be a string, but instead it was ' + imageUrl);
     });
