@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var db = require('../database');
 var googleMaps = require('./foreign-apis/google-maps');
+var trails = require('./foreign-apis/trails');
 
 router.get('/places', function (req, res) {
   googleMaps.getPlaces((results) => {
