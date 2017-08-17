@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var db = require('../database');
 var googleMaps = require('./foreign-apis/google-maps');
+var { getTrailsByLoc } = require('./foreign-apis/trails.js');
 
 router.get('/places', function (req, res) {
   googleMaps.getPlaces((results) => {
@@ -40,10 +41,25 @@ router.get('/posts/users/:useremail', (req, res) => {
 
 router.get('/posts/trails/:trail', (req, res) => {
   var trailName = req.params.trail;
-  console.log(trailName);
+  console.log('[app-router /posts/trails]trail name: ', trailName);
   db.getPostsByTrailName(trailName).then((posts) => {
     res.end(JSON.stringify(posts));
   });
+});
+
+router.get('/trails', (req, res) => {
+  // console.log('whats being sent in the req: ', req.query);
+  let lat = `${req.query.lat.split('.')[0]}` || `${34}`;
+  let long = `${req.query.lng.split('.')[0]}` || `${-104}`;
+  let radius = `${req.query.radius}` || `${100}`;
+  let limit = `${req.query.radius}` || `${25}`;
+  getTrailsByLoc(lat, long, radius, limit, (err, data) => {
+    if(err) {
+      res.end(JSON.stringify(err));
+    } else { 
+      res.end(JSON.stringify(data));
+    }
+  })
 });
 
 router.get('/*', (req, res) => {
