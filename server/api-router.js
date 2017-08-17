@@ -26,8 +26,7 @@ router.get('/currentUser', (req, res) => {
 // a timestamp that the database will create automatically
 router.post('/posts', (req, res) => {
   var post = req.body.photo;
-  console.log('post: ', req.user);
-  db.createPost(req.user.id, 'id', post.trail_name, post.title, post.text, post.image_url).then((post) => {
+  db.createPost(req.user.email, post.trail_id, post.title, post.text, post.image_url).then((post) => {
     res.end(JSON.stringify(post));
   });
 });
