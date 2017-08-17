@@ -47,19 +47,13 @@ class App extends React.Component {
   componentDidMount() {
     this.input = document.querySelector('.input');
     this.preview = document.querySelector('.preview');
-    var context = this;
-    gps.getLocation().then(console.log);
-    //was this to populate the trails? that's being handled through
-    //the /api/trails route. Do we still need this?:
-    // axios.get('/places')
-    //   .then(data => {
-    //     console.log('on sucessful get request', data);
-    //     context.setState({trails: data.results})
-    //     console.log(this.state.trails);
-    //   })
-    //   .catch(err => {
-    //     console.log('Error on get request', err);
-    //   });
+    gps.getLocation().then(value => {
+          let newObj = {
+            lat : value.coords.latitude,
+            lng : value.coords.longitude
+          }
+        this.setState({mapCenter: newObj})
+      })
     axios.get('/api/currentUser')
       .then(res => {
         var email = res.data.email;

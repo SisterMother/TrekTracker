@@ -108,11 +108,11 @@ const updateImage = function() {
   }
 }
 
-const handleSearchBoxMounted = (searchBox) => {
+const handleSearchBoxMounted = function (searchBox)  {
     this._searchBox = searchBox;
   }
 
-const handlePlacesChanged = () => {
+const handlePlacesChanged = function ()  {
    const places = this._searchBox.getPlaces();
 //    Right now, everything below is not goin to be implemented
 //   Add a marker for each place returned from search bar
@@ -150,12 +150,12 @@ const submitImage = function(e) {
   })
 }
 
-const onMarkerClick = (targetMarker) => {
+const onMarkerClick = function (targetMarker) {
     console.log("clicking the marker!!!")
     //Eventually, this is going to need to do things. Still, nice that it works. Will get built out later.
   }
 
-const onMapClick = (event) => {
+const onMapClick = function (event) {
     const nextMarkers = [
       ...this.state.markers,
       {
