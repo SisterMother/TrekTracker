@@ -167,9 +167,16 @@ const onMapClick = function (event) {
      });
    }
 
+  const handleMapMounted = function (map) {
+    this._map = map
+  }
+
   const onDragEnd = function (event) {
-    console.log('onDragEnd working!!!')
-    console.log(map.getCenter())
+    let newCenter = this._map.getCenter()
+    let newCenterLat = newCenter.lat();
+    let newCenterLng = newCenter.lng();
+
+    //Not sure how to find the map center from here.
   }
 
 
@@ -180,5 +187,6 @@ module.exports = {
   submitImage: submitImage,
   onMarkerClick: onMarkerClick,
   onMapClick: onMapClick,
-  onDragEnd: onDragEnd
+  onDragEnd: onDragEnd,
+  handleMapMounted: handleMapMounted,
 }
