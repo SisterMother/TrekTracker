@@ -15,9 +15,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        {
-          this.props.logged ? <div>Logged in! Hooray!</div> : <button onClick={this.loginRedirect}>Login</button>
-        }
+        Homepage
       </div>
     );
   }
