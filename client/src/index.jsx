@@ -71,7 +71,7 @@ class App extends React.Component {
       })
       .catch(err => console.log('error in get api/currentUser endpoint: ', err));
     // const getTrailsByLoc = (lat='34', long='-105', limit='25', radius='100')
-    axios.get('/api/trails', 
+    axios.get('/api/trails',
       {
         params: {
           lat: this.state.mapCenter.lat,
@@ -110,6 +110,12 @@ class App extends React.Component {
             <Upload submit={this.submitImage} update={this.updateImageDisplay}/>
           </Route>
         </Switch>
+        <div style={{
+            width: '700px',
+            height: '600px'
+          }}>
+       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick}  onMarkerClick={this.onMarkerClick}/>
+       </div>
       </div>
     )
   }
