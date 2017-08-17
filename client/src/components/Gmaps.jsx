@@ -26,6 +26,7 @@ class Map extends Component {
 				defaultZoom={15}
 				center={this.props.mapCenter}
         onClick={this.props.onMapClick}
+        onDragEnd={this.props.onDragEnd}
         >
         {this.props.markers.map((marker, index) => (
         <Marker
