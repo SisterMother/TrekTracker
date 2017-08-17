@@ -32,7 +32,6 @@ class App extends React.Component {
         lat: 34.7836966,
         lng: -115.4089664
       },
-      trails: [],
       markers:[]
 
     }
@@ -76,7 +75,12 @@ class App extends React.Component {
         }
       })
       .then(res => {
-        console.log('trails state: ', res.data.places);
+      res.data.places.map((trail) => {
+        var latitude = trail.lat
+        var lng = trail.lon
+
+
+      })
         this.setState({trails: res.data.places});
       })
       .catch(err => {
