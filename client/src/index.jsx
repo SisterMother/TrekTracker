@@ -94,7 +94,7 @@ class App extends React.Component {
       })
       .catch(err => console.log('error in get api/currentUser endpoint: ', err));
   }
-  
+
   render() {
     return (
       <div>
