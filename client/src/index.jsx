@@ -94,8 +94,6 @@ class App extends React.Component {
     return (
       <div>
         <Nav />
-        {console.log('this is the mapcenter state: ', this.state.mapCenter)}
-        {console.log('and here are the trails: ', this.state.trails)}
         <Switch>
           <Route exact path='/'>
             <Home logged={this.state.logged}/>
