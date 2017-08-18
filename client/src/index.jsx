@@ -67,13 +67,18 @@ class App extends React.Component {
             }
           })
           .then(res => {
-          res.data.places.map((trail) => {
-            var latitude = trail.lat
-            var lng = trail.lon
-
-          })
-            this.setState({trails: res.data.places});
-          })
+          res.data.places.forEach((trail) => {
+            const nextMarkers = [
+              ...this.state.markers,
+              {
+                 position: {lat: trail.lat, lng: trail.lon}
+               },
+             ];
+             this.setState({
+               markers: nextMarkers,
+             });
+           })
+         })
           .catch(err => {
             console.log('oops, error in the trails call: ', err);
           });
@@ -89,7 +94,7 @@ class App extends React.Component {
       })
       .catch(err => console.log('error in get api/currentUser endpoint: ', err));
   }
-
+  
   render() {
     return (
       <div>
