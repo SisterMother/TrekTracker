@@ -122,8 +122,8 @@ const handlePlacesChanged = function ()  {
    let newCenter = this._map.getCenter()
    let newCenterLat = newCenter.lat();
    let newCenterLng = newCenter.lng();
-   console.log(newCenterLng)
-   console.log(newCenterLat)
+
+
 //    Right now, everything below is not goin to be implemented
 //   Add a marker for each place returned from search bar
    const markers = places.map(place => ({
@@ -164,9 +164,14 @@ const onMarkerClick = function (targetMarker) {
     console.log("clicking the marker!!!")
     //Eventually, this is going to need to do things. Still, nice that it works. Will get built out later.
   }
+const onMarkerClose = function (target) {
+  console.log('testing marker close')
+}
 
 const onMapClick = function (event) {
-    const nextMarkers = [
+/*    ADDING MARKERS CURRENTLY DISABLED.
+
+const nextMarkers = [
       ...this.state.markers,
       {
          position: event.latLng
@@ -175,6 +180,7 @@ const onMapClick = function (event) {
      this.setState({
        markers: nextMarkers,
      });
+     */
    }
 
   const onDragEnd = function (event) {
@@ -220,4 +226,5 @@ module.exports = {
   onMapClick: onMapClick,
   onDragEnd: onDragEnd,
   handleMapMounted: handleMapMounted,
+  onMarkerClose: onMarkerClose,
 }
