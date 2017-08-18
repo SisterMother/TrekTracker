@@ -50,6 +50,7 @@ ul {
     display: block;
     text-decoration: none;
     color: black;
+    z-index: 100;
 }
 
 .dropdown-content a:hover {
