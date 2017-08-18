@@ -162,10 +162,31 @@ const submitImage = function(e) {
 
 const onMarkerClick = function (targetMarker) {
     console.log("clicking the marker!!!")
-    //Eventually, this is going to need to do things. Still, nice that it works. Will get built out later.
-  }
-const onMarkerClose = function (target) {
+    this.setState({
+  markers: this.state.markers.map(marker => {
+    if (marker === targetMarker) {
+      return {
+        marker,
+        showInfo: true,
+      };
+    }
+    return marker;
+  }),
+});
+}
+const onMarkerClose = function (targetMarker) {
   console.log('testing marker close')
+  this.setState({
+  markers: this.state.markers.map(marker => {
+    if (marker === targetMarker) {
+      return {
+        marker,
+        showInfo: false,
+      };
+    }
+    return marker;
+  }),
+});
 }
 
 const onMapClick = function (event) {

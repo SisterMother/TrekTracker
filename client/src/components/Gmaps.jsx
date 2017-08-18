@@ -36,10 +36,12 @@ class Map extends Component {
           position={marker.position}
           onClick={() => this.props.onMarkerClick(marker)}
          >,
-        <InfoWindow
-        onCloseClick={() => this.props.onMarkerClose(marker)}>
-          <div>{marker.infoContent}</div>
-        </InfoWindow>
+        {marker.showInfo && (
+          <InfoWindow
+          onCloseClick={() => this.props.onMarkerClose(marker)}>
+            <div>{marker.infoContent}</div>
+          </InfoWindow>
+        )}
         </Marker>
         ))}
 				<SearchBox
