@@ -32,7 +32,8 @@ class App extends React.Component {
         lat: 34.7836966,
         lng: -115.4089664
       },
-      markers:[]
+      markers:[],
+      trails: []
 
     }
     this.submitImage = submitImage.bind(this);
@@ -48,6 +49,7 @@ class App extends React.Component {
   componentDidMount() {
     this.input = document.querySelector('.input');
     this.preview = document.querySelector('.preview');
+
     gps.getLocation().then(value => {
           let newObj = {
             lat : value.coords.latitude,
@@ -55,6 +57,27 @@ class App extends React.Component {
           }
         this.setState({mapCenter: newObj})
       })
+      .then(() => {
+        axios.get('/api/trails',
+          {
+            params: {
+              lat: this.state.mapCenter.lat,
+              lng: this.state.mapCenter.lng,
+              radius: 50
+            }
+          })
+          .then(res => {
+          res.data.places.map((trail) => {
+            var latitude = trail.lat
+            var lng = trail.lon
+
+          })
+            this.setState({trails: res.data.places});
+          })
+          .catch(err => {
+            console.log('oops, error in the trails call: ', err);
+          });
+        })
     axios.get('/api/currentUser')
       .then(res => {
         var email = res.data.email;
@@ -65,27 +88,6 @@ class App extends React.Component {
           .catch(err => console.log('error in get api/users/:id: ', err));
       })
       .catch(err => console.log('error in get api/currentUser endpoint: ', err));
-    // const getTrailsByLoc = (lat='34', long='-105', limit='25', radius='100')
-    axios.get('/api/trails',
-      {
-        params: {
-          lat: this.state.mapCenter.lat,
-          lng: this.state.mapCenter.lng,
-          radius: 100
-        }
-      })
-      .then(res => {
-      res.data.places.map((trail) => {
-        var latitude = trail.lat
-        var lng = trail.lon
-
-
-      })
-        this.setState({trails: res.data.places});
-      })
-      .catch(err => {
-        console.log('oops, error in the trails call: ', err);
-      });
   }
 
   render() {

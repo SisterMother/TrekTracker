@@ -182,6 +182,7 @@ const onMapClick = function (event) {
     let newCenter = this._map.getCenter()
     let newCenterLat = newCenter.lat();
     let newCenterLng = newCenter.lng();
+    this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
   }
 
 
