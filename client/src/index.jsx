@@ -7,7 +7,7 @@ import Posts from './components/Posts.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
-import { updateImage, handleSearchBoxMounted, handlePlacesChanged, submitImage, onMarkerClick, onMapClick } from './helpers/helpers.js';
+import { updateImage, onDragEnd, handleSearchBoxMounted, handlePlacesChanged, submitImage, onMarkerClick, handleMapMounted, onMapClick } from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from './components/Nav.jsx';
@@ -32,7 +32,6 @@ class App extends React.Component {
         lat: 34.7836966,
         lng: -115.4089664
       },
-      trails: [],
       markers:[]
 
     }
@@ -42,6 +41,8 @@ class App extends React.Component {
     this.handleSearchBoxMounted = handleSearchBoxMounted.bind(this);
     this.onMarkerClick = onMarkerClick.bind(this);
     this.onMapClick = onMapClick.bind(this);
+    this.onDragEnd = onDragEnd.bind(this);
+    this.handleMapMounted = handleMapMounted.bind(this);
   }
 
   componentDidMount() {
@@ -74,7 +75,12 @@ class App extends React.Component {
         }
       })
       .then(res => {
-        console.log('trails state: ', res.data.places);
+      res.data.places.map((trail) => {
+        var latitude = trail.lat
+        var lng = trail.lon
+
+
+      })
         this.setState({trails: res.data.places});
       })
       .catch(err => {
@@ -107,7 +113,7 @@ class App extends React.Component {
             width: '700px',
             height: '600px'
           }}>
-       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick}  onMarkerClick={this.onMarkerClick}/>
+       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClick={this.onMarkerClick}/>
        </div>
       </div>
     )
