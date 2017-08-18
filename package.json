@@ -6,7 +6,10 @@
   "scripts": {
     "test": "mocha spec",
     "react-dev": "webpack -d --watch",
-    "server-dev": "nodemon server/index.js"
+    "server-dev": "nodemon server/index.js",
+    "start": "node server/index.js",
+    "prod": "NODE_ENV=production node server/index.js",
+    "postinstall": "webpack -p"
   },
   "author": "",
   "license": "ISC",

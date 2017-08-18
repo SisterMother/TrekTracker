@@ -1,18 +1,17 @@
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
 var users = require('../database/models.js').users;
-var config = require('./config.json');
 
-var GOOGLE_CLIENT_ID = config.GOOGLE_CLIENT_ID;
-var GOOGLE_CLIENT_SECRET = config.GOOGLE_CLIENT_SECRET;
-var callbackURL = config.callbackURL;
+if (process.env.NODE_ENV !== 'production') {
+  var config = require('./config.json');
+}
 
 module.exports = (passport) => {
   passport.use(new GoogleStrategy(
     {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: callbackURL,
+      clientID: process.env.GOOGLE_CLIENT_ID || config.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || config.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.CALLBACK_URL || config.CALLBACK_URL,
       passReqToCallback: true
     },
     (request, token, refreshToken, profile, done) => {
