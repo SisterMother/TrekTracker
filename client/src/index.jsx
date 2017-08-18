@@ -113,8 +113,8 @@ class App extends React.Component {
             width: '700px',
             height: '600px'
           }}>
-       <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClick={this.onMarkerClick}/>
-       </div>
+          <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClick={this.onMarkerClick}/>
+        </div>
       </div>
     )
   }
