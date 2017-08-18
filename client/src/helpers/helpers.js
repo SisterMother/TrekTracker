@@ -161,7 +161,6 @@ const submitImage = function(e) {
 }
 
 const onMarkerClick = function (targetMarker) {
-    console.log("clicking the marker!!!")
     this.setState({
   markers: this.state.markers.map(marker => {
     if (marker === targetMarker) {
@@ -175,7 +174,6 @@ const onMarkerClick = function (targetMarker) {
 });
 }
 const onMarkerClose = function (targetMarker) {
-  console.log('testing marker close')
   this.setState({
   markers: this.state.markers.map(marker => {
     if (marker === targetMarker) {
