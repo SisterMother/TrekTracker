@@ -147,17 +147,38 @@ module.exports.run = () => {
         expect(dbFuncs.createTrail).to.be.a('function');
       });
       it('Should create a trail when using all valid parameters', () => {
+        let apiId = 12345678
         let name = 'new trail';
         let directions = 'just look it up on google maps';
         let latitude = 4;
         let longitude = 8;
-        return dbFuncs.createTrail(name, directions, latitude, longitude)
+        return dbFuncs.createTrail(apiId, name, directions, latitude, longitude)
         .then((trail) => {
           expect(trail).to.exist;
           expect(trail.id).to.exist;
           expect(trail.createdAt).to.exist;
           expect(trail.updatedAt).to.exist;
+          expect(trail.id).to.equal(apiId);
           expect(trail.name).to.equal(name);
+          expect(trail.directions).to.equal(directions);
+          expect(trail.latitude).to.equal(latitude);
+          expect(trail.longitude).to.equal(longitude);
+        });
+      });
+      it('Should return the existing trail when attempting to create a new trail with the same ID as an existing one', () => {
+        let apiId = 12345678
+        let name = 'different trail';
+        let directions = 'just look it up on google maps';
+        let latitude = 4;
+        let longitude = 8;
+        return dbFuncs.createTrail(apiId, name, directions, latitude, longitude)
+        .then((trail) => {
+          expect(trail).to.exist;
+          expect(trail.id).to.exist;
+          expect(trail.createdAt).to.exist;
+          expect(trail.updatedAt).to.exist;
+          expect(trail.id).to.equal(apiId);
+          expect(trail.name).to.equal('new trail');
           expect(trail.directions).to.equal(directions);
           expect(trail.latitude).to.equal(latitude);
           expect(trail.longitude).to.equal(longitude);

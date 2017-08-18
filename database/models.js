@@ -43,8 +43,8 @@ models.users = Users;
 // TRAILS SCHEMA
 var Trails = sequelize.define('trails', {
   id: {
-    autoIncrement: true,
     primaryKey: true,
+    unique: true,
     type: Sequelize.INTEGER
   },
   name: {

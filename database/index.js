@@ -49,7 +49,7 @@ module.exports.getAllTrails = () => {
   });
 };
 
-module.exports.createTrail = (name, directions = '', latitude = 0, longitude = 0) => {
+module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0) => {
   if (!name || name.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected trail name to be a non-empty string, but instead got ' + name);
@@ -61,8 +61,19 @@ module.exports.createTrail = (name, directions = '', latitude = 0, longitude = 0
     });
   }
 
-  return models.trails.create({
-    name, directions, latitude, longitude
+  return models.trails.findOne({
+    where: {id}
+  })
+  .then((trail) => {
+    // If a trail with this ID already exist, don't attempt to create another one
+    if (trail) {
+      trail.latitude = parseFloat(trail.latitude);
+      trail.longitude = parseFloat(trail.longitude);
+      return trail;
+    }
+    return models.trails.create({
+      id, name, directions, latitude, longitude
+    });
   });
 };
 
