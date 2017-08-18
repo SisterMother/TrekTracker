@@ -7,7 +7,7 @@ import Posts from './components/Posts.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
-import { updateImage, onDragEnd, handleSearchBoxMounted, handlePlacesChanged, submitImage, onMarkerClick, handleMapMounted, onMapClick } from './helpers/helpers.js';
+import { updateImage, onDragEnd, onMarkerClose, handleSearchBoxMounted, handlePlacesChanged, submitImage, onMarkerClick, handleMapMounted, onMapClick } from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from './components/Nav.jsx';
@@ -41,6 +41,7 @@ class App extends React.Component {
     this.handlePlacesChanged = handlePlacesChanged.bind(this);
     this.handleSearchBoxMounted = handleSearchBoxMounted.bind(this);
     this.onMarkerClick = onMarkerClick.bind(this);
+    this.onMarkerClose = onMarkerClose.bind(this);
     this.onMapClick = onMapClick.bind(this);
     this.onDragEnd = onDragEnd.bind(this);
     this.handleMapMounted = handleMapMounted.bind(this);
@@ -71,8 +72,17 @@ class App extends React.Component {
             const nextMarkers = [
               ...this.state.markers,
               {
-                 position: {lat: trail.lat, lng: trail.lon}
-               },
+                 position: {lat: trail.lat, lng: trail.lon},
+                 showInfo: false,
+                 infoContent: (
+                  <svg
+                    id="Layer_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 50 50" />
+                  )
+              },
              ];
              this.setState({
                markers: nextMarkers,
@@ -94,7 +104,7 @@ class App extends React.Component {
       })
       .catch(err => console.log('error in get api/currentUser endpoint: ', err));
   }
-  
+
   render() {
     return (
       <div>
@@ -120,7 +130,7 @@ class App extends React.Component {
             width: '700px',
             height: '600px'
           }}>
-          <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClick={this.onMarkerClick}/>
+          <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClose={this.onMarkerClose}  submit={this.submitImage} update={this.updateImageDisplay} onMarkerClick={this.onMarkerClick}/>
         </div>
       </div>
     )

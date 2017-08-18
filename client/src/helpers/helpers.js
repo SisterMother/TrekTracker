@@ -122,8 +122,8 @@ const handlePlacesChanged = function ()  {
    let newCenter = this._map.getCenter()
    let newCenterLat = newCenter.lat();
    let newCenterLng = newCenter.lng();
-   console.log(newCenterLng)
-   console.log(newCenterLat)
+
+
 //    Right now, everything below is not goin to be implemented
 //   Add a marker for each place returned from search bar
    const markers = places.map(place => ({
@@ -162,11 +162,37 @@ const submitImage = function(e) {
 
 const onMarkerClick = function (targetMarker) {
     console.log("clicking the marker!!!")
-    //Eventually, this is going to need to do things. Still, nice that it works. Will get built out later.
-  }
+    this.setState({
+  markers: this.state.markers.map(marker => {
+    if (marker === targetMarker) {
+      return {
+        marker,
+        showInfo: true,
+      };
+    }
+    return marker;
+  }),
+});
+}
+const onMarkerClose = function (targetMarker) {
+  console.log('testing marker close')
+  this.setState({
+  markers: this.state.markers.map(marker => {
+    if (marker === targetMarker) {
+      return {
+        marker,
+        showInfo: false,
+      };
+    }
+    return marker;
+  }),
+});
+}
 
 const onMapClick = function (event) {
-    const nextMarkers = [
+/*    ADDING MARKERS CURRENTLY DISABLED.
+
+const nextMarkers = [
       ...this.state.markers,
       {
          position: event.latLng
@@ -175,6 +201,7 @@ const onMapClick = function (event) {
      this.setState({
        markers: nextMarkers,
      });
+     */
    }
 
   const onDragEnd = function (event) {
@@ -183,6 +210,31 @@ const onMapClick = function (event) {
     let newCenterLat = newCenter.lat();
     let newCenterLng = newCenter.lng();
     this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
+    axios.get('/api/trails',
+      {
+        params: {
+          lat: this.state.mapCenter.lat,
+          lng: this.state.mapCenter.lng,
+          radius: 50
+        }
+      })
+      .then(res => {
+      res.data.places.forEach((trail) => {
+        const nextMarkers = [
+          ...this.state.markers,
+          {
+             position: {lat: trail.lat, lng: trail.lon}
+           },
+         ];
+         this.setState({
+           markers: nextMarkers,
+         });
+       })
+     })
+      .catch(err => {
+        console.log('oops, error in the trails call: ', err);
+      });
+
   }
 
 
@@ -195,4 +247,5 @@ module.exports = {
   onMapClick: onMapClick,
   onDragEnd: onDragEnd,
   handleMapMounted: handleMapMounted,
+  onMarkerClose: onMarkerClose,
 }
