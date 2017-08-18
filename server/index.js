@@ -42,9 +42,19 @@ app.use('/', authRouter);
 app.get('*/bundle.js', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../client/dist/bundle.js'));
 });
-app.get('/*', (req, res) => {
+
+
+//Get existing markers.
+app.post('/markers', (req, res) => {
+  var location = req.body.location;
+  //We need to search within a certain area of this location.
+  //Just returns blank right now, put a db call here in order to load saved markers. See index.jsx for more.
+  res.send()
+})
+app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
 });
+
 
 // Start server
 app.listen(process.env.PORT || 3000, function() {
