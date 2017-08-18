@@ -80,7 +80,7 @@ class App extends React.Component {
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
-                    viewBox="0 0 16 16" />
+                    viewBox="0 0 50 50" />
                   )
               },
              ];
@@ -130,7 +130,7 @@ class App extends React.Component {
             width: '700px',
             height: '600px'
           }}>
-          <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClose={this.onMarkerClose} onMarkerClick={this.onMarkerClick}/>
+          <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClose={this.onMarkerClose}  submit={this.submitImage} update={this.updateImageDisplay} onMarkerClick={this.onMarkerClick}/>
         </div>
       </div>
     )
