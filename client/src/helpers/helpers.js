@@ -183,6 +183,31 @@ const onMapClick = function (event) {
     let newCenterLat = newCenter.lat();
     let newCenterLng = newCenter.lng();
     this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
+    axios.get('/api/trails',
+      {
+        params: {
+          lat: this.state.mapCenter.lat,
+          lng: this.state.mapCenter.lng,
+          radius: 50
+        }
+      })
+      .then(res => {
+      res.data.places.forEach((trail) => {
+        const nextMarkers = [
+          ...this.state.markers,
+          {
+             position: {lat: trail.lat, lng: trail.lon}
+           },
+         ];
+         this.setState({
+           markers: nextMarkers,
+         });
+       })
+     })
+      .catch(err => {
+        console.log('oops, error in the trails call: ', err);
+      });
+
   }
 
 
