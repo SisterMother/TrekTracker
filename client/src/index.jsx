@@ -74,7 +74,6 @@ class App extends React.Component {
                  position: {lat: trail.lat, lng: trail.lon}
                },
              ];
-             console.log(nextMarkers)
              this.setState({
                markers: nextMarkers,
              });
