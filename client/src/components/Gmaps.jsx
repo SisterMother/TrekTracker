@@ -24,8 +24,11 @@ class Map extends Component {
 		return (
 			<GoogleMap
 				defaultZoom={15}
+        ref={this.props.handleMapMounted}
 				center={this.props.mapCenter}
         onClick={this.props.onMapClick}
+        onDragEnd={this.props.onDragEnd}
+
         >
         {this.props.markers.map((marker, index) => (
         <Marker
