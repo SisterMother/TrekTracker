@@ -35,7 +35,23 @@ class Map extends Component {
           key={index}
           position={marker.position}
           onClick={() => this.props.onMarkerClick(marker)}
-        />
+         >,
+        {marker.showInfo && (
+          <InfoWindow
+          onCloseClick={() => this.props.onMarkerClose(marker)}>
+          <div>
+            <form onSubmit={this.props.submit}>
+              <h2>Upload trek pic!</h2>
+              <input className='input' onChange={() => this.props.update()} type="file"/>
+              <button style={{position:"relative",left:"10px",backgroundColor:"papayawhip"}}>Submit</button>
+            </form>
+            <div className="preview">
+              <p>No files currently selected for upload</p>
+            </div>
+          </div>
+          </InfoWindow>
+        )}
+        </Marker>
         ))}
 				<SearchBox
 				  ref={this.props.onSearchBoxMounted}
