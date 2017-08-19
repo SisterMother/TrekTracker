@@ -74,19 +74,13 @@ class App extends React.Component {
           {
               position: {lat: trail.lat, lng: trail.lon},
               showInfo: false,
-              infoContent: (
-              <svg
-                id="Layer_1"
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 50 50" />
-              )
-          },
+              name: trail.name,
+              city: trail.city,
+              state: trail.state,
+
           ];
           this.setState({
             markers: nextMarkers,
-            trails: res.data.places
           });
       })
     })
