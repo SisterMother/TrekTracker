@@ -7,7 +7,7 @@ import Posts from './components/Posts.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
-import { updateImage, onDragEnd, onMarkerClose, handleSearchBoxMounted, handlePlacesChanged, submitImage, onMarkerClick, handleMapMounted, onMapClick } from './helpers/helpers.js';
+import { updateImage, onDragEnd, onMarkerClose, handleSearchBoxMounted, submitImage, onMarkerClick, handleMapMounted, onMapClick } from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from './components/Nav.jsx';
@@ -38,7 +38,6 @@ class App extends React.Component {
     }
     this.submitImage = submitImage.bind(this);
     this.updateImageDisplay = updateImage.bind(this);
-    this.handlePlacesChanged = handlePlacesChanged.bind(this);
     this.handleSearchBoxMounted = handleSearchBoxMounted.bind(this);
     this.onMarkerClick = onMarkerClick.bind(this);
     this.onMarkerClose = onMarkerClose.bind(this);
@@ -51,49 +50,49 @@ class App extends React.Component {
     this.input = document.querySelector('.input');
     this.preview = document.querySelector('.preview');
 
-    gps.getLocation().then(value => {
-          let newObj = {
-            lat : value.coords.latitude,
-            lng : value.coords.longitude
-          }
-        this.setState({mapCenter: newObj})
-      })
-      .then(() => {
-        axios.get('/api/trails',
+    gps.getLocation()
+    .then(value => {
+      let newObj = {
+        lat : value.coords.latitude,
+        lng : value.coords.longitude
+      }
+      this.setState({mapCenter: newObj})
+    })
+    .then(() => {
+      return axios.get('/api/trails', {
+        params: {
+          lat: this.state.mapCenter.lat,
+          lng: this.state.mapCenter.lng,
+          radius: 50
+        }
+      });
+    })
+    .then(res => {
+      res.data.places.forEach((trail) => {
+        const nextMarkers = [
+          ...this.state.markers,
           {
-            params: {
-              lat: this.state.mapCenter.lat,
-              lng: this.state.mapCenter.lng,
-              radius: 50
-            }
-          })
-          .then(res => {
-            res.data.places.forEach((trail) => {
-              const nextMarkers = [
-                ...this.state.markers,
-                {
-                   position: {lat: trail.lat, lng: trail.lon},
-                   showInfo: false,
-                   infoContent: (
-                    <svg
-                      id="Layer_1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 50 50" />
-                    )
-                },
-               ];
-               this.setState({
-                 markers: nextMarkers,
-                 trails: res.data.places
-               });
-            })
-         })
-          .catch(err => {
-            console.log('oops, error in the trails call: ', err);
+              position: {lat: trail.lat, lng: trail.lon},
+              showInfo: false,
+              infoContent: (
+              <svg
+                id="Layer_1"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 50 50" />
+              )
+          },
+          ];
+          this.setState({
+            markers: nextMarkers,
+            trails: res.data.places
           });
-        })
+      })
+    })
+    .catch(err => {
+      console.log('oops, error in the trails call: ', err);
+    });
     axios.get('/api/currentUser')
       .then(res => {
         var email = res.data.email;
@@ -131,7 +130,7 @@ class App extends React.Component {
             width: '700px',
             height: '600px'
           }}>
-          <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClose={this.onMarkerClose}  submit={this.submitImage} update={this.updateImageDisplay} onMarkerClick={this.onMarkerClick}/>
+          <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClose={this.onMarkerClose}  submit={this.submitImage} update={this.updateImageDisplay} onMarkerClick={this.onMarkerClick}/>
         </div>
       </div>
     )
