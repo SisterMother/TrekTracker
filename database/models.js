@@ -53,9 +53,6 @@ var Trails = sequelize.define('trails', {
     notEmpty: true,
     allowNull: false
   },
-  directions: {
-    type: Sequelize.STRING
-  },
   latitude: {
     type: Sequelize.STRING,
     notEmpty: true,
@@ -65,6 +62,9 @@ var Trails = sequelize.define('trails', {
     type: Sequelize.STRING,
     notEmpty: true,
     allowNull: false
+  },
+  directions: {
+    type: Sequelize.STRING
   }
 });
 models.trails = Trails;
