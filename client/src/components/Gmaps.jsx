@@ -28,7 +28,7 @@ class Map extends Component {
 
 		return (
 			<GoogleMap
-				defaultZoom={13}
+				defaultZoom={15}
         ref={this.props.handleMapMounted}
 				center={this.props.mapCenter}
         onDragEnd={this.props.onDragEnd}

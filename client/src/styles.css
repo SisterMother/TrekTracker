@@ -64,16 +64,3 @@ ul {
 .loginBtn {
   margin: 1em;
 }
-.Gmap {
-  float: left;
-}
-.TrailList {
-  height:600px;
-  width:400px;
-  border:1px solid #ccc;
-  font:16px/26px Georgia, Garamond, Serif;
-  overflow:auto
-}
-.TrailListEntry {
-  background-color: #4CAF50;
-}

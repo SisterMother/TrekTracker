@@ -193,12 +193,11 @@ const onDragEnd = function (event) {
   let newCenterLat = newCenter.lat();
   let newCenterLng = newCenter.lng();
   this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
-  this.setState({markers:[]})
   axios.get('/api/trails', {
     params: {
       lat: this.state.mapCenter.lat,
       lng: this.state.mapCenter.lng,
-      radius: 10
+      radius: 50
     }
   })
   .then(res => {
@@ -206,10 +205,7 @@ const onDragEnd = function (event) {
       const nextMarkers = [
         ...this.state.markers,
         {
-          position: {lat: trail.lat, lng: trail.lon},
-          name: trail.name,
-          city: trail.city,
-          state: trail.state,
+          position: {lat: trail.lat, lng: trail.lon}
         },
       ];
       this.setState({
