@@ -62,7 +62,7 @@ class App extends React.Component {
         params: {
           lat: this.state.mapCenter.lat,
           lng: this.state.mapCenter.lng,
-          radius: 50
+          radius: 10
         }
       });
     })
