@@ -109,27 +109,26 @@ const updateImage = function() {
 }
 
 
-  const handleMapMounted = function (map) {
-    this._map = map
-  }
+const handleMapMounted = function (map) {
+  this._map = map;
+}
 
 const handleSearchBoxMounted = function (searchBox)  {
-    this._searchBox = searchBox;
-  }
+  this._searchBox = searchBox;
+}
 
 const handlePlacesChanged = function ()  {
-   const places = this._searchBox.getPlaces();
-   let newCenter = this._map.getCenter()
-   let newCenterLat = newCenter.lat();
-   let newCenterLng = newCenter.lng();
+  const places = this._searchBox.getPlaces();
+  let newCenter = this._map.getCenter()
+  let newCenterLat = newCenter.lat();
+  let newCenterLng = newCenter.lng();
 
-
-//    Right now, everything below is not goin to be implemented
-//   Add a marker for each place returned from search bar
-   const markers = places.map(place => ({
-     position: place.geometry.location,
-   }));
-   // Set markers; set map center to first search result
+  // Right now, everything below is not goin to be implemented
+  // Add a marker for each place returned from search bar
+  const markers = places.map(place => ({
+    position: place.geometry.location,
+  }));
+  // Set markers; set map center to first search result
   const mapCenter = markers.length > 0 ? markers[0].position : this.state.center;
   this.setState({
     mapCenter: mapCenter
@@ -157,93 +156,76 @@ const submitImage = function(e) {
     if(err) {
       console.log('error: ', err);
     }
-  })
+  });
 }
 
 const onMarkerClick = function (targetMarker) {
-    this.setState({
-  markers: this.state.markers.map(marker => {
-    if (marker === targetMarker) {
-      return {
-        marker,
-        showInfo: true,
-      };
-    }
-    return marker;
-  }),
-});
+  this.setState({
+    markers: this.state.markers.map(marker => {
+      if (marker === targetMarker) {
+        return {
+          marker,
+          showInfo: true,
+        };
+      }
+      return marker;
+    })
+  });
 }
+
 const onMarkerClose = function (targetMarker) {
   this.setState({
-  markers: this.state.markers.map(marker => {
-    if (marker === targetMarker) {
-      return {
-        marker,
-        showInfo: false,
-      };
-    }
-    return marker;
-  }),
-});
+    markers: this.state.markers.map(marker => {
+      if (marker === targetMarker) {
+        return {
+          marker,
+          showInfo: false,
+        };
+      }
+      return marker;
+    })
+  });
 }
 
-const onMapClick = function (event) {
-/*    ADDING MARKERS CURRENTLY DISABLED.
-
-const nextMarkers = [
-      ...this.state.markers,
-      {
-         position: event.latLng
-       },
-     ];
-     this.setState({
-       markers: nextMarkers,
-     });
-     */
-   }
-
-  const onDragEnd = function (event) {
-    //This finds the map center when the map is moved, will probably need an api call eventually.
-    let newCenter = this._map.getCenter()
-    let newCenterLat = newCenter.lat();
-    let newCenterLng = newCenter.lng();
-    this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
-    axios.get('/api/trails',
-      {
-        params: {
-          lat: this.state.mapCenter.lat,
-          lng: this.state.mapCenter.lng,
-          radius: 50
-        }
-      })
-      .then(res => {
-      res.data.places.forEach((trail) => {
-        const nextMarkers = [
-          ...this.state.markers,
-          {
-             position: {lat: trail.lat, lng: trail.lon}
-           },
-         ];
-         this.setState({
-           markers: nextMarkers,
-         });
-       })
-     })
-      .catch(err => {
-        console.log('oops, error in the trails call: ', err);
+const onDragEnd = function (event) {
+  //This finds the map center when the map is moved, will probably need an api call eventually.
+  let newCenter = this._map.getCenter()
+  let newCenterLat = newCenter.lat();
+  let newCenterLng = newCenter.lng();
+  this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
+  axios.get('/api/trails', {
+    params: {
+      lat: this.state.mapCenter.lat,
+      lng: this.state.mapCenter.lng,
+      radius: 50
+    }
+  })
+  .then(res => {
+    res.data.places.forEach((trail) => {
+      const nextMarkers = [
+        ...this.state.markers,
+        {
+          position: {lat: trail.lat, lng: trail.lon}
+        },
+      ];
+      this.setState({
+        markers: nextMarkers,
       });
-
-  }
+    });
+  })
+  .catch(err => {
+    console.log('oops, error in the trails call: ', err);
+  });
+}
 
 
 module.exports = {
-  updateImage: updateImage,
-  handleSearchBoxMounted: handleSearchBoxMounted,
-  handlePlacesChanged: handlePlacesChanged,
-  submitImage: submitImage,
-  onMarkerClick: onMarkerClick,
-  onMapClick: onMapClick,
-  onDragEnd: onDragEnd,
-  handleMapMounted: handleMapMounted,
-  onMarkerClose: onMarkerClose,
+  updateImage,
+  handleSearchBoxMounted,
+  handlePlacesChanged,
+  submitImage,
+  onMarkerClick,
+  onDragEnd,
+  handleMapMounted,
+  onMarkerClose,
 }

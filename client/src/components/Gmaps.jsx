@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import SearchBox from 'react-google-maps/lib/places/SearchBox'
+import { handlePlacesChanged } from '../helpers/helpers.js'
 
 const INPUT_STYLE = {
   boxSizing: `border-box`,
@@ -18,6 +19,10 @@ const INPUT_STYLE = {
 };
 
 class Map extends Component {
+  constructor (props) {
+    super(props);
+    this.onPlacesChanged = handlePlacesChanged.bind(this);
+  }
 
 	render() {
 
@@ -26,7 +31,6 @@ class Map extends Component {
 				defaultZoom={15}
         ref={this.props.handleMapMounted}
 				center={this.props.mapCenter}
-        onClick={this.props.onMapClick}
         onDragEnd={this.props.onDragEnd}
 
         >
@@ -55,7 +59,7 @@ class Map extends Component {
         ))}
 				<SearchBox
 				  ref={this.props.onSearchBoxMounted}
-				  onPlacesChanged={this.props.onPlacesChanged}
+				  onPlacesChanged={this.onPlacesChanged}
 		 			controlPosition={google.maps.ControlPosition.TOP_LEFT}
 		 			inputPlaceholder="Search For Locations!!"
 					inputStyle={INPUT_STYLE}
