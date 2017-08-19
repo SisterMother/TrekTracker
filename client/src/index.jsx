@@ -7,7 +7,7 @@ import Posts from './components/Posts.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
-import { updateImage, onDragEnd, onMarkerClose, handleSearchBoxMounted, submitImage, onMarkerClick, handleMapMounted, onMapClick } from './helpers/helpers.js';
+import { updateImage, onDragEnd, onMarkerClose, handleSearchBoxMounted, submitImage, onMarkerClick, handleMapMounted } from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from './components/Nav.jsx';
@@ -41,7 +41,6 @@ class App extends React.Component {
     this.handleSearchBoxMounted = handleSearchBoxMounted.bind(this);
     this.onMarkerClick = onMarkerClick.bind(this);
     this.onMarkerClose = onMarkerClose.bind(this);
-    this.onMapClick = onMapClick.bind(this);
     this.onDragEnd = onDragEnd.bind(this);
     this.handleMapMounted = handleMapMounted.bind(this);
   }
@@ -130,7 +129,7 @@ class App extends React.Component {
             width: '700px',
             height: '600px'
           }}>
-          <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClose={this.onMarkerClose}  submit={this.submitImage} update={this.updateImageDisplay} onMarkerClick={this.onMarkerClick}/>
+          <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClose={this.onMarkerClose}  submit={this.submitImage} update={this.updateImageDisplay} onMarkerClick={this.onMarkerClick}/>
         </div>
       </div>
     )

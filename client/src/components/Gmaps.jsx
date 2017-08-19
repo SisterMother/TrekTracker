@@ -31,7 +31,6 @@ class Map extends Component {
 				defaultZoom={15}
         ref={this.props.handleMapMounted}
 				center={this.props.mapCenter}
-        onClick={this.props.onMapClick}
         onDragEnd={this.props.onDragEnd}
 
         >
