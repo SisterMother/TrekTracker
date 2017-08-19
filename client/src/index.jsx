@@ -110,7 +110,6 @@ class App extends React.Component {
     return (
       <div>
         <Nav />
-        {console.log('state: ', this.state)}
         <Switch>
           <Route exact path='/'>
             <Home logged={this.state.logged}/>
