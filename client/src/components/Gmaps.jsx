@@ -23,7 +23,7 @@ class Map extends Component {
 
 		return (
 			<GoogleMap
-				defaultZoom={15}
+				defaultZoom={13}
         ref={this.props.handleMapMounted}
 				center={this.props.mapCenter}
         onClick={this.props.onMapClick}

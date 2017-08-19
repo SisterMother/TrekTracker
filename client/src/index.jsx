@@ -11,6 +11,7 @@ import { updateImage, onDragEnd, onMarkerClose, handleSearchBoxMounted, handlePl
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from './components/Nav.jsx';
+import List from './components/TrailList.jsx';
 import Home from './page-components/Home.jsx';
 import Login from './page-components/Login.jsx';
 import User from './page-components/User.jsx';
@@ -64,24 +65,18 @@ class App extends React.Component {
             params: {
               lat: this.state.mapCenter.lat,
               lng: this.state.mapCenter.lng,
-              radius: 50
+              radius: 10
             }
           })
           .then(res => {
             res.data.places.forEach((trail) => {
               const nextMarkers = [
-                ...this.state.markers,
                 {
                    position: {lat: trail.lat, lng: trail.lon},
                    showInfo: false,
-                   infoContent: (
-                    <svg
-                      id="Layer_1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 50 50" />
-                    )
+                   name: trail.name,
+                   city: trail.city,
+                   state: trail.state,
                 },
                ];
                this.setState({
@@ -127,12 +122,13 @@ class App extends React.Component {
             <Upload submit={this.submitImage} update={this.updateImageDisplay}/>
           </Route>
         </Switch>
-        <div style={{
+        <div className = 'Gmap'  style={{
             width: '700px',
             height: '600px'
           }}>
           <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}  onPlacesChanged={this.handlePlacesChanged} trails={this.state.trails} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onMapClick={this.onMapClick} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClose={this.onMarkerClose}  submit={this.submitImage} update={this.updateImageDisplay} onMarkerClick={this.onMarkerClick}/>
         </div>
+        <List markers = {this.state.markers} />
       </div>
     )
   }
