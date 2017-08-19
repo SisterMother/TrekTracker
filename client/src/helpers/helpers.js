@@ -187,29 +187,36 @@ const onMarkerClose = function (targetMarker) {
   });
 }
 
-const onDragEnd = function (event) {
-  //This finds the map center when the map is moved, will probably need an api call eventually.
-  let newCenter = this._map.getCenter()
-  let newCenterLat = newCenter.lat();
-  let newCenterLng = newCenter.lng();
-  this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
-  axios.get('/api/trails', {
-    params: {
-      lat: this.state.mapCenter.lat,
-      lng: this.state.mapCenter.lng,
-      radius: 50
-    }
-  })
-  .then(res => {
-    res.data.places.forEach((trail) => {
-      const nextMarkers = [
-        ...this.state.markers,
-        {
-          position: {lat: trail.lat, lng: trail.lon}
-        },
-      ];
-      this.setState({
-        markers: nextMarkers,
+
+  const onDragEnd = function (event) {
+    //This finds the map center when the map is moved, will probably need an api call eventually.
+    let newCenter = this._map.getCenter()
+    let newCenterLat = newCenter.lat();
+    let newCenterLng = newCenter.lng();
+    this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
+    axios.get('/api/trails',
+      {
+        params: {
+          lat: this.state.mapCenter.lat,
+          lng: this.state.mapCenter.lng,
+          radius: 50
+        }
+      })
+      .then(res => {
+      res.data.places.forEach((trail) => {
+        const nextMarkers = [
+          ...this.state.markers,
+          {
+             position: {lat: trail.lat, lng: trail.lon}
+           },
+         ];
+         this.setState({
+           markers: nextMarkers,
+         });
+       })
+     })
+      .catch(err => {
+        console.log('oops, error in the trails call: ', err);
       });
     });
   })
