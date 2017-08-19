@@ -48,15 +48,17 @@ router.get('/posts/trails/:trail', (req, res) => {
 });
 
 router.get('/trails', (req, res) => {
-  // console.log('whats being sent in the req: ', req.query);
-  let lat = `${req.query.lat.split('.')[0]}` || `${34}`;
-  let long = `${req.query.lng.split('.')[0]}` || `${-104}`;
-  let radius = `${req.query.radius}` || `${100}`;
-  let limit = `${req.query.radius}` || `${25}`;
+  let lat = `${req.query.lat || 34}`;
+  let long = `${req.query.lng || -104}`;
+  let radius = `${req.query.radius || 100}`;
+  let limit = `${req.query.radius || 25}`;
   getTrailsByLoc(lat, long, radius, limit, (err, data) => {
     if(err) {
       res.end(JSON.stringify(err));
     } else {
+      data.places.forEach(trail => {
+        db.createTrail(trail.unique_id, trail.name, trail.directions, trail.lat, trail.lon);
+      });
       res.end(JSON.stringify(data));
     }
   })

@@ -68,26 +68,27 @@ class App extends React.Component {
             }
           })
           .then(res => {
-          res.data.places.forEach((trail) => {
-            const nextMarkers = [
-              ...this.state.markers,
-              {
-                 position: {lat: trail.lat, lng: trail.lon},
-                 showInfo: false,
-                 infoContent: (
-                  <svg
-                    id="Layer_1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 50 50" />
-                  )
-              },
-             ];
-             this.setState({
-               markers: nextMarkers,
-             });
-           })
+            res.data.places.forEach((trail) => {
+              const nextMarkers = [
+                ...this.state.markers,
+                {
+                   position: {lat: trail.lat, lng: trail.lon},
+                   showInfo: false,
+                   infoContent: (
+                    <svg
+                      id="Layer_1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 50 50" />
+                    )
+                },
+               ];
+               this.setState({
+                 markers: nextMarkers,
+                 trails: res.data.places
+               });
+            })
          })
           .catch(err => {
             console.log('oops, error in the trails call: ', err);
