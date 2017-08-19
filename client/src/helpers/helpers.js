@@ -189,6 +189,7 @@ const onMarkerClose = function (targetMarker) {
 
 const onMapClick = function (event) {
 /*    ADDING MARKERS CURRENTLY DISABLED.
+  In the future, this may be a useful feature to add. 
 
 const nextMarkers = [
       ...this.state.markers,
