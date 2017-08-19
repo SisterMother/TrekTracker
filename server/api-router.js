@@ -48,7 +48,6 @@ router.get('/posts/trails/:trail', (req, res) => {
 });
 
 router.get('/trails', (req, res) => {
-  // console.log('whats being sent in the req: ', req.query);
   let lat = `${req.query.lat.split('.')[0]}` || `${34}`;
   let long = `${req.query.lng.split('.')[0]}` || `${-104}`;
   let radius = `${req.query.radius}` || `${100}`;
