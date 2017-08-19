@@ -1,5 +1,5 @@
 {
   "GOOGLE_CLIENT_ID": "FILL_ME_IN",
   "GOOGLE_CLIENT_SECRET": "FILL_ME_IN",
-  "callbackURL": "http://FILL_ME_IN/auth/google/callback"
+  "CALLBACK_URL": "http://FILL_ME_IN/auth/google/callback"
 }
