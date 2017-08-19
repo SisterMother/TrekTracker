@@ -47,21 +47,6 @@ router.get('/posts/trails/:trail', (req, res) => {
   });
 });
 
- // city: 'Sacramento',
- //  state: 'California',
- //  country: 'United States',
- //  name: 'American River Bike Trail',
- //  parent_id: null,
- //  unique_id: 281,
- //  directions: 'Starting at the confluence of the American and Sacramento Rivers, this trail heads east to Folsom Lake.  The total distance (one-way) is 32 miles.  You can ride any distance since it is an out and back ride. There is currently no &quot;legal\'&quot;singletrack along this route, however that is under review within the Parks &amp; Rec departments that oversee the Trail.  However, you may be able to divert from the paved path up to the levees along the American River to get some dirt under your tires.  The path on top of the levee is legal to ride on. ',
- //  lat: 38.60094,
- //  lon: -121.50776,
- //  description: null,
- //  date_created: null,
- //  children: [],
- //  activities:
-// module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0) => {
-
 router.get('/trails', (req, res) => {
   // console.log('whats being sent in the req: ', req.query);
   let lat = `${req.query.lat.split('.')[0]}` || `${34}`;
