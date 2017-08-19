@@ -73,16 +73,17 @@ class App extends React.Component {
           ...this.state.markers,
           {
             position: {lat: trail.lat, lng: trail.lon},
-            name: trail.name,
-            city: trail.city,
-            state: trail.state,
-          },
+             showInfo: false,
+             name: trail.name,
+             city: trail.city,
+             state: trail.state,
+          }
         ];
         this.setState({
-          markers: nextMarkers,
-        });
-      });
-    })
+           markers: nextMarkers,
+         });
+       })
+     })
     .catch(err => {
       console.log('oops, error in the trails call: ', err);
     });
