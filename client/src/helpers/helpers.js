@@ -194,12 +194,13 @@ const onMarkerClose = function (targetMarker) {
     let newCenterLat = newCenter.lat();
     let newCenterLng = newCenter.lng();
     this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
+    this.setState({markers:[]})
     axios.get('/api/trails',
       {
         params: {
           lat: this.state.mapCenter.lat,
           lng: this.state.mapCenter.lng,
-          radius: 50
+          radius: 10
         }
       })
       .then(res => {
@@ -207,7 +208,10 @@ const onMarkerClose = function (targetMarker) {
         const nextMarkers = [
           ...this.state.markers,
           {
-             position: {lat: trail.lat, lng: trail.lon}
+             position: {lat: trail.lat, lng: trail.lon},
+             name: trail.name,
+             city: trail.city,
+             state: trail.state,
            },
          ];
          this.setState({
