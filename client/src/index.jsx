@@ -11,6 +11,7 @@ import { updateImage, onDragEnd, onMarkerClose, handleSearchBoxMounted, submitIm
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from './components/Nav.jsx';
+import List from './components/TrailList.jsx';
 import Home from './page-components/Home.jsx';
 import Login from './page-components/Login.jsx';
 import User from './page-components/User.jsx';
@@ -125,7 +126,7 @@ class App extends React.Component {
             <Upload submit={this.submitImage} update={this.updateImageDisplay}/>
           </Route>
         </Switch>
-        <div style={{
+        <div className = 'Gmap'  style={{
             width: '700px',
             height: '600px'
           }}>
@@ -143,6 +144,7 @@ class App extends React.Component {
             onMarkerClick={this.onMarkerClick}
           />
         </div>
+        <List markers = {this.state.markers} />
       </div>
     )
   }
