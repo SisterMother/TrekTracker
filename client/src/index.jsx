@@ -60,31 +60,32 @@ class App extends React.Component {
     })
     .then(() => {
       return axios.get('/api/trails', {
-            params: {
-              lat: this.state.mapCenter.lat,
-              lng: this.state.mapCenter.lng,
-              radius: 10
-            }
-          })
-          .then(res => {
-            res.data.places.forEach((trail) => {
-              const nextMarkers = [
-                {
-                   position: {lat: trail.lat, lng: trail.lon},
-                   showInfo: false,
-                   name: trail.name,
-                   city: trail.city,
-                   state: trail.state,
-                },
-               ];
-               this.setState({
-                 markers: nextMarkers,
-                 trails: res.data.places
-               });
-            })
-         })
-          .catch(err => {
-            console.log('oops, error in the trails call: ', err);
+        params: {
+          lat: this.state.mapCenter.lat,
+          lng: this.state.mapCenter.lng,
+          radius: 50
+        }
+      });
+    })
+    .then(res => {
+      res.data.places.forEach((trail) => {
+        const nextMarkers = [
+          ...this.state.markers,
+          {
+              position: {lat: trail.lat, lng: trail.lon},
+              showInfo: false,
+              name: trail.name,
+              city: trail.city,
+              state: trail.state,
+
+          ];
+          this.setState({
+            markers: nextMarkers,
+          });
+      })
+    })
+    .catch(err => {
+      console.log('oops, error in the trails call: ', err);
     });
     axios.get('/api/currentUser')
       .then(res => {
