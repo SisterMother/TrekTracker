@@ -64,7 +64,7 @@ var Trails = sequelize.define('trails', {
     allowNull: false
   },
   directions: {
-    type: Sequelize.text
+    type: Sequelize.TEXT
   }
 });
 models.trails = Trails;
