@@ -63,7 +63,7 @@ class App extends React.Component {
         params: {
           lat: this.state.mapCenter.lat,
           lng: this.state.mapCenter.lng,
-          radius: 50
+          radius: 10
         }
       });
     })
@@ -72,17 +72,16 @@ class App extends React.Component {
         const nextMarkers = [
           ...this.state.markers,
           {
-              position: {lat: trail.lat, lng: trail.lon},
-              showInfo: false,
-              name: trail.name,
-              city: trail.city,
-              state: trail.state,
-
-          ];
-          this.setState({
-            markers: nextMarkers,
-          });
-      })
+            position: {lat: trail.lat, lng: trail.lon},
+            name: trail.name,
+            city: trail.city,
+            state: trail.state,
+          },
+        ];
+        this.setState({
+          markers: nextMarkers,
+        });
+      });
     })
     .catch(err => {
       console.log('oops, error in the trails call: ', err);
