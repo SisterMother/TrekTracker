@@ -1,9 +1,10 @@
-var passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth2').Strategy;
-var users = require('../database/models.js').users;
+let passport = require('passport');
+let GoogleStrategy = require('passport-google-oauth2').Strategy;
+let users = require('../database/models.js').users;
+let config;
 
-if (process.env.NODE_ENV !== 'production') {
-  var config = require('./config.json');
+if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'production') {
+  config = require('./config.json');
 }
 
 module.exports = (passport) => {
