@@ -129,7 +129,19 @@ class App extends React.Component {
             width: '700px',
             height: '600px'
           }}>
-          <Map containerElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapElement={< div style = {{width:100+'%', height:100+'%'}}/>} mapCenter={this.state.mapCenter} onSearchBoxMounted={this.handleSearchBoxMounted} markers = {this.state.markers} onDragEnd={this.onDragEnd} handleMapMounted={this.handleMapMounted} onMarkerClose={this.onMarkerClose}  submit={this.submitImage} update={this.updateImageDisplay} onMarkerClick={this.onMarkerClick}/>
+          <Map
+            containerElement={< div style = {{width:100+'%', height:100+'%'}}/>}
+            mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}
+            mapCenter={this.state.mapCenter}
+            onSearchBoxMounted={this.handleSearchBoxMounted}
+            markers = {this.state.markers}
+            onDragEnd={this.onDragEnd}
+            handleMapMounted={this.handleMapMounted}
+            onMarkerClose={this.onMarkerClose}
+            submit={this.submitImage}
+            update={this.updateImageDisplay}
+            onMarkerClick={this.onMarkerClick}
+          />
         </div>
       </div>
     )
