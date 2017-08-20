@@ -23,7 +23,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-// [{position:{lat: Number, long: Number}}]
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -32,66 +31,18 @@ class App extends React.Component {
       logged: false,
       image: null,
       photo: null,
-      mapCenter: {
-        lat: 34.7836966,
-        lng: -115.4089664
-      },
-      markers:[],
-      trailPopup: false
-
     }
+
+    /*Bindings are set here.
+    For whoever gets this as a legacy, adding redux could fix almost a lot of the spaghetti code qualities.
+    */
     this.submitImage = submitImage.bind(this);
     this.updateImageDisplay = updateImage.bind(this);
-    this.handleSearchBoxMounted = handleSearchBoxMounted.bind(this);
-    this.onMarkerClick = onMarkerClick.bind(this);
-    this.onMarkerClose = onMarkerClose.bind(this);
-    this.onDragEnd = onDragEnd.bind(this);
-    this.handleMapMounted = handleMapMounted.bind(this);
-    this.onPlacesChanged = handlePlacesChanged.bind(this);
-    this.trailClick = trailClick.bind(this);
   }
 
-  componentDidMount() {
-    this.input = document.querySelector('.input');
-    this.preview = document.querySelector('.preview');
+//When the app mounts we are going to do the following actions. Get GPS location, find local trails, and load the current user.
 
-    gps.getLocation()
-    .then(value => {
-      let newObj = {
-        lat : value.coords.latitude,
-        lng : value.coords.longitude
-      }
-      this.setState({mapCenter: newObj})
-    })
-    .then(() => {
-      return axios.get('/api/trails', {
-        params: {
-          lat: this.state.mapCenter.lat,
-          lng: this.state.mapCenter.lng,
-          radius: 10
-        }
-      });
-    })
-    .then(res => {
-      res.data.places.forEach((trail) => {
-        const nextMarkers = [
-          ...this.state.markers,
-          {
-            position: {lat: trail.lat, lng: trail.lon},
-            name: trail.name,
-            city: trail.city,
-            state: trail.state,
-            showInfo: false,
-          },
-        ];
-        this.setState({
-          markers: nextMarkers,
-        });
-      });
-    })
-    .catch(err => {
-      console.log('oops, error in the trails call: ', err);
-    });
+  componentDidMount() {
     axios.get('/api/currentUser')
       .then(res => {
         var email = res.data.email;
@@ -125,26 +76,6 @@ class App extends React.Component {
             <Upload submit={this.submitImage} update={this.updateImageDisplay}/>
           </Route>
         </Switch>
-        <div className = 'Gmap'  style={{
-            width: '700px',
-            height: '600px'
-          }}>
-          <Map
-            containerElement={< div style = {{width:100+'%', height:100+'%'}}/>}
-            mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}
-            mapCenter={this.state.mapCenter}
-            onSearchBoxMounted={this.handleSearchBoxMounted}
-            markers = {this.state.markers}
-            onDragEnd={this.onDragEnd}
-            handleMapMounted={this.handleMapMounted}
-            onMarkerClose={this.onMarkerClose}
-            submit={this.submitImage}
-            update={this.updateImageDisplay}
-            onMarkerClick={this.onMarkerClick}
-            onPlacesChanged={this.onPlacesChanged}
-          />
-        </div>
-        <TrailList onClick={this.trailClick} markers={this.state.markers} />
       </div>
     )
   }
