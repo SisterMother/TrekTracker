@@ -20,7 +20,6 @@ import gps from './helpers/gps.js';
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-// [{position:{lat: Number, long: Number}}]
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -37,6 +36,10 @@ class App extends React.Component {
       trails: []
 
     }
+
+    /*Bindings are set here.
+    For whoever gets this as a legacy, adding redux could fix almost a lot of the spaghetti code qualities. 
+    */
     this.submitImage = submitImage.bind(this);
     this.updateImageDisplay = updateImage.bind(this);
     this.handleSearchBoxMounted = handleSearchBoxMounted.bind(this);
@@ -48,18 +51,23 @@ class App extends React.Component {
     this.ListClick = ListClick.bind(this);
   }
 
+//When the app mounts we are going to do the following actions. Get GPS location, find local trails, and load the current user.
+
   componentDidMount() {
     this.input = document.querySelector('.input');
     this.preview = document.querySelector('.preview');
-
+    //Note, right now the geolocation is just HTML5.
     gps.getLocation()
     .then(value => {
+      //First, we are going to get the location, then set it inside of an object.
       let newObj = {
         lat : value.coords.latitude,
         lng : value.coords.longitude
       }
+      //We then set that object as the mapCenter, which dictates where the Google Map locates at.
       this.setState({mapCenter: newObj})
     })
+    //Once we get the location of the user, we can then find trails in their area. We search using the MapCenter coordinates.
     .then(() => {
       return axios.get('/api/trails', {
         params: {
@@ -70,18 +78,29 @@ class App extends React.Component {
       });
     })
     .then(res => {
+      //Once we get trails from our particular area, we can then create markers on the map.
       res.data.places.forEach((trail) => {
+        /*
+        We are going to set an array containing all of the markers.
+        The spread operator is used as a type of concat so that markers don't overwrite themselves.
+        */
         const nextMarkers = [
           ...this.state.markers,
           {
+            /*
+            We set an object with some information that we are going to need later one.
+            In order to populate the map/list we use information passed in here.
+            */
             position: {lat: trail.lat, lng: trail.lon},
             name: trail.name,
             city: trail.city,
             state: trail.state,
+            //showInfo toggles the marker infowinow box. It is set to false right now, when the marker is clicked it will toggle to true.
             showInfo: false,
           },
         ];
         this.setState({
+          //The empty markers array in state is set to the populated nextMarkers array.
           markers: nextMarkers,
         });
       });
