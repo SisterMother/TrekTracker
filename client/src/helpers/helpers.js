@@ -170,6 +170,8 @@ module.exports.onMarkerClick = function (targetMarker) {
     markers: this.state.markers.map(marker => {
       if (marker === targetMarker) {
         marker.showInfo = true
+      } else {
+        marker.showInfo = false
       }
       return marker;
     }),
