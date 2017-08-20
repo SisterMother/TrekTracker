@@ -1,15 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import Posts from '../components/Posts.jsx';
+import Upload from '../components/Upload.jsx';
 
 class Trail extends React.Component {
   constructor(props) {
     super(props);
 
-    // Gets user email based on the URL the user is on
-    let locationSplit = window.location.href.split('/');
+    let trailId = window.location.search.split('?id=')[1].split('?')[0]; // Successfully grabs trail query parameter regardless of what parameters are declared before or after it
     this.state = {
-      trail: locationSplit[locationSplit.length - 1],
+      trailId,
       posts: []
     };
 
@@ -22,6 +22,7 @@ class Trail extends React.Component {
   render() {
     return (
       <div>
+        <Upload />
         <Posts posts={this.state.posts} />
       </div>
     );

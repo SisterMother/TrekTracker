@@ -39,10 +39,9 @@ router.get('/posts/users/:useremail', (req, res) => {
   });
 });
 
-router.get('/posts/trails/:trail', (req, res) => {
-  var trailName = req.params.trail;
-  console.log('[app-router /posts/trails]trail name: ', trailName);
-  db.getPostsByTrailName(trailName).then((posts) => {
+router.get('/posts/trails/:trailId', (req, res) => {
+  let trailId = req.params.trailId;
+  db.getPostsByTrailId(trailId).then((posts) => {
     res.end(JSON.stringify(posts));
   });
 });
