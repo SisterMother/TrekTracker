@@ -17,6 +17,9 @@ import Login from './page-components/Login.jsx';
 import User from './page-components/User.jsx';
 import Trail from './page-components/Trail.jsx';
 import gps from './helpers/gps.js';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -147,6 +150,10 @@ class App extends React.Component {
   }
 };
 
-reactDOM.render(<BrowserRouter>
-                  <App />
-                </BrowserRouter>, document.getElementById('app'));
+reactDOM.render(
+  <BrowserRouter>
+    <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+      <App/>
+    </MuiThemeProvider>
+  </BrowserRouter>
+, document.getElementById('app'));
