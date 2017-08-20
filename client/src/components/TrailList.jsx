@@ -4,7 +4,7 @@ import ListEntry from './TrailListEntry.jsx'
 const List = (props) => (
   <div className = 'TrailList'>
     <ul> {props.markers.map(marker =>
-      <ListEntry currentMarker = {marker} ListClick = {props.ListClick} />
+      <ListEntry trail={marker} onClick={props.ListClick} />
       )}
     </ul>
   </div>
