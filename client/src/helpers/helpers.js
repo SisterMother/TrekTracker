@@ -123,7 +123,7 @@ module.exports.handleSearchBoxMounted = function (searchBox)  {
 }
 
 // When the list of trails is clicked, this sets the mapCenter on the location of the clicked trail.
-module.exports.ListClick = function (item) {
+module.exports.trailClick = function (item) {
   this.setState({mapCenter: {lat: item.position.lat, lng: item.position.lng}});
   //We also want the popup box within the marker to activate upon list click, as that is the way that we access the trail page.
   //More information on the marker click function below.
