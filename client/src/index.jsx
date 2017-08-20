@@ -118,7 +118,7 @@ class App extends React.Component {
           <Route path='/users'>
             <User logged={this.state.logged}/>
           </Route>
-          <Route path='/trails'>
+          <Route exact path='/trail'>
             <Trail logged={this.state.logged}/>
           </Route>
           <Route path='/upload'>
