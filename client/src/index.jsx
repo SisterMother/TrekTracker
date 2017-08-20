@@ -7,10 +7,11 @@ import Posts from './components/Posts.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
-import { updateImage, onDragEnd, onMarkerClose, handleSearchBoxMounted, submitImage, onMarkerClick, handleMapMounted } from './helpers/helpers.js';
+import { updateImage, handlePlacesChanged, ListClick, onDragEnd, onMarkerClose, handleSearchBoxMounted, submitImage, onMarkerClick, handleMapMounted } from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from './components/Nav.jsx';
+import List from './components/TrailList.jsx';
 import Home from './page-components/Home.jsx';
 import Login from './page-components/Login.jsx';
 import User from './page-components/User.jsx';
@@ -43,6 +44,8 @@ class App extends React.Component {
     this.onMarkerClose = onMarkerClose.bind(this);
     this.onDragEnd = onDragEnd.bind(this);
     this.handleMapMounted = handleMapMounted.bind(this);
+    this.onPlacesChanged = handlePlacesChanged.bind(this);
+    this.ListClick = ListClick.bind(this);
   }
 
   componentDidMount() {
@@ -62,7 +65,7 @@ class App extends React.Component {
         params: {
           lat: this.state.mapCenter.lat,
           lng: this.state.mapCenter.lng,
-          radius: 50
+          radius: 10
         }
       });
     })
@@ -71,23 +74,19 @@ class App extends React.Component {
         const nextMarkers = [
           ...this.state.markers,
           {
-              position: {lat: trail.lat, lng: trail.lon},
-              showInfo: false,
-              infoContent: (
-              <svg
-                id="Layer_1"
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 50 50" />
-              )
+            position: {lat: trail.lat, lng: trail.lon},
+            infoContent: "test Content",
+            name: trail.name,
+            city: trail.city,
+            state: trail.state,
+            showInfo: false,
+
           },
-          ];
-          this.setState({
-            markers: nextMarkers,
-            trails: res.data.places
-          });
-      })
+        ];
+        this.setState({
+          markers: nextMarkers,
+        });
+      });
     })
     .catch(err => {
       console.log('oops, error in the trails call: ', err);
@@ -125,7 +124,7 @@ class App extends React.Component {
             <Upload submit={this.submitImage} update={this.updateImageDisplay}/>
           </Route>
         </Switch>
-        <div style={{
+        <div className = 'Gmap'  style={{
             width: '700px',
             height: '600px'
           }}>
@@ -141,8 +140,10 @@ class App extends React.Component {
             submit={this.submitImage}
             update={this.updateImageDisplay}
             onMarkerClick={this.onMarkerClick}
+            onPlacesChanged={this.onPlacesChanged}
           />
         </div>
+        <List ListClick = {this.ListClick} markers = {this.state.markers} />
       </div>
     )
   }
