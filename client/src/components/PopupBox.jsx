@@ -13,7 +13,7 @@ class Box extends Component {
   render () {
     return (
       <div>
-        <h3>{this.props.marker.marker.name}</h3>
+        <h3>{this.props.marker.name}</h3>
         <button> Trail Page </button>
       </div>
     )
