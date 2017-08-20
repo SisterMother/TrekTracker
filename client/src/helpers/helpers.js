@@ -226,4 +226,3 @@ module.exports.onDragEnd = function (event) {
     });
   }
 }
-
