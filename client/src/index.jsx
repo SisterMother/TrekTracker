@@ -34,7 +34,7 @@ class App extends React.Component {
         lng: -115.4089664
       },
       markers:[],
-      trails: []
+      trailPopup: false
 
     }
     this.submitImage = submitImage.bind(this);
