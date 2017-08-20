@@ -118,6 +118,7 @@ const handleSearchBoxMounted = function (searchBox)  {
 }
 
 const handlePlacesChanged = function ()  {
+  console.log('here')
   const places = this._searchBox.getPlaces();
   let newCenter = this._map.getCenter()
   let newCenterLat = newCenter.lat();
