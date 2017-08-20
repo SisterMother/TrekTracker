@@ -78,6 +78,7 @@ class App extends React.Component {
             name: trail.name,
             city: trail.city,
             state: trail.state,
+            showInfo: false,
           },
         ];
         this.setState({
@@ -137,6 +138,7 @@ class App extends React.Component {
             submit={this.submitImage}
             update={this.updateImageDisplay}
             onMarkerClick={this.onMarkerClick}
+            onPlacesChanged={this.onPlacesChanged}
           />
         </div>
         <List ListClick = {this.ListClick} markers = {this.state.markers} />
