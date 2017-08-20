@@ -117,6 +117,11 @@ const handleSearchBoxMounted = function (searchBox)  {
   this._searchBox = searchBox;
 }
 
+const ListClick = function (item) {
+  this.setState({mapCenter: {lat: item.position.lat, lng: item.position.lng}});
+  this.onMarkerClick(item);
+}
+
 const handlePlacesChanged = function ()  {
   const places = this._searchBox.getPlaces();
   let newCenter = this._map.getCenter()
@@ -193,11 +198,12 @@ const onDragEnd = function (event) {
   let newCenterLat = newCenter.lat();
   let newCenterLng = newCenter.lng();
   this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
+  this.setState({markers:[]})
   axios.get('/api/trails', {
     params: {
       lat: this.state.mapCenter.lat,
       lng: this.state.mapCenter.lng,
-      radius: 50
+      radius: 10
     }
   })
   .then(res => {
@@ -205,7 +211,10 @@ const onDragEnd = function (event) {
       const nextMarkers = [
         ...this.state.markers,
         {
-          position: {lat: trail.lat, lng: trail.lon}
+          position: {lat: trail.lat, lng: trail.lon},
+          name: trail.name,
+          city: trail.city,
+          state: trail.state,
         },
       ];
       this.setState({
@@ -228,4 +237,5 @@ module.exports = {
   onDragEnd,
   handleMapMounted,
   onMarkerClose,
+  ListClick,
 }

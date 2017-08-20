@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import SearchBox from 'react-google-maps/lib/places/SearchBox'
 import { handlePlacesChanged } from '../helpers/helpers.js'
-
+import Box from './PopupBox.jsx'
 const INPUT_STYLE = {
   boxSizing: `border-box`,
   MozBoxSizing: `border-box`,
@@ -21,14 +21,13 @@ const INPUT_STYLE = {
 class Map extends Component {
   constructor (props) {
     super(props);
-    this.onPlacesChanged = handlePlacesChanged.bind(this);
   }
 
 	render() {
 
 		return (
 			<GoogleMap
-				defaultZoom={15}
+				defaultZoom={13}
         ref={this.props.handleMapMounted}
 				center={this.props.mapCenter}
         onDragEnd={this.props.onDragEnd}
@@ -44,14 +43,7 @@ class Map extends Component {
           <InfoWindow
           onCloseClick={() => this.props.onMarkerClose(marker)}>
           <div>
-            <form onSubmit={this.props.submit}>
-              <h2>Upload trek pic!</h2>
-              <input className='input' onChange={() => this.props.update()} type="file"/>
-              <button style={{position:"relative",left:"10px",backgroundColor:"papayawhip"}}>Submit</button>
-            </form>
-            <div className="preview">
-              <p>No files currently selected for upload</p>
-            </div>
+             <Box marker = {marker} />
           </div>
           </InfoWindow>
         )}
@@ -59,7 +51,7 @@ class Map extends Component {
         ))}
 				<SearchBox
 				  ref={this.props.onSearchBoxMounted}
-				  onPlacesChanged={this.onPlacesChanged}
+				  onPlacesChanged={this.props.onPlacesChanged}
 		 			controlPosition={google.maps.ControlPosition.TOP_LEFT}
 		 			inputPlaceholder="Search For Locations!!"
 					inputStyle={INPUT_STYLE}
