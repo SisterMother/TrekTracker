@@ -123,9 +123,12 @@ module.exports.handleSearchBoxMounted = function (searchBox)  {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 module.exports.trailClick = function (item) {
 =======
+=======
+>>>>>>> a4338215b0f86ef79984c0734e80a744578bf3f2
 // When the list of trails is clicked, this sets the mapCenter on the location of the clicked trail.
 module.exports.ListClick = function (item) {
 >>>>>>> Added comments for Google Maps code.
@@ -229,6 +232,7 @@ user has finished moving the map.
 
 module.exports.onDragEnd = function (event) {
 <<<<<<< HEAD
+<<<<<<< HEAD
   if(!this.state.trailPopup) {
   //This finds the map center when the map is moved, will probably need an api call eventually.
     let newCenter = this._map.getCenter()
@@ -258,6 +262,8 @@ module.exports.onDragEnd = function (event) {
           markers: nextMarkers,
         });
 =======
+=======
+>>>>>>> a4338215b0f86ef79984c0734e80a744578bf3f2
 //The first thing we are going to do is find the new center of the map.
 //If you are confused by the this._map call, it is explained above in this file.
   let newCenter = this._map.getCenter()
