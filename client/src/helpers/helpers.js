@@ -117,8 +117,12 @@ const handleSearchBoxMounted = function (searchBox)  {
   this._searchBox = searchBox;
 }
 
+const ListClick = function (item) {
+  this.setState({mapCenter: {lat: item.position.lat, lng: item.position.lng}});
+  this.onMarkerClick(item);
+}
+
 const handlePlacesChanged = function ()  {
-  console.log('here')
   const places = this._searchBox.getPlaces();
   let newCenter = this._map.getCenter()
   let newCenterLat = newCenter.lat();
@@ -233,4 +237,5 @@ module.exports = {
   onDragEnd,
   handleMapMounted,
   onMarkerClose,
+  ListClick,
 }

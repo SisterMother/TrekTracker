@@ -7,7 +7,7 @@ import Posts from './components/Posts.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
-import { updateImage, handlePlacesChanged, onDragEnd, onMarkerClose, handleSearchBoxMounted, submitImage, onMarkerClick, handleMapMounted } from './helpers/helpers.js';
+import { updateImage, handlePlacesChanged, ListClick, onDragEnd, onMarkerClose, handleSearchBoxMounted, submitImage, onMarkerClick, handleMapMounted } from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from './components/Nav.jsx';
@@ -45,6 +45,7 @@ class App extends React.Component {
     this.onDragEnd = onDragEnd.bind(this);
     this.handleMapMounted = handleMapMounted.bind(this);
     this.onPlacesChanged = handlePlacesChanged.bind(this);
+    this.ListClick = ListClick.bind(this);
   }
 
   componentDidMount() {
@@ -142,7 +143,7 @@ class App extends React.Component {
             onPlacesChanged={this.onPlacesChanged}
           />
         </div>
-        <List markers = {this.state.markers} />
+        <List ListClick = {this.ListClick} markers = {this.state.markers} />
       </div>
     )
   }
