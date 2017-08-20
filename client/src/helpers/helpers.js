@@ -15,7 +15,7 @@ const fileTypes = [
 
 //check to see if the file uploaded to the DOM matches
 //the specified file types.
-const validFileType = function (file) {
+const isValidFileType = function (file) {
   for(var i = 0; i < fileTypes.length; i++) {
     if(file.type === fileTypes[i]) {
       return true;
@@ -31,7 +31,7 @@ const validFileType = function (file) {
 * due to the scalability of binary data: 2^10 = 1024.
 * Bonus bonus fact: there are 2^10 KBs in a MB!
 */
-const returnFileSize = function(number) {
+const getFileSize = function(number) {
   if(number < 1024) {
     return number + 'bytes';
   } else if(number > 1024 && number < 1048576) {
@@ -49,7 +49,7 @@ const returnFileSize = function(number) {
 * to Update.jsx, where it is called when there is a
 * change in the input element accepting photo uploads
 */
-const updateImage = function() {
+module.exports.updateImage = function() {
   //preview and input defined in index.jsx, they are
   //DOM elements selected using query selectors.
   while(this.preview.firstChild) {
@@ -78,11 +78,11 @@ const updateImage = function() {
     for(let i = 0; i < curFiles.length; i++) {
       let listItem = document.createElement('div');
       let para = document.createElement('p');
-      if(validFileType(curFiles[i])) {
+      if(isValidFileType(curFiles[i])) {
         //if the currently uploaded files are of the valid type,
         //make elements for the image display, subtitle paragraph,
         //and description input
-        para.textContent = `File name: ${curFiles[i].name}; File size: ${returnFileSize(curFiles[i].size)}.`;
+        para.textContent = `File name: ${curFiles[i].name}; File size: ${getFileSize(curFiles[i].size)}.`;
         let desc = document.createElement('textarea');
         let image = document.createElement('img');
         image.style = 'height:200px;border:5px groove darkslategray';
@@ -109,20 +109,21 @@ const updateImage = function() {
 }
 
 
-const handleMapMounted = function (map) {
+module.exports.handleMapMounted = function (map) {
   this._map = map;
 }
 
-const handleSearchBoxMounted = function (searchBox)  {
+module.exports.handleSearchBoxMounted = function (searchBox)  {
   this._searchBox = searchBox;
 }
 
-const ListClick = function (item) {
+
+module.exports.ListClick = function (item) {
   this.setState({mapCenter: {lat: item.position.lat, lng: item.position.lng}});
   this.onMarkerClick(item);
 }
 
-const handlePlacesChanged = function ()  {
+module.exports.handlePlacesChanged = function ()  {
   const places = this._searchBox.getPlaces();
   let newCenter = this._map.getCenter()
   let newCenterLat = newCenter.lat();
@@ -140,7 +141,7 @@ const handlePlacesChanged = function ()  {
   });
  }
 
-const submitImage = function(e) {
+module.exports.submitImage = function(e) {
   e.preventDefault();
   var form = new FormData();
   form.append('image', this.state.photo[0])
@@ -164,7 +165,7 @@ const submitImage = function(e) {
   });
 }
 
-const onMarkerClick = function (targetMarker) {
+module.exports.onMarkerClick = function (targetMarker) {
   this.setState({
     markers: this.state.markers.map(marker => {
       if (marker === targetMarker) {
@@ -178,7 +179,7 @@ const onMarkerClick = function (targetMarker) {
   });
 }
 
-const onMarkerClose = function (targetMarker) {
+module.exports.onMarkerClose = function (targetMarker) {
   this.setState({
     markers: this.state.markers.map(marker => {
       if (marker === targetMarker) {
@@ -192,7 +193,7 @@ const onMarkerClose = function (targetMarker) {
   });
 }
 
-const onDragEnd = function (event) {
+module.exports.onDragEnd = function (event) {
   //This finds the map center when the map is moved, will probably need an api call eventually.
   let newCenter = this._map.getCenter()
   let newCenterLat = newCenter.lat();
@@ -227,15 +228,3 @@ const onDragEnd = function (event) {
   });
 }
 
-
-module.exports = {
-  updateImage,
-  handleSearchBoxMounted,
-  handlePlacesChanged,
-  submitImage,
-  onMarkerClick,
-  onDragEnd,
-  handleMapMounted,
-  onMarkerClose,
-  ListClick,
-}
