@@ -168,7 +168,6 @@ module.exports.submitImage = function(e) {
 module.exports.onMarkerClick = function (targetMarker) {
   this.setState({
     markers: this.state.markers.map(marker => {
-      console.log('marker: ', marker);
       if (marker === targetMarker) {
         marker.showInfo = true
       }
