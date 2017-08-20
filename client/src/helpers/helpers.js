@@ -118,7 +118,7 @@ module.exports.handleSearchBoxMounted = function (searchBox)  {
 }
 
 
-module.exports.ListClick = function (item) {
+module.exports.trailClick = function (item) {
   this.setState({mapCenter: {lat: item.position.lat, lng: item.position.lng}});
   this.onMarkerClick(item);
 }
