@@ -122,16 +122,8 @@ module.exports.handleSearchBoxMounted = function (searchBox)  {
   this._searchBox = searchBox;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-module.exports.trailClick = function (item) {
-=======
-=======
->>>>>>> a4338215b0f86ef79984c0734e80a744578bf3f2
 // When the list of trails is clicked, this sets the mapCenter on the location of the clicked trail.
 module.exports.ListClick = function (item) {
->>>>>>> Added comments for Google Maps code.
   this.setState({mapCenter: {lat: item.position.lat, lng: item.position.lng}});
   //We also want the popup box within the marker to activate upon list click, as that is the way that we access the trail page.
   //More information on the marker click function below.
@@ -229,17 +221,22 @@ I chose to use the onDragEnd method because it is more efficent. It is also poss
 function, the problem with that is it fires for every pixel the map moves. This only fires once the
 user has finished moving the map.
 */
-
 module.exports.onDragEnd = function (event) {
-<<<<<<< HEAD
-<<<<<<< HEAD
   if(!this.state.trailPopup) {
-  //This finds the map center when the map is moved, will probably need an api call eventually.
-    let newCenter = this._map.getCenter()
-    let newCenterLat = newCenter.lat();
-    let newCenterLng = newCenter.lng();
-    this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
-    this.setState({markers:[]})
+  //trailPopup is designed to fix an error regarding markers disappearing.
+  //The first thing we are going to do is find the new center of the map.
+  //If you are confused by the this._map call, it is explained above in this file.
+  let newCenter = this._map.getCenter()
+  //Once we find out what the new center of our map is, we turn the latitude and longitude into variables that we can search.
+  let newCenterLat = newCenter.lat();
+  let newCenterLng = newCenter.lng();
+  this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
+  //We clear the markers array every time the map moves. This is done so that trails that show up in our list
+  //are correlated with markers that are actually in the area, or else out list would grow in size
+  //with every marker we ever encounter. In the future, there is a Google Maps getBounds function that it may be possible to use.
+  this.setState({markers:[]})
+  //Once our markers are reset, we make a call in order to find markers in our new location.
+  //The following call is the same as the on on the index, which can be referred to for a longer explanation of this process.
     axios.get('/api/trails', {
       params: {
         lat: this.state.mapCenter.lat,
@@ -261,43 +258,6 @@ module.exports.onDragEnd = function (event) {
         this.setState({
           markers: nextMarkers,
         });
-=======
-=======
->>>>>>> a4338215b0f86ef79984c0734e80a744578bf3f2
-//The first thing we are going to do is find the new center of the map.
-//If you are confused by the this._map call, it is explained above in this file.
-  let newCenter = this._map.getCenter()
-  //Once we find out what the new center of our map is, we turn the latitude and longitude into variables that we can search.
-  let newCenterLat = newCenter.lat();
-  let newCenterLng = newCenter.lng();
-  this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
-  //We clear the markers array every time the map moves. This is done so that trails that show up in our list
-  //are correlated with markers that are actually in the area, or else out list would grow in size
-  //with every marker we ever encounter. In the future, there is a Google Maps getBounds function that it may be possible to use.
-  this.setState({markers:[]})
-  //Once our markers are reset, we make a call in order to find markers in our new location.
-  //The following call is the same as the on on the index, which can be referred to for a longer explanation of this process.
-  axios.get('/api/trails', {
-    params: {
-      lat: newCenterLat,
-      lng: newCenterLng,
-      radius: 10
-    }
-  })
-  .then(res => {
-    res.data.places.forEach((trail) => {
-      const nextMarkers = [
-        ...this.state.markers,
-        {
-          position: {lat: trail.lat, lng: trail.lon},
-          name: trail.name,
-          city: trail.city,
-          state: trail.state,
-        },
-      ];
-      this.setState({
-        markers: nextMarkers,
->>>>>>> Added comments for Google Maps code.
       });
     })
     .catch(err => {

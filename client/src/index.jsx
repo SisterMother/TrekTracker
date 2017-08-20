@@ -41,7 +41,7 @@ class App extends React.Component {
     }
 
     /*Bindings are set here.
-    For whoever gets this as a legacy, adding redux could fix almost a lot of the spaghetti code qualities. 
+    For whoever gets this as a legacy, adding redux could fix almost a lot of the spaghetti code qualities.
     */
     this.submitImage = submitImage.bind(this);
     this.updateImageDisplay = updateImage.bind(this);
