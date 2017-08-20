@@ -7,11 +7,11 @@ import Posts from './components/Posts.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
-import { updateImage, handlePlacesChanged, ListClick, onDragEnd, onMarkerClose, handleSearchBoxMounted, submitImage, onMarkerClick, handleMapMounted } from './helpers/helpers.js';
+import { updateImage, handlePlacesChanged, trailClick, onDragEnd, onMarkerClose, handleSearchBoxMounted, submitImage, onMarkerClick, handleMapMounted } from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from './components/Nav.jsx';
-import List from './components/TrailList.jsx';
+import TrailList from './components/TrailList.jsx';
 import Home from './page-components/Home.jsx';
 import Login from './page-components/Login.jsx';
 import User from './page-components/User.jsx';
@@ -45,7 +45,7 @@ class App extends React.Component {
     this.onDragEnd = onDragEnd.bind(this);
     this.handleMapMounted = handleMapMounted.bind(this);
     this.onPlacesChanged = handlePlacesChanged.bind(this);
-    this.ListClick = ListClick.bind(this);
+    this.trailClick = trailClick.bind(this);
   }
 
   componentDidMount() {
@@ -141,7 +141,7 @@ class App extends React.Component {
             onPlacesChanged={this.onPlacesChanged}
           />
         </div>
-        <List ListClick = {this.ListClick} markers = {this.state.markers} />
+        <TrailList onClick={this.trailClick} markers={this.state.markers} />
       </div>
     )
   }
