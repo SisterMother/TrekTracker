@@ -6,7 +6,8 @@ class Upload extends React.Component {
     super(props);
     this.state = {
       image: null,
-      photo: null
+      photo: null,
+      trailId: props.trailId
     }
     this.submitImage = submitImage.bind(this);
     this.updateImage = updateImage.bind(this);

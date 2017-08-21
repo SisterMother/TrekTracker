@@ -7,10 +7,10 @@ class Trail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      trailId: props.trail,
+      trailId: window.location.href.split('id=')[1],
       posts: []
     };
-
+    
     axios.get('/api/posts/trails/' + this.state.trailId, {params:{trailId:this.state.trailId}})
     .then((response) => {
       this.setState({posts: response.data});

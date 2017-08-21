@@ -59,7 +59,7 @@ class App extends React.Component {
             <User/>
           </Route>
           <Route exact path='/trail'>
-            <Trail trail={this.state.selectedId}/>
+            <Trail/>
           </Route>
           <Route path='/upload'>
             <Upload />

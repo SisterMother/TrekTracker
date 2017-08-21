@@ -158,12 +158,13 @@ module.exports.submitImage = function(e) {
   form.append('image', this.state.photo[0])
   axios.post('https://api.imgur.com/3/image', form)
   .then((res) => {
+    console.log('this is the URL: ', window.location.href);
     let metaPhoto = {
       title: this.state.photo[0].name,
       text: document.getElementsByTagName('textarea')[0].value,
       image_url: res.data.data.link,
       flag_comments: [],
-      trail_id: 1
+      trail_id: this.state.trailId
     };
     return axios.post('/api/posts', {photo: metaPhoto})
       .then(res => console.log('success: ', res))
