@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import SearchBox from 'react-google-maps/lib/places/SearchBox'
-import Box from './PopupBox.jsx'
+import { handlePlacesChanged } from '../helpers/helpers.js'
+import PopupBox from './PopupBox.jsx'
 const INPUT_STYLE = {
   boxSizing: `border-box`,
   MozBoxSizing: `border-box`,
@@ -43,7 +44,7 @@ class Map extends Component {
           <InfoWindow
           onCloseClick={() => this.props.onMarkerClose(marker)}>
           <div>
-             <Box changeId={this.changeId} marker = {marker} />
+             <PopupBox changeId={this.changeId} trail={marker} />
           </div>
           </InfoWindow>
         )}
