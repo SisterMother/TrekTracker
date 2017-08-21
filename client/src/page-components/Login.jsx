@@ -1,6 +1,5 @@
-import { Route, Switch } from 'react-router-dom';
 import React from 'react';
-import axios from 'axios';
+import { Route, Switch } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 
 class Home extends React.Component {

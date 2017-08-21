@@ -4,67 +4,12 @@ body {
   padding: 0;
 }
 
-ul {
-  /*margin & padding set to 0 force the bar to the top of the screen*/
-  margin: 0;
-  padding: 0;
-  background-color: #333333;
-}
-
-.title {
-  position: relative;
-  padding: 16px;
-  left: 37%;
-  color: white;
-}
-
-.dropbtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.dropdown {
-    position: absolute;
-    top: 0;
-}
-
-.dropdown-content {
-    display: none;
-    position: relative;
-    background-color: #f9f9f9;
-}
-
-.dropdown-content a {
-    position: relative;
-    width: 100px;
-    height: 30px;
-    padding: 4px;
-    padding-top: 12px;
-    font-weight: bold;
-    background-color: mintcream;
-    border: 0.5px solid black;
-    border-top: none;
-    display: block;
-    text-decoration: none;
-    color: black;
-    z-index: 100;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
 .loginBtn {
   margin: 1em;
 }
 .Gmap {
+  width: 700px;
+  height: 600px;
   float: left;
 }
 .TrailList {
