@@ -1,5 +1,4 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 
 class Home extends React.Component {
@@ -13,11 +12,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
-        {
-          <GoogleButton className='loginBtn' onClick={this.loginRedirect} />
-        }
-      </div>
+      <GoogleButton className='loginBtn' onClick={this.loginRedirect} />
     );
   }
 }
