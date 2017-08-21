@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import reactDOM from 'react-dom';
 import Posts from './components/Posts.jsx';
-import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { changeSelectedId } from './helpers/helpers.js';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -60,9 +59,6 @@ class App extends React.Component {
           </Route>
           <Route exact path='/trail'>
             <Trail trail={this.state.selectedId}/>
-          </Route>
-          <Route path='/upload'>
-            <Upload />
           </Route>
         </Switch>
       </div>

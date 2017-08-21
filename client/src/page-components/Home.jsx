@@ -3,7 +3,6 @@ import React from 'react';
 import axios from 'axios';
 import GoogleButton from 'react-google-button';
 import Posts from '../components/Posts.jsx';
-import Upload from '../components/Upload.jsx';
 import Map from '../components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import { handlePlacesChanged, trailClick, onDragEnd, onMarkerClose, handleSearchBoxMounted, onMarkerClick, handleMapMounted } from '../helpers/helpers.js';
