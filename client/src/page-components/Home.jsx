@@ -95,9 +95,6 @@ class Home extends React.Component {
     });
   }
 
-
-
-
   loginRedirect() {
     window.location.href = '/auth/google'
   }
@@ -105,25 +102,22 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-      <div className = 'Gmap'  style={{
-          width: '700px',
-          height: '600px'
-        }}>
-        <Map
-          containerElement={< div style = {{width:100+'%', height:100+'%'}}/>}
-          mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}
-          mapCenter={this.state.mapCenter}
-          onSearchBoxMounted={this.handleSearchBoxMounted}
-          markers = {this.state.markers}
-          onDragEnd={this.onDragEnd}
-          handleMapMounted={this.handleMapMounted}
-          onMarkerClose={this.onMarkerClose}
-          onMarkerClick={this.onMarkerClick}
-          onPlacesChanged={this.onPlacesChanged}
-          changeId={this.changeId}
-        />
-      </div>
-      <TrailList onClick={this.trailClick} markers={this.state.markers} />
+        <div className = 'Gmap'>
+          <Map
+            containerElement={ < div style = {{width:100+'%', height:100+'%'}}/> }
+            mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}
+            mapCenter={this.state.mapCenter}
+            onSearchBoxMounted={this.handleSearchBoxMounted}
+            markers = {this.state.markers}
+            onDragEnd={this.onDragEnd}
+            handleMapMounted={this.handleMapMounted}
+            onMarkerClose={this.onMarkerClose}
+            onMarkerClick={this.onMarkerClick}
+            onPlacesChanged={this.onPlacesChanged}
+            changeId={this.changeId}
+          />
+        </div>
+        <TrailList onClick={this.trailClick} markers={this.state.markers} />
       </div>
     );
   }
