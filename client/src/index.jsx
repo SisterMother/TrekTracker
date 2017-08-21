@@ -16,31 +16,6 @@ axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      posts: [],
-    }
-    /*Bindings are set here.
-    For whoever gets this as a legacy, adding redux could fix almost a lot of the spaghetti code qualities.
-    */
-  }
-
-//When the app mounts we are going to do the following actions. Load the current user.
-
-  componentDidMount() {
-    axios.get('/api/currentUser')
-      .then(res => {
-        var email = res.data.email;
-        axios.get(`/api/posts/users/${email}`)
-          .then(res => {
-            this.setState({posts: res.data});
-          })
-          .catch(err => console.log('error in get api/users/:id: ', err));
-      })
-      .catch(err => console.log('error in get api/currentUser endpoint: ', err));
-  }
-
   render() {
     return (
       <div>
