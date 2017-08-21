@@ -6,14 +6,12 @@ import Upload from '../components/Upload.jsx';
 class Trail extends React.Component {
   constructor(props) {
     super(props);
-
-    let trailId = window.location.search.split('?id=')[1].split('?')[0]; // Successfully grabs trail query parameter regardless of what parameters are declared before or after it
     this.state = {
-      trailId,
+      trailId: props.trail,
       posts: []
     };
 
-    axios.get('/api/posts/trails/' + this.state.trail)
+    axios.get('/api/posts/trails/' + this.state.trailId, {params:{trailId:this.state.trailId}})
     .then((response) => {
       this.setState({posts: response.data});
     });
