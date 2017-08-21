@@ -1,9 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import reactDOM from 'react-dom';
-import Posts from './components/Posts.jsx';
-import Map from './components/Gmaps.jsx';
-import { changeSelectedId } from './helpers/helpers.js';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Nav from './components/Nav.jsx';
 import Home from './page-components/Home.jsx';
