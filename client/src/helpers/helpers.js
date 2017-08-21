@@ -108,6 +108,11 @@ module.exports.updateImage = function() {
   }
 }
 
+/*
+At times, ReactGoogleMaps requires you to call components seperately in order to use them.
+Once you call them in this format, you can use native functions that are built into the-
+traditional Google Maps application. Note that they must be called in the format shown below.
+*/
 
 module.exports.handleMapMounted = function (map) {
   this._map = map;
@@ -117,25 +122,31 @@ module.exports.handleSearchBoxMounted = function (searchBox)  {
   this._searchBox = searchBox;
 }
 
-
+// When the list of trails is clicked, this sets the mapCenter on the location of the clicked trail.
 module.exports.trailClick = function (item) {
   this.setState({mapCenter: {lat: item.position.lat, lng: item.position.lng}});
+  //We also want the popup box within the marker to activate upon list click, as that is the way that we access the trail page.
+  //More information on the marker click function below.
   this.onMarkerClick(item);
 }
 
+//The handlePlacesChanged function is designed for when the search box is used to change the location of the map.
 module.exports.handlePlacesChanged = function ()  {
+//We need to set a variable for the searchbox in order to use it's native functions. More info above.
   const places = this._searchBox.getPlaces();
-  let newCenter = this._map.getCenter()
-  let newCenterLat = newCenter.lat();
-  let newCenterLng = newCenter.lng();
-
-  // Right now, everything below is not goin to be implemented
-  // Add a marker for each place returned from search bar
+  /*
+  This basically creates an api call when you submit a location change from the searchbox.
+  There is some level of abstration here, but I think that the way it works is this.
+  It searches for places based on their name. The searchbox automatically gives you a
+  list of places and either chooses the one that you either select, or a list of several that are close to your query.
+*/
   const markers = places.map(place => ({
+    //From there, we go through the results that are returned to us, and find the position of each of them.
     position: place.geometry.location,
   }));
-  // Set markers; set map center to first search result
+  //We set a mapCenter variable equal to either the first result of the search, or the current location if nothing is returned.
   const mapCenter = markers.length > 0 ? markers[0].position : this.state.center;
+  //Lastly, we set the state of the mapcenter to the variable. This change in state will re-render the map with a new center.
   this.setState({
     mapCenter: mapCenter
   });
@@ -165,6 +176,13 @@ module.exports.submitImage = function(e) {
   });
 }
 
+/*
+When a marker is clicked we want to open the infowindow.
+I couldn't really find an efficient way to do this, so I just
+went for a brute force method. All this really does is just
+map through the entire marker state until it finds the marker
+that was clicked on. Once if finds it, it sets the showInfo to true.
+*/
 module.exports.onMarkerClick = function (targetMarker) {
   this.setState({
     markers: this.state.markers.map(marker => {
@@ -173,11 +191,17 @@ module.exports.onMarkerClick = function (targetMarker) {
       } else {
         marker.showInfo = false
       }
+      //There are two returns here because of the if statement. If it is triggered we want to return the marker and a modified showinfo property.
+      //If it isn't triggred, we still want out map to return our marker.
       return marker;
     }),
     trailPopup: true
   });
 }
+
+/*
+See the comments for the previous method, they are programatically similar except they change the value of the showInfo property.
+*/
 
 module.exports.onMarkerClose = function (targetMarker) {
   this.setState({
@@ -191,14 +215,28 @@ module.exports.onMarkerClose = function (targetMarker) {
   });
 }
 
+/*
+The following function is designed to update our markers when the map is manually moved by the user.
+I chose to use the onDragEnd method because it is more efficent. It is also possible to use an onMapMove
+function, the problem with that is it fires for every pixel the map moves. This only fires once the
+user has finished moving the map.
+*/
 module.exports.onDragEnd = function (event) {
   if(!this.state.trailPopup) {
-  //This finds the map center when the map is moved, will probably need an api call eventually.
-    let newCenter = this._map.getCenter()
-    let newCenterLat = newCenter.lat();
-    let newCenterLng = newCenter.lng();
-    this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
-    this.setState({markers:[]})
+  //trailPopup is designed to fix an error regarding markers disappearing.
+  //The first thing we are going to do is find the new center of the map.
+  //If you are confused by the this._map call, it is explained above in this file.
+  let newCenter = this._map.getCenter()
+  //Once we find out what the new center of our map is, we turn the latitude and longitude into variables that we can search.
+  let newCenterLat = newCenter.lat();
+  let newCenterLng = newCenter.lng();
+  this.setState({mapCenter: {lat: newCenterLat, lng: newCenterLng}});
+  //We clear the markers array every time the map moves. This is done so that trails that show up in our list
+  //are correlated with markers that are actually in the area, or else out list would grow in size
+  //with every marker we ever encounter. In the future, there is a Google Maps getBounds function that it may be possible to use.
+  this.setState({markers:[]})
+  //Once our markers are reset, we make a call in order to find markers in our new location.
+  //The following call is the same as the on on the index, which can be referred to for a longer explanation of this process.
     axios.get('/api/trails', {
       params: {
         lat: this.state.mapCenter.lat,
@@ -215,6 +253,7 @@ module.exports.onDragEnd = function (event) {
             name: trail.name,
             city: trail.city,
             state: trail.state,
+            trailId: trail.unique_id
           },
         ];
         this.setState({
@@ -226,4 +265,9 @@ module.exports.onDragEnd = function (event) {
       console.log('oops, error in the trails call: ', err);
     });
   }
+}
+
+
+module.exports.changeSelectedId = function(trailId) {
+  this.setState({selectedId: trailId})
 }

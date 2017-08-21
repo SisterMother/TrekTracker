@@ -21,6 +21,7 @@ const INPUT_STYLE = {
 class Map extends Component {
   constructor (props) {
     super(props);
+    this.changeId = props.changeId;
   }
 
 	render() {
@@ -43,7 +44,7 @@ class Map extends Component {
           <InfoWindow
           onCloseClick={() => this.props.onMarkerClose(marker)}>
           <div>
-             <PopupBox trail={marker} />
+             <PopupBox changeId={this.changeId} trail={marker} />
           </div>
           </InfoWindow>
         )}
