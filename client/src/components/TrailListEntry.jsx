@@ -9,13 +9,14 @@ class TrailListEntry extends React.Component {
 
   render () {
     return (
-      <Card>
+      <Card className='trail-entry'>
         <CardHeader
           title={this.props.trail.name}
           subtitle={this.props.trail.city + ', ' + this.props.trail.state}
         />
         <CardActions>
           <FlatButton label='View on Map' onClick={this.props.onClick.bind(this, this.props.trail)} />
+          <FlatButton className='view-posts' label='View Posts' onClick={() => {window.location.href = '/trail?id=' + this.props.trail.trailId}} />
         </CardActions>
       </Card>
     );

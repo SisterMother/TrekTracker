@@ -29,8 +29,12 @@ router.get('/currentUser', (req, res) => {
 
 router.post('/posts', (req, res) => {
   var post = req.body.photo;
-  db.createPost(req.user.email, post.trail_id, post.title, post.text, post.image_url, post.latitude, post.longitude).then((post) => {
+  db.createPost(req.user.email, post.trail_id, post.title, post.text, post.image_url, post.latitude, post.longitude)
+  .then((post) => {
     res.end(JSON.stringify(post));
+  })
+  .catch((error) => {
+    res.status(500).json(error);
   });
 });
 

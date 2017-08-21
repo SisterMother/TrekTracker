@@ -6,6 +6,7 @@ import gps from '../helpers/gps.js';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from '../components/Nav.jsx';
 import TrailList from '../components/TrailList.jsx';
+import CircularProgress from 'material-ui/CircularProgress';
 
 
 class Home extends React.Component {
@@ -16,7 +17,7 @@ class Home extends React.Component {
         lat: 34.7836966,
         lng: -115.4089664
       },
-      markers:[],
+      markers: [],
       trailPopup: false
     }
 
@@ -94,7 +95,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <div className = 'Gmap'>
+        <div className = 'Gmap col-wide'>
           <Map
             containerElement={ < div style = {{width:100+'%', height:100+'%'}}/> }
             mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}
@@ -109,7 +110,9 @@ class Home extends React.Component {
             changeId={this.changeId}
           />
         </div>
-        <TrailList onClick={this.trailClick} markers={this.state.markers} />
+        <div className='col-narrow'>
+          {this.state.markers.length > 0 ? <TrailList onClick={this.trailClick} markers={this.state.markers} /> : <CircularProgress size={200} thickness={10} style={{'width': '50%', 'position': 'relative', 'left': '25%'}} />}
+        </div>
       </div>
     );
   }

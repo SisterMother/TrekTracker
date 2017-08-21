@@ -13,18 +13,35 @@ body {
   float: left;
 }
 .TrailList {
-  height:600px;
-  width:400px;
-  border:1px solid #ccc;
-  font:16px/26px Georgia, Garamond, Serif;
-  overflow:auto
+  height: 600px;
+  width: auto;
+  overflow: auto;
 }
 .TrailListEntry {
   background-color: #4CAF50;
 }
 .content-wrap{
-  max-width: 850px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 10px;
   overflow: hidden;
+}
+.col-wide{
+  width: 65%;
+  float: left;
+  min-height: 175px;
+}
+.col-narrow{
+  width: 35%;
+  float: right;
+  min-height: 175px;
+}
+.view-posts {
+  float: right;
+}
+.trail-entry {
+  margin: 5px;
+}
+.post {
+  margin: 10px 0;
 }
