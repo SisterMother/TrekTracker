@@ -1,16 +1,37 @@
 import React from 'react';
+import { updateImage, submitImage } from '../helpers/helpers.js';
 
-const Upload = (props) => (
-  <div>
-    <form onSubmit={props.submit}>
-      <h2>Upload trek pic!</h2>
-      <input className='input' onChange={() => props.update()} type='file' accept='image/*' capture='camera' />
-      <button style={{position:'relative',left:'10px',backgroundColor:'papayawhip'}}>Submit</button>
-    </form>
-    <div className='preview'>
-      <p>No files currently selected for upload</p>
-    </div>
-  </div>
-);
+class Upload extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      image: null,
+      photo: null
+    }
+    this.submitImage = submitImage.bind(this);
+    this.updateImage = updateImage.bind(this);
+
+  }
+
+  componentDidMount() {
+    this.input = document.querySelector('.input');
+    this.preview = document.querySelector('.preview');
+  }
+
+  render() {
+    return(
+      <div>
+          <form onSubmit={ this.submitImage }>
+            <h2>Upload trek pic!</h2>
+            <input className='input' onChange={(e) => this.updateImage(e)} type='file' accept='image/*' capture='camera' />
+            <button style={{position:'relative',left:'10px',backgroundColor:'papayawhip'}}>Submit</button>
+          </form>
+          <div className='preview'>
+            <p>No files currently selected for upload</p>
+          </div>
+        </div>);
+  }
+};
+
 
 export default Upload;

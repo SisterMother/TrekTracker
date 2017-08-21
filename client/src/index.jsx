@@ -7,7 +7,7 @@ import Posts from './components/Posts.jsx';
 import Upload from './components/Upload.jsx';
 import Map from './components/Gmaps.jsx';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
-import { updateImage, handlePlacesChanged, trailClick, onDragEnd, onMarkerClose, handleSearchBoxMounted, submitImage, onMarkerClick, handleMapMounted } from './helpers/helpers.js';
+import { updateImage, handlePlacesChanged, trailClick, onDragEnd, onMarkerClose, handleSearchBoxMounted, submitImage, onMarkerClick, handleMapMounted, changeSelectedId } from './helpers/helpers.js';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from './components/Nav.jsx';
@@ -31,13 +31,12 @@ class App extends React.Component {
       logged: false,
       image: null,
       photo: null,
+      selectedId: null
     }
-
     /*Bindings are set here.
     For whoever gets this as a legacy, adding redux could fix almost a lot of the spaghetti code qualities.
     */
-    this.submitImage = submitImage.bind(this);
-    this.updateImageDisplay = updateImage.bind(this);
+    this.changeSelectedId = changeSelectedId.bind(this);
   }
 
 //When the app mounts we are going to do the following actions. Get GPS location, find local trails, and load the current user.
@@ -61,7 +60,7 @@ class App extends React.Component {
         <Nav />
         <Switch>
           <Route exact path='/'>
-            <Home logged={this.state.logged}/>
+            <Home changeId={this.changeSelectedId} logged={this.state.logged}/>
           </Route>
           <Route exact path='/login'>
             <Login exact logged={this.state.logged}/>
@@ -70,10 +69,10 @@ class App extends React.Component {
             <User logged={this.state.logged}/>
           </Route>
           <Route exact path='/trail'>
-            <Trail logged={this.state.logged}/>
+            <Trail trail={this.state.selectedId} logged={this.state.logged}/>
           </Route>
           <Route path='/upload'>
-            <Upload submit={this.submitImage} update={this.updateImageDisplay}/>
+            <Upload />
           </Route>
         </Switch>
       </div>
