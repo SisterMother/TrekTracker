@@ -1,18 +1,11 @@
-import { Route, Switch } from 'react-router-dom';
 import React from 'react';
 import axios from 'axios';
-import GoogleButton from 'react-google-button';
-import Posts from '../components/Posts.jsx';
 import Map from '../components/Gmaps.jsx';
-import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import { handlePlacesChanged, trailClick, onDragEnd, onMarkerClose, handleSearchBoxMounted, onMarkerClick, handleMapMounted } from '../helpers/helpers.js';
 import gps from '../helpers/gps.js';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from '../components/Nav.jsx';
 import TrailList from '../components/TrailList.jsx';
-import Login from './Login.jsx';
-import User from './User.jsx';
-import Trail from './Trail.jsx';
 
 
 class Home extends React.Component {
