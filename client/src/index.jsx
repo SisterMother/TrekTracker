@@ -52,10 +52,13 @@ class App extends React.Component {
             <Home changeId={this.changeSelectedId} />
           </Route>
           <Route exact path='/login'>
-            <Login exact/>
+            <Login/>
           </Route>
           <Route path='/users'>
-            <User/>
+          <User/>
+          </Route>
+          <Route exact path='/profile'>
+            <User currentUser={true} />
           </Route>
           <Route exact path='/trail'>
             <Trail trail={this.state.selectedId}/>

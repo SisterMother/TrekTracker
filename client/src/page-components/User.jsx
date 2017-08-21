@@ -6,14 +6,34 @@ class User extends React.Component {
   constructor(props) {
     super(props);
 
-    // Gets user email based on the URL the user is on
-    let locationSplit = window.location.href.split('/');
     this.state = {
-      user: locationSplit[locationSplit.length - 1],
+      userEmail: null,
       posts: []
     };
 
-    axios.get('/api/posts/users/' + this.state.user)
+    if (props.currentUser) {
+      this.getCurrentUser()
+      .then(() => {
+        this.getPosts();
+      });
+    } else {
+      let locationSplit = window.location.href.split('/');
+      let email = locationSplit[locationSplit.length - 1];
+      this.state.userEmail = email;
+      this.getPosts();
+    }
+
+  }
+
+  getCurrentUser () {
+    return axios.get('/api/currentuser')
+    .then((response) => {
+      this.setState({userEmail: response.data.email});
+    });
+  }
+
+  getPosts () {
+    return axios.get('/api/posts/users/' + this.state.userEmail)
     .then((response) => {
       this.setState({posts: response.data});
     });
