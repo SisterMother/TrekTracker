@@ -94,7 +94,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <div className = 'Gmap'>
+        <div className = 'Gmap col-wide'>
           <Map
             containerElement={ < div style = {{width:100+'%', height:100+'%'}}/> }
             mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}
@@ -109,7 +109,7 @@ class Home extends React.Component {
             changeId={this.changeId}
           />
         </div>
-        <TrailList onClick={this.trailClick} markers={this.state.markers} />
+        <TrailList onClick={this.trailClick} markers={this.state.markers} className='col-narrow' />
       </div>
     );
   }
