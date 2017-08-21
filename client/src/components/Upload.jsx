@@ -1,6 +1,7 @@
 import React from 'react';
 import { updateImage, submitImage } from '../helpers/helpers.js';
 import gps from '../helpers/gps.js';
+import Paper from 'material-ui/Paper';
 
 class Upload extends React.Component {
   constructor(props) {
@@ -18,11 +19,7 @@ class Upload extends React.Component {
   componentWillMount() {
     gps.getLocation()
     .then(value => {
-      //First, we are going to get the location, then set it inside of an object.
-      
-      //We then set that object as the mapCenter, which dictates where the Google Map locates at.
-      this.setState({lat: value.coords.latitude,
-                     lng: value.coords.longitude})
+      this.setState({lat: value.coords.latitude, lng: value.coords.longitude})
     })
     .catch(err => console.log('location access denied: ', err));
   }
@@ -34,16 +31,17 @@ class Upload extends React.Component {
 
   render() {
     return(
-      <div>
-          <form onSubmit={ this.submitImage }>
-            <h2>Upload trek pic!</h2>
-            <input className='input' onChange={(e) => this.updateImage(e)} type='file' accept='image/*' capture='camera' />
-            <button style={{position:'relative',left:'10px',backgroundColor:'papayawhip'}}>Submit</button>
-          </form>
-          <div className='preview'>
-            <p>No files currently selected for upload</p>
-          </div>
-        </div>);
+      <Paper>
+        <form onSubmit={ this.submitImage }>
+          <h2>Upload trek pic!</h2>
+          <input className='input' onChange={(e) => this.updateImage(e)} type='file' accept='image/*' capture='camera' />
+          <button style={{position:'relative',left:'10px',backgroundColor:'papayawhip'}}>Submit</button>
+        </form>
+        <div className='preview'>
+          <p>No files currently selected for upload</p>
+        </div>
+      </Paper>
+    );
   }
 };
 

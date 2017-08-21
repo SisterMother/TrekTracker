@@ -38,7 +38,7 @@ class Map extends Component {
           key={index}
           position={marker.position}
           onClick={() => this.props.onMarkerClick(marker)}
-         >,
+         >
         {marker.showInfo && (
           <InfoWindow
           onCloseClick={() => this.props.onMarkerClose(marker)}>
