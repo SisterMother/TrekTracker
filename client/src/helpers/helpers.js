@@ -150,6 +150,7 @@ module.exports.handlePlacesChanged = function ()  {
   this.setState({
     mapCenter: mapCenter
   });
+  this.onDragEnd({});
  }
 
 module.exports.submitImage = function(e) {
