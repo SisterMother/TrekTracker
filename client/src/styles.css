@@ -39,3 +39,9 @@ body {
 .view-posts {
   float: right;
 }
+.trail-entry {
+  margin: 5px;
+}
+.post {
+  margin: 10px;
+}

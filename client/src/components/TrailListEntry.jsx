@@ -9,7 +9,7 @@ class TrailListEntry extends React.Component {
 
   render () {
     return (
-      <Card>
+      <Card className='trail-entry'>
         <CardHeader
           title={this.props.trail.name}
           subtitle={this.props.trail.city + ', ' + this.props.trail.state}

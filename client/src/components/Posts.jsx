@@ -7,7 +7,7 @@ const Posts = (props) => (
   <div>
     {props.posts.map((post, i) => (
       <div key={i}>
-        <Card>
+        <Card className='post'>
           <CardHeader
             title={post.poster.firstname + ' ' + post.poster.lastname}
             subtitle={post.poster.email}
