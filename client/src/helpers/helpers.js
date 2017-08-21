@@ -158,7 +158,6 @@ module.exports.submitImage = function(e) {
   form.append('image', this.state.photo[0])
   axios.post('https://api.imgur.com/3/image', form)
   .then((res) => {
-    console.log('state: ', this.state);
     let metaPhoto = {
       title: this.state.photo[0].name,
       text: document.getElementsByTagName('textarea')[0].value,
