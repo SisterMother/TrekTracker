@@ -7,7 +7,10 @@ var path = require('path');
 var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var authRouter = require('./auth-router.js');
-var Session = require('express-session');
+var session = require('express-session');
+var SessionStore = require('sessionstore');
+
+let sessionStore = SessionStore.createSessionStore();
 
 var app = express();
 
@@ -26,7 +29,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 // Passport and session middleware
-app.use(Session({
+app.use(session({
+  store: sessionStore,
   secret: 'thisisasecret',
   resave: true,
   saveUninitialized: true
