@@ -21,12 +21,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       posts: [],
-      selectedId: null
     }
     /*Bindings are set here.
     For whoever gets this as a legacy, adding redux could fix almost a lot of the spaghetti code qualities.
     */
-    this.changeSelectedId = changeSelectedId.bind(this);
   }
 
 //When the app mounts we are going to do the following actions. Load the current user.
@@ -50,7 +48,7 @@ class App extends React.Component {
         <Nav />
         <Switch>
           <Route exact path='/'>
-            <Home changeId={this.changeSelectedId} />
+            <Home />
           </Route>
           <Route exact path='/login'>
             <Login exact/>
