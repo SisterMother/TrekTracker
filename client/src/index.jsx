@@ -36,13 +36,12 @@ class App extends React.Component {
     /*Bindings are set here.
     For whoever gets this as a legacy, adding redux could fix almost a lot of the spaghetti code qualities.
     */
-    this.submitImage = submitImage.bind(this);
-    this.updateImageDisplay = updateImage.bind(this);
   }
 
 //When the app mounts we are going to do the following actions. Get GPS location, find local trails, and load the current user.
 
   componentDidMount() {
+
     axios.get('/api/currentUser')
       .then(res => {
         var email = res.data.email;
@@ -73,7 +72,7 @@ class App extends React.Component {
             <Trail logged={this.state.logged}/>
           </Route>
           <Route path='/upload'>
-            <Upload submit={this.submitImage} update={this.updateImageDisplay}/>
+            <Upload />
           </Route>
         </Switch>
       </div>

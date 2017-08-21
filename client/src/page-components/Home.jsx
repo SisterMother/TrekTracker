@@ -39,8 +39,6 @@ class Home extends React.Component {
   }
   componentDidMount() {
     //Not sure what the lines below do.
-    this.input = document.querySelector('.input');
-    this.preview = document.querySelector('.preview');
     //Note, right now the geolocation is just HTML5.
     gps.getLocation()
     .then(value => {
