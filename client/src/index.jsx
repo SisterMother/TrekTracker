@@ -45,23 +45,25 @@ class App extends React.Component {
     return (
       <div>
         <Nav />
-        <Switch>
-          <Route exact path='/'>
-            <Home />
-          </Route>
-          <Route exact path='/login'>
-            <Login/>
-          </Route>
-          <Route path='/users'>
-          <User/>
-          </Route>
-          <Route exact path='/profile'>
-            <User currentUser={true} />
-          </Route>
-          <Route exact path='/trail'>
-            <Trail/>
-          </Route>
-        </Switch>
+        <div className='content-wrap'>
+          <Switch>
+            <Route exact path='/'>
+              <Home />
+            </Route>
+            <Route exact path='/login'>
+              <Login/>
+            </Route>
+            <Route path='/users'>
+            <User/>
+            </Route>
+            <Route exact path='/profile'>
+              <User currentUser={true} />
+            </Route>
+            <Route exact path='/trail'>
+              <Trail/>
+            </Route>
+          </Switch>
+        </div>
       </div>
     )
   }
