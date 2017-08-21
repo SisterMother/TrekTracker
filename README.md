@@ -4,22 +4,22 @@ Welcome to Trek Tracker! Here you can search for trails near you, upload photos,
 
 ## Getting Started
 
-Initially, npm install in the root of the repo. 
+*Initially, npm install in the root of the repo. 
 Steps: 
-I. initialize the database: 
-  -make sure mysql and mysql2 is install locally
-  -run `mysql.server start`
-  -run `mysql -u student`
-    -If there is no student profile, create one with the password 'student', otherwise the database/config.json development object can be changed to a username and password currently existing. For the default mysql profile, change username to 'root', and password to an empty string. 
-  -create a database for this app by running the following command in the mysql shell opened from the previous step: `CREATE DATABASE TrekTracker`
-  -the tables and are automatically built with the correct columns if they do not already exist
-  -Database good to go! 
-II. Transpile the code: 
-  -in a new terminal tab, run `npm run react-dev`
-III. Start the server
-  -in a new terminal tab, run `npm run server-dev`
-IV. Open in browser
-  -open a new web browser window and navigate to `localhost:3000`
+*I. initialize the database: 
+  *-make sure mysql and mysql2 is install locally
+  *-run `mysql.server start`
+  *-run `mysql -u student`
+    *-If there is no student profile, create one with the password 'student', otherwise the database/config.json development object can be changed to a username and password currently existing. For the default mysql profile, change username to 'root', and password to an empty string. 
+  *-create a database for this app by running the following command in the mysql shell opened from the previous step: `CREATE DATABASE TrekTracker`
+  *-the tables and are automatically built with the correct columns if they do not already exist
+  *-Database good to go! 
+*II. Transpile the code: 
+  *-in a new terminal tab, run `npm run react-dev`
+*III. Start the server
+  *-in a new terminal tab, run `npm run server-dev`
+*IV. Open in browser
+  *-open a new web browser window and navigate to `localhost:3000`
 
 ## Program Architecture 
 
