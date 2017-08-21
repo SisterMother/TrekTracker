@@ -23,6 +23,32 @@ Steps:
 
 ## Program Architecture 
 
+**Client**
+* In the index.jsx, the flow of the program is controlled with react router dependent rendering. 
+* Without loggin in, users can see trails in the Home component and display the associated posts after clicking `view posts`.
+* After loggin in, the upload component becomes available in Trail.jsx
+
+**Server**
+* api-router
+  * /currentUser
+  * /posts/[users || trails]
+    * posts to, or gets from, the database Posts table. They can be queried to return wither a list of posts by a particular user, or from a specific trail. 
+  * /trails
+    * posts to, or gets from, the database Trails table. They can be queried to get all trails currently stored, or a specific trail by id. 
+* auth-router
+  * for redirect to authenticate via users Google profile
+
+**Database**
+
+
+**APIs**
+* imgur
+  * stores images, a URL is returned, which is then stored in the database along with additional metadata
+* Google maps
+  * to displays a google map on the page to be populated by nearby trails
+* Trails
+  * gets all nearby trails, to then be placed in the rendered map
+
 
 ## Deployment
 

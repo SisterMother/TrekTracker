@@ -3,29 +3,9 @@ var db = require('../database');
 var googleMaps = require('./foreign-apis/google-maps');
 var { getTrailsByLoc } = require('./foreign-apis/trails.js');
 
-router.get('/places', function (req, res) {
-  googleMaps.getPlaces((results) => {
-    res.send(results);
-  })
-});
-
 router.get('/currentUser', (req, res) => {
   res.send(req.user || null);
 });
-
-// Saves a post to the database and returns it as the response
-// The input data should look like this...
-//
-// {
-//   trailName: 'test trail',
-//   title: 'example post',
-//   text: 'this is an example of a post',
-//   image_url: 'https://somewebsite.com/example'
-// }
-//
-// And the HTTP response will contain all of this data plus
-// a timestamp that the database will create automatically
-
 
 router.post('/posts', (req, res) => {
   var post = req.body.photo;
