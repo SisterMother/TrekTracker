@@ -253,6 +253,7 @@ module.exports.onDragEnd = function (event) {
             name: trail.name,
             city: trail.city,
             state: trail.state,
+            trailId: trail.unique_id
           },
         ];
         this.setState({
@@ -264,4 +265,9 @@ module.exports.onDragEnd = function (event) {
       console.log('oops, error in the trails call: ', err);
     });
   }
+}
+
+
+module.exports.changeSelectedId = function(trailId) {
+  this.setState({selectedId: trailId})
 }

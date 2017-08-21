@@ -28,19 +28,18 @@ class Home extends React.Component {
       trailPopup: false
     }
 
-  this.handleSearchBoxMounted = handleSearchBoxMounted.bind(this);
-  this.onMarkerClick = onMarkerClick.bind(this);
-  this.onMarkerClose = onMarkerClose.bind(this);
-  this.onDragEnd = onDragEnd.bind(this);
-  this.handleMapMounted = handleMapMounted.bind(this);
-  this.onPlacesChanged = handlePlacesChanged.bind(this);
-  this.trailClick = trailClick.bind(this);
+    this.handleSearchBoxMounted = handleSearchBoxMounted.bind(this);
+    this.onMarkerClick = onMarkerClick.bind(this);
+    this.onMarkerClose = onMarkerClose.bind(this);
+    this.onDragEnd = onDragEnd.bind(this);
+    this.handleMapMounted = handleMapMounted.bind(this);
+    this.onPlacesChanged = handlePlacesChanged.bind(this);
+    this.trailClick = trailClick.bind(this);
+    this.changeId = props.changeId;
 
   }
   componentDidMount() {
     //Not sure what the lines below do.
-    this.input = document.querySelector('.input');
-    this.preview = document.querySelector('.preview');
     //Note, right now the geolocation is just HTML5.
     gps.getLocation()
     .then(value => {
@@ -82,6 +81,7 @@ class Home extends React.Component {
             state: trail.state,
             //showInfo toggles the marker infowinow box. It is set to false right now, when the marker is clicked it will toggle to true.
             showInfo: false,
+            trailId: trail.unique_id
           },
         ];
         this.setState({
@@ -95,9 +95,6 @@ class Home extends React.Component {
     });
   }
 
-
-
-
   loginRedirect() {
     window.location.href = '/auth/google'
   }
@@ -105,24 +102,22 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-      <div className = 'Gmap'  style={{
-          width: '700px',
-          height: '600px'
-        }}>
-        <Map
-          containerElement={< div style = {{width:100+'%', height:100+'%'}}/>}
-          mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}
-          mapCenter={this.state.mapCenter}
-          onSearchBoxMounted={this.handleSearchBoxMounted}
-          markers = {this.state.markers}
-          onDragEnd={this.onDragEnd}
-          handleMapMounted={this.handleMapMounted}
-          onMarkerClose={this.onMarkerClose}
-          onMarkerClick={this.onMarkerClick}
-          onPlacesChanged={this.onPlacesChanged}
-        />
-      </div>
-      <TrailList onClick={this.trailClick} markers={this.state.markers} />
+        <div className = 'Gmap'>
+          <Map
+            containerElement={ < div style = {{width:100+'%', height:100+'%'}}/> }
+            mapElement={< div style = {{width:100+'%', height:100+'%'}}/>}
+            mapCenter={this.state.mapCenter}
+            onSearchBoxMounted={this.handleSearchBoxMounted}
+            markers = {this.state.markers}
+            onDragEnd={this.onDragEnd}
+            handleMapMounted={this.handleMapMounted}
+            onMarkerClose={this.onMarkerClose}
+            onMarkerClick={this.onMarkerClick}
+            onPlacesChanged={this.onPlacesChanged}
+            changeId={this.changeId}
+          />
+        </div>
+        <TrailList onClick={this.trailClick} markers={this.state.markers} />
       </div>
     );
   }
