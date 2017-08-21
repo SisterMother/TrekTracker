@@ -14,9 +14,9 @@
         "dialect": "mysql"
     },
     "production": {
-        "username": "",
-        "password": null,
-        "database": "",
+        "username": "server",
+        "password": "serverpass",
+        "database": "trektracker",
         "host": "localhost",
         "dialect": "mysql"
     }
