@@ -16,6 +16,7 @@ class TrailListEntry extends React.Component {
         />
         <CardActions>
           <FlatButton label='View on Map' onClick={this.props.onClick.bind(this, this.props.trail)} />
+          <FlatButton className='view-posts' label='View Posts' onClick={() => {window.location.href = '/trail?id=' + this.props.trail.trailId}} />
         </CardActions>
       </Card>
     );
