@@ -11,15 +11,9 @@ class Trail extends React.Component {
     this.state = {
       mapCenter: {}, //Can either be passed a marker, where the info will be embedded, or put the location from the trail api here.
       trailId: props.trail,
-      posts: []
-    };
-
-      mapCenter: {}, //Can either be passed a marker, where the info will be embedded, or put the location from the trail api here.
-      trailId,
       posts: [],
     };
     axios.get('/api/posts/trails/' + this.state.trailId, {params:{trailId:this.state.trailId}})
-
     .then((response) => {
       this.setState({posts: response.data});
     });
