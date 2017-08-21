@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import SearchBox from 'react-google-maps/lib/places/SearchBox'
-import { handlePlacesChanged } from '../helpers/helpers.js'
 import PopupBox from './PopupBox.jsx'
 const INPUT_STYLE = {
   boxSizing: `border-box`,
