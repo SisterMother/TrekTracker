@@ -22,3 +22,9 @@ body {
 .TrailListEntry {
   background-color: #4CAF50;
 }
+.content-wrap{
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 10px;
+  overflow: hidden;
+}

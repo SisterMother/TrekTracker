@@ -8,19 +8,27 @@ class Trail extends React.Component {
     super(props);
     this.state = {
       trailId: window.location.href.split('id=')[1],
-      posts: []
+      posts: [],
+      currentUser: null
     };
     
     axios.get('/api/posts/trails/' + this.state.trailId, {params:{trailId:this.state.trailId}})
     .then((response) => {
       this.setState({posts: response.data});
     });
+
+    axios.get('/api/currentuser')
+    .then((response) => {
+      if (response.data) {
+        this.setState({currentUser: response.data});
+      }
+    });
   }
 
   render() {
     return (
       <div>
-        <Upload />
+        {this.state.currentUser ? <Upload/> : <div/>}
         <Posts posts={this.state.posts} />
       </div>
     );

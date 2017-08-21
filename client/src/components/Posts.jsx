@@ -1,15 +1,21 @@
-import React from 'react';
+import React from 'react'
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card'
+import FlatButton from 'material-ui/FlatButton'
+import time from '../helpers/time.js'
 
 const Posts = (props) => (
   <div>
     {props.posts.map((post, i) => (
       <div key={i}>
-        <div style={{display:"inline-block"}}>
-          <img style={{border:"3px solid black"}} src={post['image_url']}/>
-        </div>
-        <div style={{display:"inline-block",paddingLeft:'8px'}}>
-          <p>Title: {post.title}</p>
-        </div>
+        <Card>
+          <CardHeader
+            title={post.poster.firstname + ' ' + post.poster.lastname}
+            subtitle={post.poster.email}
+          />
+          <CardMedia overlay={<CardTitle title={post.text} subtitle={time.parse(post.createdAt, true)} />}>
+            <img src={post['image_url']}/>
+          </CardMedia>
+        </Card>
       </div>
     ))}
   </div>

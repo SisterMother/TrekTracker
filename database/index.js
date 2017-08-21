@@ -161,7 +161,8 @@ module.exports.getPostsByTrailId = (id) => {
 // idToReplace - a string representing the name of the foreign key that will be replaced
 // modelToReplaceWith - the sequelize model that will be searched for using the foreign key
 // modelKey - the key where the new foreign-referenced model will be replaced within each element of modelArray
-let replaceReferenceModelIdsWithModels = (modelArray, idToReplace, modelToReplaceWith, modelKey) => {
+let replaceReferenceModelIdsWithModels = (modelArrayImmutable, idToReplace, modelToReplaceWith, modelKey) => {
+  let modelArray = JSON.parse(JSON.stringify(modelArrayImmutable));
   let getModelPromises = []; // An array of promises, one for each model in the model array
   modelArray.forEach((model) => {
     let referenceModelId = model[idToReplace];
@@ -178,5 +179,8 @@ let replaceReferenceModelIdsWithModels = (modelArray, idToReplace, modelToReplac
       })
     );
   });
-  return Promise.all(getModelPromises);
+  return Promise.all(getModelPromises)
+  .then(() => {
+    return modelArray;
+  });
 };
