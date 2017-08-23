@@ -130,7 +130,7 @@ var Events = sequelize.define('events', {
     type: Sequelize.INTEGER,
     unique: true
   },
-  name: {
+  title: {
     type: Sequelize.STRING,
     unique: true,
     notEmpty: true,
@@ -174,7 +174,7 @@ InterestedInEvent.belongsTo(Users, {
   foreignKey: 'user_id'
 });
 InterestedInEvent.belongsTo(Events, {
-  foreignKey: 'event_id'
+  foreignKey: 'event_name'
 });
 models.interestedInEvent = InterestedInEvent;
 
