@@ -163,20 +163,20 @@ Events.belongsTo(Trails, {
 });
 models.events = Events;
 
-var RegisteredEvents = sequelize.define('registeredEvents', {
+var InterestedInEvent = sequelize.define('interestedInEvent', {
   id: {
     primaryKey: true,
     type: Sequelize.INTEGER,
     unique: true
   }
 });
-RegisteredEvents.belongsTo(Users, {
+InterestedInEvent.belongsTo(Users, {
   foreignKey: 'user_id'
 });
-RegisteredEvents.belongsTo(Events, {
+InterestedInEvent.belongsTo(Events, {
   foreignKey: 'event_id'
 });
-models.registeredEvents = RegisteredEvents;
+models.interestedInEvent = InterestedInEvent;
 
 
 
