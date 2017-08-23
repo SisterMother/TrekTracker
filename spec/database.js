@@ -21,6 +21,16 @@ module.exports.run = () => {
         expect(models.posts).to.exist;
       });
     });
+    describe('Events', () => {
+      it('Should exist', () => {
+        expect(models.events).to.exist;
+      });
+    });
+    describe('InterestedInEvent', () => {
+      it('Should exist', () => {
+        expect(models.interestedInEvent).to.exist;
+      });
+    });
   });
 
   describe('Export Functions', () => {
