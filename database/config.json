@@ -7,8 +7,7 @@
         "dialect": "mysql"
     },
     "test": {
-        "username": "root",
-        "password": null,
+        "username": "student",
         "database": "trektracker",
         "host": "localhost",
         "dialect": "mysql"
