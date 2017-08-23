@@ -178,8 +178,6 @@ InterestedInEvent.belongsTo(Events, {
 });
 models.interestedInEvent = InterestedInEvent;
 
-
-
 // Sync database
 models.sequelize.sync().then(() => {
   console.log('Nice! Database looks fine.');
