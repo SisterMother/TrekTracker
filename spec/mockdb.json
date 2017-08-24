@@ -17,6 +17,12 @@
       "firstname": "Whereis",
       "lastname": "Waldo",
       "email": "whereis@waldo.com"
+    },
+    {
+      "id": 4,
+      "firstname": "Whereis",
+      "lastname": "Waldo",
+      "email": "123@thats.me"
     }
   ],
   "trails": [
@@ -24,20 +30,24 @@
       "id": 1,
       "name": "testtrail",
       "latitude": 1234,
-      "longitude": 5678
+      "longitude": 5678,
+      "description": "A paved limited-access road and a network of well-defined dirt trails wind around the hills flanks and provide access to the summit.",
+      "traillength": "3"
     },
     {
       "id": 2,
       "name": "testtrail2",
       "latitude": 12345,
-      "longitude": 56789
+      "longitude": 56789,
+      "description": "Three miles of asphalt and dirt paths wind through the Oak Woodlands and connect to the extensive trail and road network within Golden Gate Park.",
+      "traillength": "1"
     }
   ],
   "events": [
     {
       "id": 1,
       "title": "Join us for a view from the Top",
-      "desc": "Beautiful vistas are better with friends, so come",
+      "desc": "Beautiful vistas are better with friends, so come.",
       "start": "2017, 10, 2, 17, 55",
       "end": "2017, 10, 2, 20, 00",
       "contact": "123@thats.me"
@@ -49,6 +59,14 @@
       "start": "2017, 9, 23, 16, 00",
       "end": "2017, 9, 23, 18, 30",
       "contact": "456@fetch.sticks"
+    },
+    {
+      "id": 3,
+      "title": "Join us for a view from the Top",
+      "desc": "Beautiful vistas are better with friends, so come.",
+      "start": "2017, 10, 2, 17, 55",
+      "end": "2017, 10, 2, 20, 00",
+      "contact": "test@example.com"
     }
   ]
 }

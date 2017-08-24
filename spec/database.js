@@ -1,4 +1,5 @@
 const expect = require('chai').use(require('chai-as-promised')).expect;
+
 let models = require('../database/models.js');
 let sequelize = models.sequelize;
 let dbFuncs = require('../database/index.js');
@@ -164,10 +165,12 @@ module.exports.run = () => {
       it('Should create a trail when using all valid parameters', () => {
         let apiId = 12345678
         let name = 'new trail';
-        let directions = 'just look it up on google maps';
+        let directions = 'Second trail from the right and straight on until morning';
         let latitude = 4;
         let longitude = 8;
-        return dbFuncs.createTrail(apiId, name, directions, latitude, longitude)
+        let description = 'It is beautiful.';
+        let traillength = '3';
+        return dbFuncs.createTrail(apiId, name, directions, latitude, longitude, description, traillength)
         .then((trail) => {
           expect(trail).to.exist;
           expect(trail.id).to.exist;
@@ -178,15 +181,19 @@ module.exports.run = () => {
           expect(trail.directions).to.equal(directions);
           expect(trail.latitude).to.equal(latitude);
           expect(trail.longitude).to.equal(longitude);
+          expect(trail.description).to.equal(description);
+          expect(trail.traillength).to.equal(traillength);
         });
       });
       it('Should return the existing trail when attempting to create a new trail with the same ID as an existing one', () => {
         let apiId = 12345678
         let name = 'different trail';
-        let directions = 'just look it up on google maps';
+        let directions = 'Second trail from the right and straight on until morning';
         let latitude = 4;
         let longitude = 8;
-        return dbFuncs.createTrail(apiId, name, directions, latitude, longitude)
+        let description = 'It is beautiful.';
+        let traillength = '3';
+        return dbFuncs.createTrail(apiId, name, directions, latitude, longitude, description, traillength)
         .then((trail) => {
           expect(trail).to.exist;
           expect(trail.id).to.exist;
@@ -197,6 +204,8 @@ module.exports.run = () => {
           expect(trail.directions).to.equal(directions);
           expect(trail.latitude).to.equal(latitude);
           expect(trail.longitude).to.equal(longitude);
+          expect(trail.description).to.equal(description);
+          expect(trail.traillength).to.equal(traillength);
         });
       });
       it('Should reject when name is not a string', () => {
@@ -204,6 +213,12 @@ module.exports.run = () => {
       });
       it('Should reject when directions is not a string', () => {
         return expect(dbFuncs.createTrail('name', null, 1, 1)).to.be.rejected;
+      });
+      it('Should reject when description is not a string', () => {
+        return expect(dbFuncs.createTrail(null, 'description', 1, 1)).to.be.rejected;
+      });
+      it('Should reject when traillength is not a string', () => {
+        return expect(dbFuncs.createTrail(null, 'traillength', 1, 1)).to.be.rejected;
       });
     });
 
@@ -219,7 +234,7 @@ module.exports.run = () => {
         let desc = 'Beautiful vistas are better with friends, so come.';
         let start = '2017, 10, 2, 17, 55';
         let end = '2017, 10, 2, 20, 00';
-        let contact = '123@thats.me';
+        let contact = 'test@example.com';
         return dbFuncs.createEvent(db.users[0].email, db.trails[0].id, title, desc, start, end, contact)
         .then((event) => {
           expect(event).to.exist;
@@ -233,6 +248,160 @@ module.exports.run = () => {
         });
       });
     })
+
+    // getAllEventsNearLocation
+
+    describe('getAllEventsNearLocations()', ()=>{
+      let title = 'Join us for a view from the Top';
+      let desc = 'Beautiful vistas are better with friends, so come.';
+      let start = '2017, 10, 2, 17, 55';
+      let end = '2017, 10, 2, 20, 00';
+      let contact = 'test@example.com';
+    
+      it('Should exist', () =>{
+        expect(dbFuncs.getAllEventsNearLocations).to.exist;
+
+      });
+      it('Should be a function', () =>{
+        expect(dbFuncs.getAllEventsNearLocations).to.be.a('function');
+
+
+      });
+      it('Should be a function return list of events', () =>{
+        
+        return dbFuncs.getAllEventsNearLocations([1,2])
+        
+        .then((events) => {
+          expect(events).to.be.an('array');
+          expect(events).to.exist;
+          expect(events[0]).to.exist;
+          expect(events[0].createdAt).to.exist;
+          expect(events[0].updatedAt).to.exist;
+          expect(events[0].title).to.equal(title);
+          expect(events[0].desc).to.equal(desc);
+          expect(events[0].start).to.equal(start);
+          expect(events[0].end).to.equal(end);
+          expect(events[0].contact).to.equal(contact);
+        });
+
+      });
+
+
+    });
+
+    //getAllEventsByUserEmail
+
+    describe('getAllEventsByUserEmail()', ()=>{
+      let title = 'Join us for a view from the Top';
+      let desc = 'Beautiful vistas are better with friends, so come.';
+      let start = '2017, 10, 2, 17, 55';
+      let end = '2017, 10, 2, 20, 00';
+      let contact = 'test@example.com';
+    
+      it('Should exist', () =>{
+        expect(dbFuncs.getAllEventsByUserEmail).to.exist;
+
+      });
+      it('Should be a function', () =>{
+        expect(dbFuncs.getAllEventsByUserEmail).to.be.a('function');
+
+
+      });
+      it('Should be a function return list of events', () =>{
+        
+        return dbFuncs.getAllEventsByUserEmail(contact)
+        
+        .then((events) => {
+          expect(events).to.be.an('array');
+          expect(events).to.exist;
+          expect(events[0]).to.exist;
+          expect(events[0].createdAt).to.exist;
+          expect(events[0].updatedAt).to.exist;
+          expect(events[0].title).to.equal(title);
+          expect(events[0].desc).to.equal(desc);
+          expect(events[0].start).to.equal(start);
+          expect(events[0].end).to.equal(end);
+          expect(events[0].contact).to.equal(contact);
+        });
+
+      });
+
+    });
+
+    //getEventById
+    describe('getEventById()', ()=>{
+      let title = 'Join us for a view from the Top';
+      let desc = 'Beautiful vistas are better with friends, so come.';
+      let start = '2017, 10, 2, 17, 55';
+      let end = '2017, 10, 2, 20, 00';
+      let contact = 'test@example.com';
+    
+      it('Should exist', () =>{
+        expect(dbFuncs.getEventById).to.exist;
+
+      });
+      it('Should be a function', () =>{
+        expect(dbFuncs.getEventById).to.be.a('function');
+
+
+      });
+      it('Should be a function return an event', () =>{
+        
+        return dbFuncs.getEventById(3)
+        
+        .then((event) => {
+          
+          expect(event).to.exist;
+          expect(event).to.exist;
+          expect(event.createdAt).to.exist;
+          expect(event.updatedAt).to.exist;
+          expect(event.title).to.equal(title);
+          expect(event.desc).to.equal(desc);
+          expect(event.start).to.equal(start);
+          expect(event.end).to.equal(end);
+          expect(event.contact).to.equal(contact);
+        });
+
+      });
+
+    });
+
+        // getAllEventsByTrailId
+    describe('getAllEventsByTrailId()', () => {
+      it('Should exist', () => {
+        expect(dbFuncs.getAllEventsByTrailId).to.exist;
+      });
+      it('Should be a function', () => {
+        expect(dbFuncs.getAllEventsByTrailId).to.be.a('function');
+      });
+      it('Should be a function return an event', () =>{
+        let title = 'Join us for a view from the Top';
+        let desc = 'Beautiful vistas are better with friends, so come.';
+        let start = '2017, 10, 2, 17, 55';
+        let end = '2017, 10, 2, 20, 00';
+        let contact = 'test@example.com';
+        return dbFuncs.getAllEventsByTrailId(1)
+        
+        .then((event) => {
+          
+          expect(event).to.exist;
+          expect(event).to.exist;
+          expect(event.createdAt).to.exist;
+          expect(event.updatedAt).to.exist;
+          expect(event.title).to.equal(title);
+          expect(event.desc).to.equal(desc);
+          expect(event.start).to.equal(start);
+          expect(event.end).to.equal(end);
+          expect(event.contact).to.equal(contact);
+        });
+
+      });
+
+    });
+
+
+
+
 
     describe('createPost()', () => {
       it('Should exist', () => {
@@ -295,6 +464,10 @@ module.exports.run = () => {
         });
       });
     });
+
+
+
+
 
     describe('getPostsByTrailName()', () => {
       it('Should exist', () => {
