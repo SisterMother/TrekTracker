@@ -67,8 +67,6 @@ module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude
       reject('Expected trail description to be a string, but instead got ' + traillength);
     });
   }
-  console.log('DESCRIPTION', description);
-  console.log('TRAILLENGTH', traillength);
 
   return models.trails.findOne({
     where: {id}
