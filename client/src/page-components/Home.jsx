@@ -7,7 +7,7 @@ import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from '../components/Nav.jsx';
 import TrailList from '../components/TrailList.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
-
+import Calendar from '../components/calender.jsx';
 
 class Home extends React.Component {
   constructor(props) {
@@ -112,6 +112,9 @@ class Home extends React.Component {
         </div>
         <div className='col-narrow'>
           {this.state.markers.length > 0 ? <TrailList onClick={this.trailClick} markers={this.state.markers} /> : <CircularProgress size={200} thickness={10} style={{'width': '50%', 'position': 'relative', 'left': '25%'}} />}
+        </div>
+        <div className='calendar'>
+          <Calendar/>
         </div>
       </div>
     );

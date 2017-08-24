@@ -1,6 +1,10 @@
-import React, {Component} from 'react'
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card'
-import FlatButton from 'material-ui/FlatButton'
+import React, {Component} from 'react';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import RaisedButton from 'material-ui/RaisedButton';
+import DatePicker from 'material-ui/DatePicker';
+
 
 // In the interest of modularization, I'm putting the bubbles populated by the markers in this component.
 //Aware of the fact that the variable names are remarkably circuitious, this could be fixed in redux.
