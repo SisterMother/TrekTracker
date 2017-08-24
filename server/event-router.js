@@ -14,3 +14,31 @@ router.post('/event', (req, res) => {
 });
 
 module.exports = router;
+
+
+// all events
+
+router.get('/event/allevents', (req, res)=>{
+
+	//db.getAllEventsNearLocation takes array of trailIds as parameter
+
+});
+
+router.get('/event/user/allevents', (req, res)=>{
+
+  //db.getAllEventsByUserEmail user's email and finds all events that belongs to a user.
+});
+
+router.get('/event', (req, res)=>{
+
+
+  //db.getEventsByTrailId take trail id. 
+
+
+});
+
+// one event with id
+
+// get num of events
+
+

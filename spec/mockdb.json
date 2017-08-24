@@ -17,6 +17,12 @@
       "firstname": "Whereis",
       "lastname": "Waldo",
       "email": "whereis@waldo.com"
+    },
+    {
+      "id": 4,
+      "firstname": "Whereis",
+      "lastname": "Waldo",
+      "email": "123@thats.me"
     }
   ],
   "trails": [
@@ -37,7 +43,7 @@
     {
       "id": 1,
       "title": "Join us for a view from the Top",
-      "desc": "Beautiful vistas are better with friends, so come",
+      "desc": "Beautiful vistas are better with friends, so come.",
       "start": "2017, 10, 2, 17, 55",
       "end": "2017, 10, 2, 20, 00",
       "contact": "123@thats.me"
@@ -49,6 +55,14 @@
       "start": "2017, 9, 23, 16, 00",
       "end": "2017, 9, 23, 18, 30",
       "contact": "456@fetch.sticks"
+    },
+    {
+      "id": 3,
+      "title": "Join us for a view from the Top",
+      "desc": "Beautiful vistas are better with friends, so come.",
+      "start": "2017, 10, 2, 17, 55",
+      "end": "2017, 10, 2, 20, 00",
+      "contact": "test@example.com"
     }
   ]
 }
