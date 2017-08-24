@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import axios from 'axios';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -8,11 +8,11 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 
-class EventForm extends Component {
+class NewEventForm extends Component {
   constructor(props){
  	super(props);
  	this.state = {
- 	  open: false,
+ 	  open: true,
  	  date : '',
  	  title : '',
  	  description : '',
@@ -24,25 +24,25 @@ class EventForm extends Component {
   this.handleOpen = this.handleOpen.bind(this);
   this.handleSelect = this.handleSelect.bind(this);
   this.handleClose = this.handleClose.bind(this);
-  this.handleLocation = this.handleLocation.bind(this);
+  this.handlelocation = this.handleLocation.bind(this);
   this.saveEvent = this.saveEvent.bind(this);
  };
 
   saveEvent () {
-    axios.post('/event', {
+  	axios.post('/event', {
       event: { 
-        title: this.state.title,
-      date: this.state.date,
-      title: this.state.title,
-      trailId: this.state.location.trailId 
-    }
-    })
-    .then(function(response){
-      console.log('Saved')
-    })
-    .catch(function(error){
-      console.log('Error', error)
-    })
+      	title: this.state.title,
+	    date: this.state.date,
+	    title: this.state.title,
+	    trailId: this.state.location.trailId 
+	  }
+  	})
+  	.then(function(response){
+  	  console.log('Saved')
+  	})
+  	.catch(function(error){
+  	  console.log('Error', error)
+  	})
   }
 
   handleDescription  (e) {
@@ -63,32 +63,30 @@ class EventForm extends Component {
 
   handleClose () {
     this.setState({open: false});
-    console.log(this.state)
   }
 
   handleLocation (trail) {
-    this.setState({location: trail})
+  	this.setState({location: trail})
   }
 
   render() {
-    const actions = [
-      <FlatButton
-        label="Done"
-       // primary={true}
-        //keyboardFocused={true}
-        onClick={this.handleClose}
-      />,
-      <FlatButton
-        label="Create Event"
-        //primary={true}
-        //keyboardFocused={true}
-        onClick={this.saveEvent}
-      />
-    ];
+	const actions = [
+	  <FlatButton
+	    label="Done"
+	    primary={true}
+	    keyboardFocused={true}
+	    onClick={this.handleClose}
+	  />,
+	  <FlatButton
+	    label="Create Event"
+	    primary={true}
+	    keyboardFocused={true}
+	    onClick={this.saveEvent}
+	  />,
+	];
 
       return (
         <div>
-          <RaisedButton label="Plan a hike!" onClick={this.handleOpen} />
             <Dialog
 	          title="Let us know the details"
 	          actions={actions}
@@ -109,9 +107,4 @@ class EventForm extends Component {
   }
 }
 
-export default EventForm
-
-// module.exports = {
-//   handleOpen: EventForm.handleOpen,
-//   EventForm: EventForm
-// }
+export default NewEventForm
