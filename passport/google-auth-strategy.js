@@ -6,7 +6,7 @@ let config;
 console.log('---------------------------------------------- NODE_ENV: ', process.env.NODE_ENV);
 
 if (!process.env.NODE_ENV) {
-  //config = require('./config.json');
+  config =  require('./config.json');
 }
 
 module.exports = (passport) => {
