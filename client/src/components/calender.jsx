@@ -2,6 +2,8 @@ import React from 'react';
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import EventForm from './eventForm.jsx'
+import NewEventForm from './eventFormNoButton.jsx'
+
 var moment = require('moment');
 
 BigCalendar.momentLocalizer(moment);
@@ -19,7 +21,7 @@ class Calendar extends React.Component {
   }
 
   handleOpen () {
-    this.setState({formStatus: true});
+    this.setState({formStatus: !this.state.formStatus});
   }
 
   handleClose () {
@@ -27,14 +29,14 @@ class Calendar extends React.Component {
   }
 
   render(){
-    var newEvent = this.state.formStatus === false ? null : <EventForm/>
+    var newEvent = this.state.formStatus === false ? null : <NewEventForm trails={this.props.trails}/>
     return (
       <div {...this.props}>
         <h3 className="callout">
           Click an event to see more info, or
           drag the mouse over the calendar to select a date/time range.
         </h3>
-        <EventForm/>
+        <EventForm trails={this.props.trails}/>
         {newEvent}
         <BigCalendar
           selectable
