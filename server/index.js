@@ -39,6 +39,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 // Setup routes
 app.use('/api', apiRouter);
 app.use('/', authRouter);
