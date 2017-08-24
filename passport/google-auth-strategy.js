@@ -4,7 +4,7 @@ let users = require('../database/models.js').users;
 let config;
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'test') {
-  config = require('./config.json');
+  //config = require('./config.json');
 }
 
 module.exports = (passport) => {
