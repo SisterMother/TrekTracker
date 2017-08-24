@@ -10,7 +10,6 @@ models.sequelize = sequelize;
 // models.Sequelize = Sequelize; // Kamie commented this out.
 
 
-
 // ----------------- //
 // ---- SCHEMAS ---- //
 // ----------------- //
@@ -67,6 +66,12 @@ var Trails = sequelize.define('trails', {
   },
   directions: {
     type: Sequelize.TEXT
+  },
+  description: {
+    type: Sequelize.TEXT
+  },
+  traillength: {
+    type: Sequelize.STRING
   }
 });
 models.trails = Trails;
