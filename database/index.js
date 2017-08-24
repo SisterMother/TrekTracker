@@ -1,7 +1,5 @@
 var models = require('./models');
 
-
-
 module.exports.getUserByEmail = (email) => {
   return models.users.findOne({
     where: {email}
@@ -16,8 +14,6 @@ module.exports.getUserByEmail = (email) => {
     }
   });
 };
-
-
 
 module.exports.getTrailsByName = (name) => {
   if (!name || name.constructor !== String) {
@@ -118,6 +114,53 @@ module.exports.createPost = (posterEmail, trailId, title, text, imageUrl, latitu
       trail_id: trailId
     });
   });
+};
+
+// Catch could be used instead of if statements to make it shorter, but the statements are helpful for debugging.
+module.exports.createEvent = (creatorEmail, trailId, eventTitle, eventDesc, eventStart, eventEnd, eventContact) => {
+  if (!creatorEmail || creatorEmail.constructor !== String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the event creator email to be a string, but instead it was ' + creatorEmail);
+    });
+  }
+  if (!eventTitle || eventTitle.constructor != String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the title to be a string, but instead it was ' + eventTitle);
+    });
+  }
+  if (!eventDesc || eventDesc.constructor != String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the description to be a string, but instead it was ' + eventDesc);
+    });
+  }
+  if (!eventStart || eventStart.constructor != String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the start time to be a string, but instead it was ' + eventStart);
+    });
+  }
+  if (!eventEnd || eventEnd.constructor != String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the end time to be a string, but instead it was ' + eventEnd);
+    });
+  }
+  if (!eventContact || eventContact.constructor != String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the contact time to be a string, but instead it was ' + eventContact);
+    });
+  }
+  return module.exports.getUserByEmail(creatorEmail)
+  .then(
+    (event) => {
+    return models.events.create({
+      title: eventTitle,
+      desc: eventDesc,
+      start: eventStart,
+      end: eventEnd,
+      contact: eventContact,
+      creator_user_id: event.id,
+      trail_id: trailId
+    });
+  })
 };
 
 module.exports.getPostsByUserEmail = (email) => {
