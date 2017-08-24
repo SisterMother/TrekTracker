@@ -1,7 +1,5 @@
 var models = require('./models');
 
-
-
 module.exports.getUserByEmail = (email) => {
   return models.users.findOne({
     where: {email}
@@ -16,8 +14,6 @@ module.exports.getUserByEmail = (email) => {
     }
   });
 };
-
-
 
 module.exports.getTrailsByName = (name) => {
   if (!name || name.constructor !== String) {
@@ -49,7 +45,8 @@ module.exports.getAllTrails = () => {
   });
 };
 
-module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0) => {
+//consider refactoring
+module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0, description = '', traillength = 0) => {
   if (!name || name.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected trail name to be a non-empty string, but instead got ' + name);
@@ -58,6 +55,16 @@ module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude
   if (directions === undefined || directions === null || directions.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected trail directions to be a string, but instead got ' + directions);
+    });
+  }
+  if (description === undefined || description === null || description.constructor !== String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected trail description to be a string, but instead got ' + description);
+    });
+  }
+  if (traillength === undefined || traillength === null || traillength.constructor !== String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected trail description to be a string, but instead got ' + traillength);
     });
   }
 
@@ -72,12 +79,11 @@ module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude
       return trail;
     }
     return models.trails.create({
-      id, name, directions, latitude, longitude
+      id, name, directions, latitude, longitude, description, traillength
     });
-  });
+  })
+  .catch( err => console.log(err));
 };
-
-
 
 // posterData can be either a user ID or a user email (REMEMBER: user IDs are STRINGS, NOT numbers)
 // trailData can be either a trail ID or a trail name
@@ -117,6 +123,105 @@ module.exports.createPost = (posterEmail, trailId, title, text, imageUrl, latitu
       poster_user_id: poster.id,
       trail_id: trailId
     });
+  });
+};
+
+// Catch could be used instead of if statements to make it shorter, but the statements are helpful for debugging.
+module.exports.createEvent = (creatorEmail, trailId, eventTitle, eventDesc, eventStart, eventEnd, eventContact) => {
+  if (!creatorEmail || creatorEmail.constructor !== String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the event creator email to be a string, but instead it was ' + creatorEmail);
+    });
+  }
+  if (!eventTitle || eventTitle.constructor != String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the title to be a string, but instead it was ' + eventTitle);
+    });
+  }
+  if (!eventDesc || eventDesc.constructor != String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the description to be a string, but instead it was ' + eventDesc);
+    });
+  }
+  if (!eventStart || eventStart.constructor != String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the start time to be a string, but instead it was ' + eventStart);
+    });
+  }
+  if (!eventEnd || eventEnd.constructor != String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the end time to be a string, but instead it was ' + eventEnd);
+    });
+  }
+  if (!eventContact || eventContact.constructor != String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the contact time to be a string, but instead it was ' + eventContact);
+    });
+  }
+  return module.exports.getUserByEmail(creatorEmail)
+  .then(
+    (user) => {
+    return models.events.create({
+      title: eventTitle,
+      desc: eventDesc,
+      start: eventStart,
+      end: eventEnd,
+      contact: eventContact,
+      creator_user_id: user.id,
+      trail_id: trailId
+    });
+  })
+};
+
+// get all events around the location
+
+module.exports.getAllEventsNearLocations = (trailIdList) => {
+  
+  var orQuery = trailIdList.map((id)=>{
+    return {trail_id: id}
+  });
+  return models.events.findAll({
+    where: {
+      $or: orQuery
+
+    }
+  })
+  .then((events)=>{
+
+    return events.map((event)=>{
+      return event.dataValues;
+
+    });
+
+  });
+};
+
+
+module.exports.getAllEventsByTrailId = (trailId) => {
+  return module.exports.getAllEventsNearLocations([trailId])
+  .then((events)=>{
+    return events[0];
+  });
+};
+
+// get all events by user
+
+module.exports.getAllEventsByUserEmail = (email) => {
+  return models.users.findOne({where: {email} })
+  .then((user)=>{
+    return models.events.findAll({where: { creator_user_id: user.id}});
+  })
+  .catch((err) =>{
+    console.log("Error: ", err);
+    throw err;
+  });
+};
+
+module.exports.getEventById = (eventId) => {
+  return models.events.findOne({where: {id:eventId}})
+  .catch((err)=>{
+    console.log("Error: ", err);
+    throw err;
   });
 };
 

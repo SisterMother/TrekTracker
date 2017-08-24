@@ -7,7 +7,8 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
 var models = {};
 
 models.sequelize = sequelize;
-models.Sequelize = Sequelize;
+// models.Sequelize = Sequelize; // Kamie commented this out.
+
 
 // ----------------- //
 // ---- SCHEMAS ---- //
@@ -65,6 +66,12 @@ var Trails = sequelize.define('trails', {
   },
   directions: {
     type: Sequelize.TEXT
+  },
+  description: {
+    type: Sequelize.TEXT
+  },
+  traillength: {
+    type: Sequelize.STRING
   }
 });
 models.trails = Trails;
@@ -121,6 +128,60 @@ Posts.belongsTo(Trails, {
 });
 models.posts = Posts;
 
+//EVENTS SCHEMA
+var Events = sequelize.define('events', {
+  id: {
+    primaryKey: true,
+    type: Sequelize.INTEGER,
+    unique: true,
+    autoIncrement:true
+  },
+  title: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
+  },
+  desc: {
+    type: Sequelize.TEXT
+  },
+  start: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
+  },
+  end: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
+  },
+  contact: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
+  }
+});
+Events.belongsTo(Users, {
+  foreignKey: 'creator_user_id'
+});
+Events.belongsTo(Trails, {
+  foreignKey: 'trail_id'
+});
+models.events = Events;
+
+var InterestedInEvent = sequelize.define('interestedInEvent', {
+  id: {
+    primaryKey: true,
+    type: Sequelize.INTEGER,
+    unique: true
+  }
+});
+InterestedInEvent.belongsTo(Users, {
+  foreignKey: 'user_id'
+});
+InterestedInEvent.belongsTo(Events, {
+  foreignKey: 'event_name'
+});
+models.interestedInEvent = InterestedInEvent;
 
 // Sync database
 models.sequelize.sync().then(() => {
