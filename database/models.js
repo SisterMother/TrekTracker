@@ -128,11 +128,11 @@ var Events = sequelize.define('events', {
   id: {
     primaryKey: true,
     type: Sequelize.INTEGER,
-    unique: true
+    unique: true,
+    autoIncrement:true
   },
   title: {
     type: Sequelize.STRING,
-    unique: true,
     notEmpty: true,
     allowNull: false
   },
