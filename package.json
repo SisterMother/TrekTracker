@@ -9,7 +9,11 @@
     "server-dev": "nodemon server/index.js",
     "start": "node server/index.js",
     "prod": "NODE_ENV=production node server/index.js",
+<<<<<<< HEAD
     "postinstall": "webpack -p"
+=======
+    "heroku-postbuild": "webpack -p"
+>>>>>>> Adjust package.json format
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +29,7 @@
     "express-session": "^1.15.5",
     "jquery": "^3.2.1",
     "material-ui": "^0.19.0",
+<<<<<<< HEAD
     "moment": "^2.18.1",
     "mysql": "^2.14.1",
     "mysql2": "^1.4.0",
@@ -32,6 +37,14 @@
     "passport-google-oauth2": "^0.1.6",
     "react": "^15.6.1",
     "react-big-calendar": "^0.14.4",
+=======
+    "mysql": "^2.14.1",
+    "mysql2": "^1.4.0",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-google-oauth2": "^0.1.6",
+    "react": "^15.6.1",
+>>>>>>> Adjust package.json format
     "react-dom": "^15.6.1",
     "react-google-button": "^0.3.0",
     "react-google-maps": "^7.2.0",
@@ -52,4 +65,7 @@
     "chai": "^4.1.1"
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> Adjust package.json format
