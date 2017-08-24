@@ -85,8 +85,6 @@ module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude
   .catch( err => console.log(err));
 };
 
-
-
 // posterData can be either a user ID or a user email (REMEMBER: user IDs are STRINGS, NOT numbers)
 // trailData can be either a trail ID or a trail name
 // posterDataType should either be 'id' or 'email'
@@ -162,17 +160,69 @@ module.exports.createEvent = (creatorEmail, trailId, eventTitle, eventDesc, even
   }
   return module.exports.getUserByEmail(creatorEmail)
   .then(
-    (event) => {
+    (user) => {
     return models.events.create({
       title: eventTitle,
       desc: eventDesc,
       start: eventStart,
       end: eventEnd,
       contact: eventContact,
-      creator_user_id: event.id,
+      creator_user_id: user.id,
       trail_id: trailId
     });
   })
+};
+
+// get all events around the location
+
+module.exports.getAllEventsNearLocations = (trailIdList) => {
+  
+  var orQuery = trailIdList.map((id)=>{
+    return {trail_id: id}
+  });
+  return models.events.findAll({
+    where: {
+      $or: orQuery
+
+    }
+  })
+  .then((events)=>{
+
+    return events.map((event)=>{
+      return event.dataValues;
+
+    });
+
+  });
+};
+
+
+module.exports.getAllEventsByTrailId = (trailId) => {
+  return module.exports.getAllEventsNearLocations([trailId])
+  .then((events)=>{
+    return events[0];
+  });
+};
+
+// get all events by user
+
+module.exports.getAllEventsByUserEmail = (email) => {
+  return models.users.findOne({where: {email} })
+  .then((user)=>{
+    return models.events.findAll({where: { creator_user_id: user.id}});
+  })
+  .catch((err) =>{
+    console.log("Error: ", err);
+    throw err;
+  });
+};
+
+module.exports.getEventById = (eventId) => {
+  return models.events.findOne({where: {id:eventId}})
+  .catch((err)=>{
+    console.log("Error: ", err);
+    throw err;
+  });
 };
 
 module.exports.getPostsByUserEmail = (email) => {
