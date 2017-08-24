@@ -19,19 +19,23 @@ class Calendar extends React.Component {
   }
 
   handleOpen () {
-  	console.log('hello');
     this.setState({formStatus: true});
-    console.log(this.state.formStatus)
+  }
+
+  handleClose () {
+    this.setState({formStatus: false});
   }
 
   render(){
+    var newEvent = this.state.formStatus === false ? null : <EventForm/>
     return (
       <div {...this.props}>
         <h3 className="callout">
           Click an event to see more info, or
           drag the mouse over the calendar to select a date/time range.
         </h3>
-        <EventForm formStatus={this.state.formStatus}/>
+        <EventForm/>
+        {newEvent}
         <BigCalendar
           selectable
           events= {events}

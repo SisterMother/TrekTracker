@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
@@ -12,13 +11,14 @@ class EventForm extends Component {
   constructor(props){
  	super(props);
  	this.state = {
- 	  open: this.props.formStatus,
+ 	  open: true,
  	  date : '',
  	  title : '',
  	  description : '',
  	  location : ''
  	}
 
+  console.log('eventform:open', this.state.open)
 
   this.handleDescription = this.handleDescription.bind(this);
   this.handleTitle = this.handleTitle.bind(this);
@@ -45,6 +45,7 @@ class EventForm extends Component {
   }
 
   handleClose () {
+    console.log('hello')
     this.setState({open: false});
   }
 
@@ -62,10 +63,10 @@ class EventForm extends Component {
         <div>
           <RaisedButton label="Plan a hike!" onClick={this.handleOpen} />
             <Dialog
-	          title="Dialog With Date Picker"
+	          title="Let us know the details"
 	          actions={actions}
 	          modal={false}
-	          open={this.props.formStatus}
+	          open={this.state.open}
 	          onRequestClose={this.handleClose}
             >
            Plan your hike here.
