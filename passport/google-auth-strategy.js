@@ -3,7 +3,9 @@ let GoogleStrategy = require('passport-google-oauth2').Strategy;
 let users = require('../database/models.js').users;
 let config;
 
-if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'test') {
+console.log('---------------------------------------------- NODE_ENV: ', process.env.NODE_ENV);
+
+if (!process.env.NODE_ENV) {
   config = require('./config.json');
 }
 
