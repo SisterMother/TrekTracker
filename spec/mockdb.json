@@ -24,13 +24,17 @@
       "id": 1,
       "name": "testtrail",
       "latitude": 1234,
-      "longitude": 5678
+      "longitude": 5678,
+      "description": "A paved limited-access road and a network of well-defined dirt trails wind around the hills flanks and provide access to the summit.",
+      "traillength": "3"
     },
     {
       "id": 2,
       "name": "testtrail2",
       "latitude": 12345,
-      "longitude": 56789
+      "longitude": 56789,
+      "description": "Three miles of asphalt and dirt paths wind through the Oak Woodlands and connect to the extensive trail and road network within Golden Gate Park.",
+      "traillength": "1"
     }
   ],
   "events": [

@@ -164,10 +164,12 @@ module.exports.run = () => {
       it('Should create a trail when using all valid parameters', () => {
         let apiId = 12345678
         let name = 'new trail';
-        let directions = 'just look it up on google maps';
+        let directions = 'Second trail from the right and straight on until morning';
         let latitude = 4;
         let longitude = 8;
-        return dbFuncs.createTrail(apiId, name, directions, latitude, longitude)
+        let description = 'It is beautiful.';
+        let traillength = '3';
+        return dbFuncs.createTrail(apiId, name, directions, latitude, longitude, description, traillength)
         .then((trail) => {
           expect(trail).to.exist;
           expect(trail.id).to.exist;
@@ -178,15 +180,19 @@ module.exports.run = () => {
           expect(trail.directions).to.equal(directions);
           expect(trail.latitude).to.equal(latitude);
           expect(trail.longitude).to.equal(longitude);
+          expect(trail.description).to.equal(description);
+          expect(trail.traillength).to.equal(traillength);
         });
       });
       it('Should return the existing trail when attempting to create a new trail with the same ID as an existing one', () => {
         let apiId = 12345678
         let name = 'different trail';
-        let directions = 'just look it up on google maps';
+        let directions = 'Second trail from the right and straight on until morning';
         let latitude = 4;
         let longitude = 8;
-        return dbFuncs.createTrail(apiId, name, directions, latitude, longitude)
+        let description = 'It is beautiful.';
+        let traillength = '3';
+        return dbFuncs.createTrail(apiId, name, directions, latitude, longitude, description, traillength)
         .then((trail) => {
           expect(trail).to.exist;
           expect(trail.id).to.exist;
@@ -197,6 +203,8 @@ module.exports.run = () => {
           expect(trail.directions).to.equal(directions);
           expect(trail.latitude).to.equal(latitude);
           expect(trail.longitude).to.equal(longitude);
+          expect(trail.description).to.equal(description);
+          expect(trail.traillength).to.equal(traillength);
         });
       });
       it('Should reject when name is not a string', () => {
@@ -204,6 +212,12 @@ module.exports.run = () => {
       });
       it('Should reject when directions is not a string', () => {
         return expect(dbFuncs.createTrail('name', null, 1, 1)).to.be.rejected;
+      });
+      it('Should reject when description is not a string', () => {
+        return expect(dbFuncs.createTrail(null, 'description', 1, 1)).to.be.rejected;
+      });
+      it('Should reject when traillength is not a string', () => {
+        return expect(dbFuncs.createTrail(null, 'traillength', 1, 1)).to.be.rejected;
       });
     });
 

@@ -45,7 +45,8 @@ module.exports.getAllTrails = () => {
   });
 };
 
-module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0) => {
+//consider refactoring
+module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0, description = '', traillength = 0) => {
   if (!name || name.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected trail name to be a non-empty string, but instead got ' + name);
@@ -54,6 +55,16 @@ module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude
   if (directions === undefined || directions === null || directions.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected trail directions to be a string, but instead got ' + directions);
+    });
+  }
+  if (description === undefined || description === null || description.constructor !== String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected trail description to be a string, but instead got ' + description);
+    });
+  }
+  if (traillength === undefined || traillength === null || traillength.constructor !== String) {
+    return new Promise((resolve, reject) => {
+      reject('Expected trail description to be a string, but instead got ' + traillength);
     });
   }
 
@@ -68,9 +79,10 @@ module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude
       return trail;
     }
     return models.trails.create({
-      id, name, directions, latitude, longitude
+      id, name, directions, latitude, longitude, description, traillength
     });
-  });
+  })
+  .catch( err => console.log(err));
 };
 
 
