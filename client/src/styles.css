@@ -45,3 +45,33 @@ body {
 .post {
   margin: 10px 0;
 }
+
+.rootWeather {
+  display: 'flex';
+  flexWrap: 'nowrap';
+  justifyContent: 'space-around';
+  overflow: auto;
+}
+
+.gridListWeather {
+  display: 'flex';
+  flexWrap: 'nowrap';
+  overflowX: 'auto';
+  overflow: auto;
+}
+
+.titleStyleWeather {
+  color: 'rgb(0, 188, 212)';
+}
+
+.weatherDetailPopup = {
+  height: 4000;
+  width: 100;
+  margin: 20;
+  textAlign: 'center';
+  display: 'inline-block';
+};
+
+.wundergroundimg = {
+  margin: 1em;
+}
