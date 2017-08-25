@@ -1,6 +1,8 @@
 const axios = require('axios');
 const $ = require('jquery');
 const Promise = require('bluebird');
+const time = require('./time.js')
+
 /*
 * In order to further modularize, functions not directly
 * interacting with the DOM or passed between files are placed
@@ -43,6 +45,19 @@ const getFileSize = function(number) {
   } else if(number > 1048576) {
     return (number/1048576).toFixed(1) + 'MB';
   }
+}
+
+//take array of posts from database, and translate into an array that can be loaded by ImageGallery component
+module.exports.galleryConversion = function(postsFromDatabase) {
+  var galleryposts = postsFromDatabase.map((eachpost) => {
+    return {
+      original: eachpost.image_url,
+      thumbnail: eachpost.image_url,
+      description: `${eachpost.poster.firstname} ${eachpost.poster.lastname} ${eachpost.poster.email}
+                  : ${eachpost.text} ${time.parse(eachpost.createdAt, true)}`
+    };
+  });
+  return galleryposts;
 }
 
 /*
