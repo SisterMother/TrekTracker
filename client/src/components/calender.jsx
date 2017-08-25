@@ -31,7 +31,7 @@ class Calendar extends React.Component {
   render(){
     var newEvent = this.state.formStatus === false ? null : <NewEventForm trails={this.props.trails}/>
     return (
-      <div {...this.props}>
+      <div>
         <h3 className="callout">
           Click an event to see more info, or
           drag the mouse over the calendar to select a date/time range.

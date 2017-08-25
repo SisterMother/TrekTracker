@@ -16,7 +16,8 @@ class NewEventForm extends Component {
  	  date : '',
  	  title : '',
  	  description : '',
- 	  location : {}
+ 	  location : {},
+ 	  trails: this.props.trails
  	}
 
   this.handleDescription = this.handleDescription.bind(this);
@@ -96,7 +97,7 @@ class NewEventForm extends Component {
             >
            Plan your hike here.
           <TextField onChange={this.handleTitle} hintText="Name your event"/><br />
-          <DropDownMenu value="Select a trail" onChange={this.handleLocation}>
+          <DropDownMenu trails={this.state.trails} value="Select a trail" onChange={this.handleLocation}>
             {this.props.trails.map((trail, i) =>{<MenuItem value={i} primaryText={trail.name}/>})}
           </DropDownMenu>
           <DatePicker hintText="Select a date"/>
