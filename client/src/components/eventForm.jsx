@@ -22,14 +22,12 @@ class EventForm extends Component {
  	  description : '',
  	  location : '',
     trailId : 0,
-    host: '',
     date_time: null
  	}
 
   this.handleDescription = this.handleDescription.bind(this);
   this.handleTitle = this.handleTitle.bind(this);
   this.handleOpen = this.handleOpen.bind(this);
-  this.handleSelect = this.handleSelect.bind(this);
   this.handleClose = this.handleClose.bind(this);
   this.handleLocation = this.handleLocation.bind(this);
   this.saveEvent = this.saveEvent.bind(this);
@@ -43,10 +41,9 @@ class EventForm extends Component {
       event: { 
         title: this.state.title,
         date: this.state.date,
-        title: this.state.title,
         trailId: this.state.location.trailId,
-        host: this.state.host,
-        description: this.state.description 
+        description: this.state.description,
+        location: this.state.location 
       }
     })
     .then(function(response){
@@ -55,6 +52,7 @@ class EventForm extends Component {
     .catch(function(error){
       console.log('Error', error)
     })
+    this.handleSubmit();
   }
 
   handleDescription  (e) {
@@ -67,10 +65,6 @@ class EventForm extends Component {
 
   handleOpen () {
     this.setState({open: true});
-  }
-
-  handleSelect (value) {
-    this.setState({location: value});
   }
 
   handleClose () {
