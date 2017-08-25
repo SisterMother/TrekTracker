@@ -45,8 +45,23 @@ module.exports.getAllTrails = () => {
   });
 };
 
+<<<<<<< HEAD
 //consider refactoring
 module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0, description = '', traillength = 0) => {
+=======
+
+module.exports.registerInterest = (id, eventid) => {
+  models.interestedInEvent.findOrCreate({where: {user_id: id, event_id: eventid}})
+  .spread((user, created) => {
+    console.log('USER', user);
+    console.log(user.get({plain: true}));
+    console.log(created);
+  })
+}
+
+
+module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0) => {
+>>>>>>> Add register interest function to save that a user is interested in an event
   if (!name || name.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected trail name to be a non-empty string, but instead got ' + name);
