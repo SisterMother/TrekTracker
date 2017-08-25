@@ -3,6 +3,7 @@ import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import EventForm from './eventForm.jsx'
 import NewEventForm from './eventFormNoButton.jsx'
+import RaisedButton from 'material-ui/RaisedButton';
 
 var moment = require('moment');
 
@@ -40,7 +41,7 @@ class Calendar extends React.Component {
           Click an event to see more info, or
           drag the mouse over the calendar to select a date/time range.
         </h3>
-        <EventForm trails={this.props.trails}/>
+        <RaisedButton label="Plan a hike!" onClick={this.handleOpen} />
         {newEvent}
         <BigCalendar
           selectable
