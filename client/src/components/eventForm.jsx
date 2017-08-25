@@ -17,19 +17,18 @@ class EventForm extends Component {
  	this.state = {
  	  open: false,
  	  date : null,
-    time: null,
+    start: null,
+    end: null,
  	  title : '',
  	  description : '',
  	  location : '',
     trailId : 0,
-    host: '',
     date_time: null
  	}
 
   this.handleDescription = this.handleDescription.bind(this);
   this.handleTitle = this.handleTitle.bind(this);
   this.handleOpen = this.handleOpen.bind(this);
-  this.handleSelect = this.handleSelect.bind(this);
   this.handleClose = this.handleClose.bind(this);
   this.handleLocation = this.handleLocation.bind(this);
   this.saveEvent = this.saveEvent.bind(this);
@@ -43,10 +42,11 @@ class EventForm extends Component {
       event: { 
         title: this.state.title,
         date: this.state.date,
-        title: this.state.title,
         trailId: this.state.location.trailId,
-        host: this.state.host,
-        description: this.state.description 
+        description: this.state.description,
+        location: this.state.location ,
+        start: this.state.start,
+        end: this.state.end
       }
     })
     .then(function(response){
@@ -55,6 +55,7 @@ class EventForm extends Component {
     .catch(function(error){
       console.log('Error', error)
     })
+    this.handleSubmit();
   }
 
   handleDescription  (e) {
@@ -67,10 +68,6 @@ class EventForm extends Component {
 
   handleOpen () {
     this.setState({open: true});
-  }
-
-  handleSelect (value) {
-    this.setState({location: value});
   }
 
   handleClose () {
@@ -86,7 +83,11 @@ class EventForm extends Component {
   }
 
   handleTime(event, time){
-    this.setState({time: time})
+    this.setState({start: time})
+  }
+
+    handleTime(event, time){
+    this.setState({end: time})
   }
   
   handleDate(event, date){
@@ -113,10 +114,10 @@ class EventForm extends Component {
   render() {
     const actions = [
       <FlatButton
-        label="Done"
+        label="Cancel"
        // primary={true}
         //keyboardFocused={true}
-        onClick={this.handleSubmit}
+        onClick={this.handleClose}
       />,
       <FlatButton
         label="Create Event"
@@ -148,7 +149,8 @@ class EventForm extends Component {
             {items}
           </DropDownMenu>
           <DatePicker onChange={this.handleDate} value ={this.state.date} hintText="Pick a day" />
-          <TimePicker onChange={this.handleTime} value={this.state.time} hintText="Select a time" />
+          <TimePicker onChange={this.handleTime} value={this.state.time} hintText="Select a start time" />
+          <TimePicker onChange={this.handleEnd} value={this.state.time} hintText="Select an end time" />
           <TextField onChange={this.handleDescription} hintText="Tell us more about it!"/><br />
         </Dialog>
       </div>
