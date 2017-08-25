@@ -1,13 +1,11 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import Paper from 'material-ui/Paper';
 import NavigationExpandMore from 'material-ui/svg-icons/navigation/expand-more';
-import $ from 'jquery'
-import config from '../../../passport/config.json'
-import dummyWeather from './dummyweather.jsx'
 import {leanSevenDayForecastArray} from '../helpers/helpers.js';
 
 class Weather extends React.Component {
@@ -25,31 +23,21 @@ class Weather extends React.Component {
   }
 
   componentDidMount() {
-    //not using axios because we are getting CORS cross origin issues with weather API. Ajax doesn't have problem
-    //call the weather api on long,lat
-    var urlBuilder = `http://api.wunderground.com/api/`;
-    urlBuilder += `${config.WUNDERGROUND_KEY}`;
-    urlBuilder += `/forecast10day/q/`;
-    urlBuilder += `${this.props.latitude},`;
-    urlBuilder += `${this.props.longitude}.json`
     var thisComponent = this;
-    $.ajax({
-      url: urlBuilder,
-      method: 'GET',
-      success: function(data) {
-        console.log(data);
+    axios('/api/weather', {params: {lat: this.props.latitude, lng: this.props.longitude}})
+      .then((response) => {
+        console.log(response.data);
         //weatherForecast contains all detail about upcoming weather
-        thisComponent.setState({weatherForecast: data.forecast});
+        thisComponent.setState({weatherForecast: response.data.forecast});
         //Construct a more compact data structure containing only the weather info we care about
-        thisComponent.leanSevenDayForecastArray(data.forecast)
-          .then((leanWeatherArray) =>{
-            console.log('leanWeatherArray has been stored in Weather state ', thisComponent.state.leanWeatherForecast);
-          })
-      },
-      error: function(err) {
+        return thisComponent.leanSevenDayForecastArray(response.data.forecast);
+      })
+      .then((leanWeatherArray) =>{
+        console.log('leanWeatherArray has been stored in Weather state ', thisComponent.state.leanWeatherForecast);
+      })
+      .catch((err) => {
         console.log(err);
-      }
-    });
+      });
   }
 
   clickDayWeather(event, dayIndex) {
