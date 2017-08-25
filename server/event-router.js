@@ -21,7 +21,7 @@ module.exports = router;
 router.get('/event/allevents', (req, res)=>{
 
 	//db.getAllEventsNearLocation takes array of trailIds as parameter
-
+    
 });
 
 router.get('/event/user/allevents', (req, res)=>{
