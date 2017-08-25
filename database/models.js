@@ -2,8 +2,17 @@
 
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config.json')[env];
+
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
+
+if (process.env.JAWSDB_URL) {
+  // the application is executed on Heroku ... use the postgres database
+  sequelize = new Sequelize(process.env.JAWSDB_URL);
+} else {
+  // the application is executed on the local machine
+  var sequelize = new Sequelize(config.database, config.username, config.password, config);
+
+}
 var models = {};
 
 models.sequelize = sequelize;
