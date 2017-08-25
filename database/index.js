@@ -45,7 +45,16 @@ module.exports.getAllTrails = () => {
   });
 };
 
-//consider refactoring
+module.exports.registerInterest = (id, eventid) => {
+  models.interestedInEvent.findOrCreate({where: {user_id: id, event_id: eventid}})
+  .spread((user, created) => {
+    console.log('USER', user);
+    console.log(user.get({plain: true}));
+    console.log(created);
+  })
+}
+
+
 module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0, description = '', traillength = 0) => {
   if (!name || name.constructor !== String) {
     return new Promise((resolve, reject) => {
@@ -176,14 +185,12 @@ module.exports.createEvent = (creatorEmail, trailId, eventTitle, eventDesc, even
 // get all events around the location
 
 module.exports.getAllEventsNearLocations = (trailIdList) => {
-  
   var orQuery = trailIdList.map((id)=>{
     return {trail_id: id}
   });
   return models.events.findAll({
     where: {
       $or: orQuery
-
     }
   })
   .then((events)=>{
