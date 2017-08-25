@@ -17,7 +17,8 @@ class EventForm extends Component {
  	this.state = {
  	  open: false,
  	  date : null,
-    time: null,
+    start: null,
+    end: null,
  	  title : '',
  	  description : '',
  	  location : '',
@@ -43,7 +44,9 @@ class EventForm extends Component {
         date: this.state.date,
         trailId: this.state.location.trailId,
         description: this.state.description,
-        location: this.state.location 
+        location: this.state.location ,
+        start: this.state.start,
+        end: this.state.end
       }
     })
     .then(function(response){
@@ -80,7 +83,11 @@ class EventForm extends Component {
   }
 
   handleTime(event, time){
-    this.setState({time: time})
+    this.setState({start: time})
+  }
+
+    handleTime(event, time){
+    this.setState({end: time})
   }
   
   handleDate(event, date){
@@ -107,10 +114,10 @@ class EventForm extends Component {
   render() {
     const actions = [
       <FlatButton
-        label="Done"
+        label="Cancel"
        // primary={true}
         //keyboardFocused={true}
-        onClick={this.handleSubmit}
+        onClick={this.handleClose}
       />,
       <FlatButton
         label="Create Event"
@@ -142,7 +149,8 @@ class EventForm extends Component {
             {items}
           </DropDownMenu>
           <DatePicker onChange={this.handleDate} value ={this.state.date} hintText="Pick a day" />
-          <TimePicker onChange={this.handleTime} value={this.state.time} hintText="Select a time" />
+          <TimePicker onChange={this.handleTime} value={this.state.time} hintText="Select a start time" />
+          <TimePicker onChange={this.handleEnd} value={this.state.time} hintText="Select an end time" />
           <TextField onChange={this.handleDescription} hintText="Tell us more about it!"/><br />
         </Dialog>
       </div>
