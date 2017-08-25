@@ -16,7 +16,7 @@
       "required": true
     },
     "NPM_CONFIG_PRODUCTION": {
-      "required": true
+      "required": false
     }
   },
   "formation": {
