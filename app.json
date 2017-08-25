@@ -12,8 +12,11 @@
     "GOOGLE_CLIENT_SECRET": {
       "required": true
     },
-    "NPM_CONFIG_PRODUCTION": {
+    "WUNDERGROUND_KEY": {
       "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": false
     }
   },
   "formation": {
