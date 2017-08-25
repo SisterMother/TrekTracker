@@ -16,7 +16,7 @@ class EventForm extends Component {
  	  date : '',
  	  title : '',
  	  description : '',
- 	  location : {}
+ 	  location : {},
  	}
 
   this.handleDescription = this.handleDescription.bind(this);
@@ -31,7 +31,7 @@ class EventForm extends Component {
   saveEvent () {
     axios.post('/event', {
       event: { 
-        title: this.state.title,
+      title: this.state.title,
       date: this.state.date,
       title: this.state.title,
       trailId: this.state.location.trailId 
@@ -98,8 +98,8 @@ class EventForm extends Component {
             >
            Plan your hike here.
           <TextField onChange={this.handleTitle} hintText="Name your event"/><br />
-          <DropDownMenu value="Select a trail" onChange={this.handleLocation}>
-            {this.props.trails.map((trail, i) =>{<MenuItem value={i} primaryText={trail.name}/>})}
+          <DropDownMenu children ={['hello', 'goodbye']}value="Select a trail" onChange={this.handleLocation}>
+            {this.props.children.map((trail, i) =>{<MenuItem value={i} primaryText={trail.name}/>})}
           </DropDownMenu>
           <DatePicker hintText="Select a date"/>
           <TextField onChange={this.handleDescription} hintText="Tell us more about it!"/><br />
