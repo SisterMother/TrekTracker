@@ -45,11 +45,6 @@ module.exports.getAllTrails = () => {
   });
 };
 
-<<<<<<< HEAD
-//consider refactoring
-module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0, description = '', traillength = 0) => {
-=======
-
 module.exports.registerInterest = (id, eventid) => {
   models.interestedInEvent.findOrCreate({where: {user_id: id, event_id: eventid}})
   .spread((user, created) => {
@@ -60,8 +55,7 @@ module.exports.registerInterest = (id, eventid) => {
 }
 
 
-module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0) => {
->>>>>>> Add register interest function to save that a user is interested in an event
+module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0, description = '', traillength = 0) => {
   if (!name || name.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected trail name to be a non-empty string, but instead got ' + name);
@@ -191,14 +185,12 @@ module.exports.createEvent = (creatorEmail, trailId, eventTitle, eventDesc, even
 // get all events around the location
 
 module.exports.getAllEventsNearLocations = (trailIdList) => {
-  
   var orQuery = trailIdList.map((id)=>{
     return {trail_id: id}
   });
   return models.events.findAll({
     where: {
       $or: orQuery
-
     }
   })
   .then((events)=>{
