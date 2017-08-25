@@ -21,7 +21,9 @@ class Calendar extends React.Component {
   }
 
   handleOpen () {
+    console.log('hello')
     this.setState({formStatus: !this.state.formStatus});
+    console.log(this.state)
   }
 
   handleClose () {
@@ -29,6 +31,8 @@ class Calendar extends React.Component {
   }
 
   render(){
+    var startTime = new Date()
+    startTime = startTime.setHours(4);
     var newEvent = this.state.formStatus === false ? null : <NewEventForm trails={this.props.trails}/>
     return (
       <div>
@@ -41,9 +45,11 @@ class Calendar extends React.Component {
         <BigCalendar
           selectable
           events= {events}
-          defaultView='month'
-          scrollToTime={new Date(1970, 1, 1, 6)}
-          defaultDate={new Date(2017, 8, 26)}
+          defaultView='week'
+          min={new Date('2017, 1, 7, 05:00')}
+          max={new Date('2017, 1, 7, 22:00')}
+          scrollToTime={new Date(2010, 1, 1, 6)}
+          defaultDate={new Date()}
           //onSelectEvent={}// pull up info for event, sign up button included
           onSelectSlot={this.handleOpen}// open form to create new event
         />
@@ -84,8 +90,8 @@ var events =[
   },
   {
     'title': 'Conference',
-    'start': new Date(2015, 3, 11),
-    'end': new Date(2015, 3, 13),
+    'start': new Date(),
+    'end': new Date(),
     desc: 'Big conference for important people'
   },
   {
