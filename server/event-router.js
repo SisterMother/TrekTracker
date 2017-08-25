@@ -14,8 +14,6 @@ router.post('/', (req, res) => {
 });
 
 router.post('/interested', (req, res) => {
-  console.log('event ID', req.body.event.event_id);
-  console.log('USER ID', req.user.id);
   // profile photo url === req.user.photos[0].value
   db.registerInterest(req.user.id, req.body.event.event_id)
   .then((post) => {
@@ -46,7 +44,7 @@ router.get('/event/user/allevents', (req, res)=>{
 router.get('/event', (req, res)=>{
 
 
-  //db.getEventsByTrailId take trail id. 
+  //db.getEventsByTrailId take trail id.
 
 
 });
@@ -54,5 +52,3 @@ router.get('/event', (req, res)=>{
 // one event with id
 
 // get num of events
-
-
