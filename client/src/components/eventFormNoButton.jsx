@@ -56,6 +56,7 @@ class NewEventForm extends Component {
   	  console.log('Error', error)
   	})
   	this.handleClose();
+
   }
 
   handleDescription  (e) {
@@ -118,6 +119,7 @@ class NewEventForm extends Component {
        // primary={true}
         //keyboardFocused={true}
         onClick={this.handleClose}
+
       />,
       <FlatButton
         label="Create Event"
