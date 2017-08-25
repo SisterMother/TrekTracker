@@ -2,6 +2,7 @@ var router = require('express').Router();
 var db = require('../database');
 var googleMaps = require('./foreign-apis/google-maps');
 var { getTrailsByLoc } = require('./foreign-apis/trails.js');
+var { getWeatherByLoc } = require('./foreign-apis/weather.js');
 
 router.get('/currentUser', (req, res) => {
   res.send(req.user || null);
@@ -52,6 +53,18 @@ router.get('/trails', (req, res) => {
       res.end(JSON.stringify(data));
     }
   })
+});
+
+router.get('/weather', (req, res) => {
+  let lat = `${req.query.lat || 34}`;
+  let long = `${req.query.lng || -104}`;
+  getWeatherByLoc(lat, long)
+    .then((response) => {
+      res.end(JSON.stringify(response.data));
+    })
+    .catch((err) => {
+      res.status(500).send(JSON.stringify(err));
+    });
 });
 
 router.get('/*', (req, res) => {
