@@ -19,7 +19,8 @@ class NewEventForm extends Component {
  	this.state = {
  	  open: true,
  	  date : null,
-      time: null,
+      start: null,
+      end: null,
  	  title : '',
  	  description : '',
  	  location : '',
@@ -36,6 +37,7 @@ class NewEventForm extends Component {
   this.saveEvent = this.saveEvent.bind(this);
   this.handleDate = this.handleDate.bind(this);
   this.handleTime = this.handleTime.bind(this);
+  this.handleEnd = this.handleEnd.bind(this);
   this.handleSubmit = this.handleSubmit.bind(this);
  };
 
@@ -87,7 +89,11 @@ class NewEventForm extends Component {
   }
 
   handleTime(event, time){
-    this.setState({time: time})
+    this.setState({start: time})
+  }
+
+  handleEnd(event, time){
+    this.setState({end: time})
   }
   
   handleDate(event, date){
@@ -111,7 +117,6 @@ class NewEventForm extends Component {
   }
 
   render() {
-  	console.log(moment())
     const actions = [
       <FlatButton
         label="Cancel"
