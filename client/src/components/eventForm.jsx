@@ -16,7 +16,7 @@ class EventForm extends Component {
  	  date : '',
  	  title : '',
  	  description : '',
- 	  location : {},
+ 	  location : {}
  	}
 
   this.handleDescription = this.handleDescription.bind(this);
@@ -66,8 +66,12 @@ class EventForm extends Component {
     console.log(this.state)
   }
 
-  handleLocation (trail) {
-    this.setState({location: trail})
+  handleLocation (event, index, value) {
+    this.setState({location: value })
+  }
+
+  handleDate () {
+    console.log(this.value)
   }
 
   render() {
@@ -86,6 +90,12 @@ class EventForm extends Component {
       />
     ];
 
+    const items = [];
+    for (let i = 0; i < this.props.trails.length; i++ ) {
+      items.push(<MenuItem value={this.props.trails[i]} key={i} primaryText={this.props.trails[i].name} />);
+    }
+
+
       return (
         <div>
           <RaisedButton label="Plan a hike!" onClick={this.handleOpen} />
@@ -98,10 +108,10 @@ class EventForm extends Component {
             >
            Plan your hike here.
           <TextField onChange={this.handleTitle} hintText="Name your event"/><br />
-          <DropDownMenu children ={['hello', 'goodbye']}value="Select a trail" onChange={this.handleLocation}>
-            {this.props.children.map((trail, i) =>{<MenuItem value={i} primaryText={trail.name}/>})}
+          <DropDownMenu maxHeight={300} onChange={this.handleLocation}>
+            {items}
           </DropDownMenu>
-          <DatePicker hintText="Select a date"/>
+          <DatePicker hintText="Select a date" onChange={this.handleDate}/>
           <TextField onChange={this.handleDescription} hintText="Tell us more about it!"/><br />
         </Dialog>
       </div>
