@@ -40,6 +40,7 @@ class NewEventForm extends Component {
  };
 
   saveEvent () {
+  	this.handleSubmit();
   	axios.post('/event', {
       event: { 
       	title: this.state.title,
@@ -54,7 +55,7 @@ class NewEventForm extends Component {
   	.catch(function(error){
   	  console.log('Error', error)
   	})
-  	this.handleSubmit();
+  	this.handleClose();
   }
 
   handleDescription  (e) {
@@ -106,7 +107,6 @@ class NewEventForm extends Component {
     });
     console.log('rendered', renderedDateTime);
     this.setState({date_time: renderedDateTime});
-    this.handleClose();
 
   }
 
@@ -114,10 +114,10 @@ class NewEventForm extends Component {
   	console.log(moment())
     const actions = [
       <FlatButton
-        label="Done"
+        label="Cancel"
        // primary={true}
         //keyboardFocused={true}
-        onClick={this.handleSubmit}
+        onClick={this.handleClose}
       />,
       <FlatButton
         label="Create Event"
@@ -147,7 +147,8 @@ class NewEventForm extends Component {
             {items}
           </DropDownMenu>
           <DatePicker onChange={this.handleDate} value ={this.state.date} hintText="Pick a day" />
-          <TimePicker onChange={this.handleTime} value={this.state.time} hintText="Select a time" />
+          <TimePicker onChange={this.handleTime} value={this.state.time} hintText="Select a start time" />
+          <TimePicker onChange={this.handleEnd} value={this.state.time} hintText="Select an end time" />
           <TextField onChange={this.handleDescription} hintText="Tell us more about it!"/><br />
         </Dialog>
       </div>
