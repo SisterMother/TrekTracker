@@ -168,20 +168,23 @@ Events.belongsTo(Trails, {
 });
 models.events = Events;
 
+
 var InterestedInEvent = sequelize.define('interestedInEvent', {
   id: {
-    primaryKey: true,
     type: Sequelize.INTEGER,
-    unique: true
-  }
+    primaryKey: true,
+    unique: true,
+    autoIncrement:true
+  },
 });
 InterestedInEvent.belongsTo(Users, {
   foreignKey: 'user_id'
 });
 InterestedInEvent.belongsTo(Events, {
-  foreignKey: 'event_name'
+  foreignKey: 'event_id'
 });
 models.interestedInEvent = InterestedInEvent;
+
 
 // Sync database
 models.sequelize.sync().then(() => {
