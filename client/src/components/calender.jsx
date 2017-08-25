@@ -22,9 +22,7 @@ class Calendar extends React.Component {
   }
 
   handleOpen () {
-    console.log('hello')
     this.setState({formStatus: !this.state.formStatus});
-    console.log(this.state)
   }
 
   handleClose () {
