@@ -1,6 +1,6 @@
 var axios = require('axios');
 let config;
-if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'test') {
+if (!process.env.NODE_ENV) {
   config = require('../../passport/config.json');
 }
 
