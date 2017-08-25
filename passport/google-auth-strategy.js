@@ -3,8 +3,15 @@ let GoogleStrategy = require('passport-google-oauth2').Strategy;
 let users = require('../database/models.js').users;
 let config;
 
+<<<<<<< HEAD
 if (!process.env.NODE_ENV) {
   config = require('./config.json');
+=======
+console.log('---------------------------------------------- NODE_ENV: ', process.env.NODE_ENV);
+
+if (!process.env.NODE_ENV) {
+  config =  require('./config.json');
+>>>>>>> 40476d86f3eaa1820f25bd025e91fcd5ff40851f
 }
 
 module.exports = (passport) => {

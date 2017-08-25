@@ -235,7 +235,7 @@ module.exports.run = () => {
         let start = '2017, 10, 2, 17, 55';
         let end = '2017, 10, 2, 20, 00';
         let contact = 'test@example.com';
-        return dbFuncs.createEvent(db.users[0].email, db.trails[0].id, title, desc, start, end, contact)
+        return dbFuncs.createEvent(db.users[0].email, db.trails[0].id, title, desc, start, end, contact).sync()
         .then((event) => {
           expect(event).to.exist;
           expect(event.createdAt).to.exist;
