@@ -1,9 +1,23 @@
 var router = require('express').Router();
 var db = require('../database');
 
-router.post('/event', (req, res) => {
+router.post('/', (req, res) => {
   var event = req.body.event;
   db.createEvent(req.user.email, event.trailId, event.title, event.desc, event.start, event.end, event.contact)
+  .then((post) => {
+    res.end(JSON.stringify(post));
+  })
+  .catch((error) => {
+    res.status(500).json(error);
+  })
+  res.send();
+});
+
+router.post('/interested', (req, res) => {
+  console.log('event ID', req.body.event.event_id);
+  console.log('USER ID', req.user.id);
+  // profile photo url === req.user.photos[0].value
+  db.registerInterest(req.user.id, req.body.event.event_id)
   .then((post) => {
     res.end(JSON.stringify(post));
   })
