@@ -7,16 +7,23 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
+import TimePicker from 'material-ui/TimePicker';
+
+var moment = require('moment');
 
 class EventForm extends Component {
   constructor(props){
  	super(props);
  	this.state = {
  	  open: false,
- 	  date : '',
+ 	  date : null,
+    time: null,
  	  title : '',
  	  description : '',
- 	  location : {}
+ 	  location : '',
+    trailId : 0,
+    host: '',
+    date_time: null
  	}
 
   this.handleDescription = this.handleDescription.bind(this);
@@ -26,16 +33,21 @@ class EventForm extends Component {
   this.handleClose = this.handleClose.bind(this);
   this.handleLocation = this.handleLocation.bind(this);
   this.saveEvent = this.saveEvent.bind(this);
+  this.handleDate = this.handleDate.bind(this);
+  this.handleTime = this.handleTime.bind(this);
+  this.handleSubmit = this.handleSubmit.bind(this);
  };
 
   saveEvent () {
     axios.post('/event', {
       event: { 
-      title: this.state.title,
-      date: this.state.date,
-      title: this.state.title,
-      trailId: this.state.location.trailId 
-    }
+        title: this.state.title,
+        date: this.state.date,
+        title: this.state.title,
+        trailId: this.state.location.trailId,
+        host: this.state.host,
+        description: this.state.description 
+      }
     })
     .then(function(response){
       console.log('Saved')
@@ -67,11 +79,35 @@ class EventForm extends Component {
   }
 
   handleLocation (event, index, value) {
-    this.setState({location: value })
+    this.setState({
+      location: value.name, 
+      trailId: value.trailId,
+    })
   }
 
-  handleDate () {
-    console.log(this.value)
+  handleTime(event, time){
+    this.setState({time: time})
+  }
+  
+  handleDate(event, date){
+    this.setState({date: date})
+  }
+
+  handleSubmit(event){
+    let momentTime = moment(this.state.time);
+    console.log(momentTime.hours());
+    let momentDate = moment(this.state.date);
+    let renderedDateTime = moment({
+      year: momentDate.year(),
+      month: momentDate.month(),
+      day: momentDate.date(),
+      hour: momentTime.hours(),
+      minute: momentTime.minutes()
+    });
+    console.log('rendered', renderedDateTime);
+    this.setState({date_time: renderedDateTime});
+    this.handleClose();
+
   }
 
   render() {
@@ -80,7 +116,7 @@ class EventForm extends Component {
         label="Done"
        // primary={true}
         //keyboardFocused={true}
-        onClick={this.handleClose}
+        onClick={this.handleSubmit}
       />,
       <FlatButton
         label="Create Event"
@@ -104,14 +140,15 @@ class EventForm extends Component {
 	          actions={actions}
 	          modal={false}
 	          open={this.state.open}
-	          onRequestClose={this.handleClose}
+	          onRequestClose={this.handleSubmit}
             >
            Plan your hike here.
           <TextField onChange={this.handleTitle} hintText="Name your event"/><br />
           <DropDownMenu maxHeight={300} onChange={this.handleLocation}>
             {items}
           </DropDownMenu>
-          <DatePicker hintText="Select a date" onChange={this.handleDate}/>
+          <DatePicker onChange={this.handleDate} value ={this.state.date} hintText="Pick a day" />
+          <TimePicker onChange={this.handleTime} value={this.state.time} hintText="Select a time" />
           <TextField onChange={this.handleDescription} hintText="Tell us more about it!"/><br />
         </Dialog>
       </div>
@@ -121,7 +158,3 @@ class EventForm extends Component {
 
 export default EventForm
 
-// module.exports = {
-//   handleOpen: EventForm.handleOpen,
-//   EventForm: EventForm
-// }
