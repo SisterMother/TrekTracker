@@ -54,6 +54,7 @@ class NewEventForm extends Component {
   	.catch(function(error){
   	  console.log('Error', error)
   	})
+  	this.handleSubmit();
   }
 
   handleDescription  (e) {
