@@ -356,3 +356,14 @@ module.exports.leanSevenDayForecastArray = function(detailedArray) {
       return leanWeatherArray;
     });
 }
+
+module.exports.isLoggedIn = function () {
+  return axios.get('/api/currentuser')
+  .then((response) => {
+    if (response.data) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
