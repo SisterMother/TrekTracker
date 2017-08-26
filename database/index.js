@@ -141,50 +141,51 @@ module.exports.createPost = (posterEmail, trailId, title, text, imageUrl, latitu
 
 // Catch could be used instead of if statements to make it shorter, but the statements are helpful for debugging.
 module.exports.createEvent = (creatorId, trailId, eventTitle, eventDesc, eventTrail, eventDate, eventStart, eventEnd) => {
-  if (!creatorId) {
-    return new Promise((resolve, reject) => {
-      reject('Expected the event creator id to exist, but instead it was ' + creatorId);
-    });
-  }
-  if (!trailId) {
-    return new Promise((resolve, reject) => {
-      reject('Expected the trail id to exist, but instead it was ' + trailId);
-    });
-  }
-  if (!eventTitle || eventTitle.constructor !==  String) {
-    return new Promise((resolve, reject) => {
-      reject('Expected the title to be a string, but instead it was ' + eventTitle);
-    });
-  }
-  if (!eventDesc || eventDesc.constructor !==  String) {
-    return new Promise((resolve, reject) => {
-      reject('Expected the description to be a string, but instead it was ' + eventDesc);
-    });
-  }
-  if (!eventTrail || eventTrail.constructor !==  String) {
-    return new Promise((resolve, reject) => {
-      reject('Expected the trail name to be a string, but instead it was ' + eventTrail);
-    });
-  }
-  if (!eventDate || eventDate.constructor !==  String) {
-    return new Promise((resolve, reject) => {
-      reject('Expected the date to be a string, but instead it was ' + eventDate);
-    });
-  }
-  if (!eventStart || eventStart.constructor !==  String) {
-    return new Promise((resolve, reject) => {
-      reject('Expected the start time to be a string, but instead it was ' + eventStart);
-    });
-  }
-  if (!eventEnd || eventEnd.constructor !== String) {
-    return new Promise((resolve, reject) => {
-      reject('Expected the end time to be a string, but instead it was ' + eventEnd);
-    });
-  }
+  console.log('CHECK HERE', creatorId, trailId, eventTitle, eventDesc, eventTrail, eventDate, eventStart, eventEnd);
+  // if (!creatorId) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the event creator id to exist, but instead it was ' + creatorId);
+  //   });
+  // }
+  // if (!trailId) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the trail id to exist, but instead it was ' + trailId);
+  //   });
+  // }
+  // if (!eventTitle || eventTitle.constructor !==  String) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the title to be a string, but instead it was ' + eventTitle);
+  //   });
+  // }
+  // if (!eventDesc || eventDesc.constructor !==  String) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the description to be a string, but instead it was ' + eventDesc);
+  //   });
+  // }
+  // if (!eventTrail || eventTrail.constructor !==  String) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the trail name to be a string, but instead it was ' + eventTrail);
+  //   });
+  // }
+  // if (!eventDate || eventDate.constructor !==  String) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the date to be a string, but instead it was ' + eventDate);
+  //   });
+  // }
+  // if (!eventStart || eventStart.constructor !==  String) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the start time to be a string, but instead it was ' + eventStart);
+  //   });
+  // }
+  // if (!eventEnd || eventEnd.constructor !== String) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the end time to be a string, but instead it was ' + eventEnd);
+  //   });
+  // }
   return models.events.create({
     title: eventTitle,
     desc: eventDesc,
-    trail: eventTrail,
+    trailname: eventTrail,
     date: eventDate,
     start: eventStart,
     end: eventEnd,
