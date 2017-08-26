@@ -7,6 +7,7 @@
     "test": "mocha spec",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
+    "server-inspect": "node --inspect server/index.js",
     "start": "node server/index.js",
     "prod": "NODE_ENV=production node server/index.js",
     "heroku-postbuild": "webpack -p"
