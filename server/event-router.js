@@ -3,7 +3,7 @@ var db = require('../database');
 
 router.post('/', (req, res) => {
   var event = req.body.event;
-  db.createEvent(req.user.email, event.trailId, event.title, event.desc, event.start, event.end, event.contact)
+  db.createEvent(req.user.id, event.trailId, event.title, event.description, event.date, event.date, event.contact='')
   .then((post) => {
     res.end(JSON.stringify(post));
   })
@@ -30,18 +30,18 @@ module.exports = router;
 
 // all events
 
-router.get('/event/allevents', (req, res)=>{
+router.get('/allevents', (req, res)=>{
 
 	//db.getAllEventsNearLocation takes array of trailIds as parameter
-    
+
 });
 
-router.get('/event/user/allevents', (req, res)=>{
+router.get('/user/allevents', (req, res)=>{
 
-  //db.getAllEventsByUserEmail user's email and finds all events that belongs to a user.
+  //db.getAllEventsByUserId user's email and finds all events that belongs to a user.
 });
 
-router.get('/event', (req, res)=>{
+router.get('/', (req, res)=>{
 
 
   //db.getEventsByTrailId take trail id.
