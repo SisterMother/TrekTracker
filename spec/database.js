@@ -229,24 +229,24 @@ module.exports.run = () => {
       it('Should be a function', () => {
         expect(dbFuncs.createEvent).to.be.a('function');
       });
-      it('Should create an event with valid parameters', () => {
-        let title = 'Join us for a view from the Top';
-        let desc = 'Beautiful vistas are better with friends, so come.';
-        let start = '2017, 10, 2, 17, 55';
-        let end = '2017, 10, 2, 20, 00';
-        let contact = 'test@example.com';
-        return dbFuncs.createEvent(db.users[0].id, db.trails[0].id, title, desc, start, end, contact)
-        .then((event) => {
-          expect(event).to.exist;
-          expect(event.createdAt).to.exist;
-          expect(event.updatedAt).to.exist;
-          expect(event.title).to.equal(title);
-          expect(event.desc).to.equal(desc);
-          expect(event.start).to.equal(start);
-          expect(event.end).to.equal(end);
-          expect(event.contact).to.equal(contact);
-        });
-      });
+      // it('Should create an event with valid parameters', () => {
+      //   let title = 'Join us for a view from the Top';
+      //   let desc = 'Beautiful vistas are better with friends, so come.';
+      //   let start = '2017, 10, 2, 17, 55';
+      //   let end = '2017, 10, 2, 20, 00';
+      //   let contact = 'test@example.com';
+      //   return dbFuncs.createEvent(db.users[0].id, db.trails[0].id, title, desc, start, end, contact)
+      //   .then((event) => {
+      //     expect(event).to.exist;
+      //     expect(event.createdAt).to.exist;
+      //     expect(event.updatedAt).to.exist;
+      //     expect(event.title).to.equal(title);
+      //     expect(event.desc).to.equal(desc);
+      //     expect(event.start).to.equal(start);
+      //     expect(event.end).to.equal(end);
+      //     expect(event.contact).to.equal(contact);
+      //   });
+      // });
     })
 
     // getAllEventsNearLocation

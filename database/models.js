@@ -152,17 +152,20 @@ var Events = sequelize.define('events', {
   desc: {
     type: Sequelize.TEXT
   },
+  trailname: {
+    type: Sequelize.STRING,
+  },
+  date: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
+  },
   start: {
     type: Sequelize.STRING,
     notEmpty: true,
     allowNull: false
   },
   end: {
-    type: Sequelize.STRING,
-    notEmpty: true,
-    allowNull: false
-  },
-  contact: {
     type: Sequelize.STRING,
     notEmpty: true,
     allowNull: false
