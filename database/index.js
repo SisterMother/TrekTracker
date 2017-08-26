@@ -59,24 +59,27 @@ module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude
   if (!name || name.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected trail name to be a non-empty string, but instead got ' + name);
-    });
+    })
+    .catch(err => console.log(err));
   }
   if (directions === undefined || directions === null || directions.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected trail directions to be a string, but instead got ' + directions);
-    });
+    })
+    .catch(err => console.log(err));
   }
-  if (description === undefined || description === null || description.constructor !== String) {
+  if (description === undefined) { //  || description === null || description.constructor !== String
     return new Promise((resolve, reject) => {
       reject('Expected trail description to be a string, but instead got ' + description);
-    });
+    })
+    .catch(err => console.log(err));
   }
-  if (traillength === undefined || traillength === null || traillength.constructor !== String) {
+  if (traillength === undefined || traillength === null) { //|| traillength.constructor !== String
     return new Promise((resolve, reject) => {
-      reject('Expected trail description to be a string, but instead got ' + traillength);
-    });
+      reject('Expected trail length to be a string, but instead got ' + traillength);
+    })
+    .catch(err => console.log(err));
   }
-
   return models.trails.findOne({
     where: {id}
   })
@@ -132,54 +135,62 @@ module.exports.createPost = (posterEmail, trailId, title, text, imageUrl, latitu
       poster_user_id: poster.id,
       trail_id: trailId
     });
-  });
+  })
+  .catch(err => console.log(err));
 };
 
 // Catch could be used instead of if statements to make it shorter, but the statements are helpful for debugging.
-module.exports.createEvent = (creatorEmail, trailId, eventTitle, eventDesc, eventStart, eventEnd, eventContact) => {
-  if (!creatorEmail || creatorEmail.constructor !== String) {
+module.exports.createEvent = (creatorId, trailId, eventTitle, eventDesc, eventStart, eventEnd, eventContact) => {
+  var counter = 0;
+  if (!creatorId) {
     return new Promise((resolve, reject) => {
-      reject('Expected the event creator email to be a string, but instead it was ' + creatorEmail);
+      reject('Expected the event creator id to exist, but instead it was ' + creatorId);
     });
   }
-  if (!eventTitle || eventTitle.constructor != String) {
+  if (!trailId) {
+    return new Promise((resolve, reject) => {
+      reject('Expected the trail id to exist, but instead it was ' + trailId);
+    });
+  }
+  if (!eventTitle || eventTitle.constructor !==  String) {
     return new Promise((resolve, reject) => {
       reject('Expected the title to be a string, but instead it was ' + eventTitle);
     });
   }
-  if (!eventDesc || eventDesc.constructor != String) {
+  if (!eventDesc || eventDesc.constructor !==  String) {
     return new Promise((resolve, reject) => {
       reject('Expected the description to be a string, but instead it was ' + eventDesc);
     });
   }
-  if (!eventStart || eventStart.constructor != String) {
+  if (!eventStart || eventStart.constructor !==  String) {
     return new Promise((resolve, reject) => {
       reject('Expected the start time to be a string, but instead it was ' + eventStart);
     });
   }
-  if (!eventEnd || eventEnd.constructor != String) {
+  if (!eventEnd || eventEnd.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected the end time to be a string, but instead it was ' + eventEnd);
     });
   }
-  if (!eventContact || eventContact.constructor != String) {
+  if (eventContact === undefined || eventContact.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected the contact time to be a string, but instead it was ' + eventContact);
     });
   }
-  return module.exports.getUserByEmail(creatorEmail)
-  .then(
-    (user) => {
-    return models.events.create({
-      title: eventTitle,
-      desc: eventDesc,
-      start: eventStart,
-      end: eventEnd,
-      contact: eventContact,
-      creator_user_id: user.id,
-      trail_id: trailId
-    });
+  console.log(counter, 'done');
+
+  return models.events.create({
+    title: eventTitle,
+    desc: eventDesc,
+    start: eventStart,
+    end: eventEnd,
+    contact: eventContact,
+    creator_user_id: creatorId,
+    trail_id: trailId
+  }).then((event)=>{
+    return event;
   })
+  .catch(err => console.log(err));
 };
 
 // get all events around the location
