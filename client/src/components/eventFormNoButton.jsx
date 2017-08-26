@@ -120,20 +120,16 @@ class NewEventForm extends Component {
     const actions = [
       <FlatButton
         label="Cancel"
-       // primary={true}
-        //keyboardFocused={true}
         onClick={this.handleClose}
       />,
       <FlatButton
         label="Create Event"
-        //primary={true}
-        //keyboardFocused={true}
         onClick={this.saveEvent}
       />
     ];
 
-    const items = [];
-    for (let i = 0; i < this.props.trails.length; i++ ) {
+    const items = [<MenuItem value={0} key ={0} primaryText ="Select a trail" />];
+    for (let i = 1; i < this.props.trails.length-1; i++ ) {
       items.push(<MenuItem value={this.props.trails[i]} key={i} primaryText={this.props.trails[i].name} />);
     }
 
@@ -146,9 +142,9 @@ class NewEventForm extends Component {
 	          open={this.state.open}
 	          onRequestClose={this.handleSubmit}
             >
-           Plan your hike here.
+           Plan your hike here.<br/>
           <TextField onChange={this.handleTitle} hintText="Name your event"/><br />
-          <DropDownMenu maxHeight={300} onChange={this.handleLocation}>
+          <DropDownMenu value={0} maxHeight={300} onChange={this.handleLocation}>
             {items}
           </DropDownMenu>
           <DatePicker onChange={this.handleDate} value ={this.state.date} hintText="Pick a day" />
