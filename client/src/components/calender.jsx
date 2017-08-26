@@ -4,6 +4,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import EventForm from './eventForm.jsx'
 import NewEventForm from './eventFormNoButton.jsx'
 import RaisedButton from 'material-ui/RaisedButton';
+import axios from 'axios';
 
 var moment = require('moment');
 
@@ -16,9 +17,28 @@ class Calendar extends React.Component {
   constructor(props) {
   	super(props);
   	this.state = {
-  	  formStatus: false
+  	  formStatus: false,
+      trails: this.props.trails,
+      events: []
   	}
   	this.handleOpen = this.handleOpen.bind(this);
+    this.RSVP = this.RSVP.bind(this);
+  }
+
+  RSVP(event){
+    axios.post('/event/interested', {
+      event: event
+    })
+    .then(function(response){
+      console.log('RSVPd') 
+    })
+    .catch(function(error){
+      console.log('we dont want you to come')
+    })
+  }
+
+  ComponentDidMount(){
+    this.setState({trails: this.props.trails})
   }
 
   handleOpen () {
@@ -29,10 +49,21 @@ class Calendar extends React.Component {
     this.setState({formStatus: false});
   }
 
+  getEvents (trails) {
+    axios.get('/event', {
+      params: {
+        trails: trails
+      }
+    })
+    .then(function(response){
+      this.setState({events: response.events})
+    })
+  }
+
   render(){
     var startTime = new Date()
     startTime = startTime.setHours(4);
-    var newEvent = this.state.formStatus === false ? null : <NewEventForm trails={this.props.trails}/>
+    var newEvent = this.state.formStatus === false ? null : <NewEventForm events={this.state.events} trails={this.props.trails}/>
     return (
       <div>
         <h3 className="callout">
@@ -49,7 +80,7 @@ class Calendar extends React.Component {
           max={new Date('2017, 1, 7, 22:00')}
           scrollToTime={new Date(2010, 1, 1, 6)}
           defaultDate={new Date()}
-          //onSelectEvent={}// pull up info for event, sign up button included
+          onSelectEvent={this.RSVP}// pull up info for event, sign up button included
           onSelectSlot={this.handleOpen}// open form to create new event
         />
       </div>
@@ -88,10 +119,13 @@ var events =[
     'end': new Date(2015, 3, 9, 0, 0, 0)
   },
   {
-    'title': 'Conference',
-    'start': new Date(),
-    'end': new Date(),
-    desc: 'Big conference for important people'
+      title: 'test',
+      date: new Date(),
+      start: new Date(),
+      end: new Date(),
+      description: 'testing',
+      trailId: 339,
+      date_time: 'string that wont work'
   },
   {
     'title': 'Meeting',

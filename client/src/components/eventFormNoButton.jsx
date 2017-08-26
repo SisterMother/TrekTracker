@@ -25,7 +25,8 @@ class NewEventForm extends Component {
  	  description : '',
  	  location : '',
       trailId : 0,
-      date_time: null
+      date_time: null,
+      value: 0
  	}
 
   this.handleDescription = this.handleDescription.bind(this);
@@ -47,8 +48,11 @@ class NewEventForm extends Component {
       event: { 
       	title: this.state.title,
 	    date: this.state.date,
-	    title: this.state.title,
-	    trailId: this.state.location.trailId 
+	    start: this.state.start,
+	    end: this.state.end,
+	    description: this.state.description,
+	    trailId: this.state.trailId,
+	    date_time: this.state.date_time 
 	  }
   	})
   	.then(function(response){
@@ -82,10 +86,13 @@ class NewEventForm extends Component {
   }
 
   handleLocation (event, index, value) {
+  	console.log(index)
     this.setState({
       location: value.name, 
       trailId: value.trailId,
+      value: index
     })
+    console.log(this.state)
   }
 
   handleTime(event, time){
@@ -129,10 +136,10 @@ class NewEventForm extends Component {
     ];
 
     const items = [<MenuItem value={0} key ={0} primaryText ="Select a trail" />];
+
     for (let i = 1; i < this.props.trails.length-1; i++ ) {
       items.push(<MenuItem value={this.props.trails[i]} key={i} primaryText={this.props.trails[i].name} />);
     }
-
       return (
         <div>
             <Dialog
