@@ -140,8 +140,6 @@ class NewEventForm extends Component {
     for (let i = 1; i < this.props.trails.length-1; i++ ) {
       items.push(<MenuItem value={this.props.trails[i]} key={i} primaryText={this.props.trails[i].name} />);
     }
-    console.log(this.props)
-
       return (
         <div>
             <Dialog
