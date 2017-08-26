@@ -3,7 +3,7 @@ var db = require('../database');
 
 router.post('/', (req, res) => {
   var event = req.body.event;
-  db.createEvent(req.user.id, event.trailId, event.title, event.description, event.date, event.date, event.contact='')
+  db.createEvent(req.user.id, event.trailId, event.title, event.description, event.location, event.date, event.start, event.end)
   .then((post) => {
     res.end(JSON.stringify(post));
   })
