@@ -43,11 +43,12 @@ router.get('/trails', (req, res) => {
       res.end(JSON.stringify(err));
     } else {
       data.places.forEach(trail => {
-        if (trail.description) {
-          trail.description = trail.activities.description;
-        } else {
-          trail.description += trail.activities.description;
-        }
+        //ATTEMPT TO concatonate two string descriptions. Revisit later
+        // if (trail.description) {
+        //   trail.description = trail.activities.description;
+        // } else {
+        //   trail.description += trail.activities.description;
+        // }
         db.createTrail(trail.unique_id, trail.name, trail.directions, trail.lat, trail.lon, trail.description, trail.activities.length);
       });
       res.end(JSON.stringify(data));
