@@ -1,7 +1,5 @@
 var models = require('./models');
 
-
-
 module.exports.getUserByEmail = (email) => {
   return models.users.findOne({
     where: {email}
@@ -16,8 +14,6 @@ module.exports.getUserByEmail = (email) => {
     }
   });
 };
-
-
 
 module.exports.getTrailsByName = (name) => {
   if (!name || name.constructor !== String) {
@@ -49,18 +45,41 @@ module.exports.getAllTrails = () => {
   });
 };
 
-module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0) => {
+module.exports.registerInterest = (id, eventid) => {
+  models.interestedInEvent.findOrCreate({where: {user_id: id, event_id: eventid}})
+  .spread((user, created) => {
+    console.log('USER', user);
+    console.log(user.get({plain: true}));
+    console.log(created);
+  })
+}
+
+
+module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude = 0, description = '', traillength = 0) => {
   if (!name || name.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected trail name to be a non-empty string, but instead got ' + name);
-    });
+    })
+    .catch(err => console.log(err));
   }
   if (directions === undefined || directions === null || directions.constructor !== String) {
     return new Promise((resolve, reject) => {
       reject('Expected trail directions to be a string, but instead got ' + directions);
-    });
+    })
+    .catch(err => console.log(err));
   }
-
+  if (description === undefined) { //  || description === null || description.constructor !== String
+    return new Promise((resolve, reject) => {
+      reject('Expected trail description to be a string, but instead got ' + description);
+    })
+    .catch(err => console.log(err));
+  }
+  if (traillength === undefined || traillength === null) { //|| traillength.constructor !== String
+    return new Promise((resolve, reject) => {
+      reject('Expected trail length to be a string, but instead got ' + traillength);
+    })
+    .catch(err => console.log(err));
+  }
   return models.trails.findOne({
     where: {id}
   })
@@ -72,12 +91,11 @@ module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude
       return trail;
     }
     return models.trails.create({
-      id, name, directions, latitude, longitude
+      id, name, directions, latitude, longitude, description, traillength
     });
-  });
+  })
+  .catch( err => console.log(err));
 };
-
-
 
 // posterData can be either a user ID or a user email (REMEMBER: user IDs are STRINGS, NOT numbers)
 // trailData can be either a trail ID or a trail name
@@ -117,6 +135,115 @@ module.exports.createPost = (posterEmail, trailId, title, text, imageUrl, latitu
       poster_user_id: poster.id,
       trail_id: trailId
     });
+  })
+  .catch(err => console.log(err));
+};
+
+// Catch could be used instead of if statements to make it shorter, but the statements are helpful for debugging.
+module.exports.createEvent = (creatorId, trailId, eventTitle, eventDesc, eventTrail, eventDate, eventStart, eventEnd) => {
+  console.log('CHECK HERE', creatorId, trailId, eventTitle, eventDesc, eventTrail, eventDate, eventStart, eventEnd);
+  // if (!creatorId) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the event creator id to exist, but instead it was ' + creatorId);
+  //   });
+  // }
+  // if (!trailId) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the trail id to exist, but instead it was ' + trailId);
+  //   });
+  // }
+  // if (!eventTitle || eventTitle.constructor !==  String) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the title to be a string, but instead it was ' + eventTitle);
+  //   });
+  // }
+  // if (!eventDesc || eventDesc.constructor !==  String) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the description to be a string, but instead it was ' + eventDesc);
+  //   });
+  // }
+  // if (!eventTrail || eventTrail.constructor !==  String) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the trail name to be a string, but instead it was ' + eventTrail);
+  //   });
+  // }
+  // if (!eventDate || eventDate.constructor !==  String) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the date to be a string, but instead it was ' + eventDate);
+  //   });
+  // }
+  // if (!eventStart || eventStart.constructor !==  String) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the start time to be a string, but instead it was ' + eventStart);
+  //   });
+  // }
+  // if (!eventEnd || eventEnd.constructor !== String) {
+  //   return new Promise((resolve, reject) => {
+  //     reject('Expected the end time to be a string, but instead it was ' + eventEnd);
+  //   });
+  // }
+  return models.events.create({
+    title: eventTitle,
+    desc: eventDesc,
+    trailname: eventTrail,
+    date: eventDate,
+    start: eventStart,
+    end: eventEnd,
+    creator_user_id: creatorId,
+    trail_id: trailId
+  }).then((event)=>{
+    return event;
+  })
+  .catch(err => console.log(err));
+};
+
+// get all events around the location
+
+module.exports.getAllEventsNearLocations = (trailIdList) => {
+  var orQuery = trailIdList.map((id)=>{
+    return {trail_id: id}
+  });
+  return models.events.findAll({
+    where: {
+      $or: orQuery
+    }
+  })
+  .then((events)=>{
+
+    return events.map((event)=>{
+      return event.dataValues;
+
+    });
+
+  });
+};
+
+
+module.exports.getAllEventsByTrailId = (trailId) => {
+  return module.exports.getAllEventsNearLocations([trailId])
+  .then((events)=>{
+    return events[0];
+  });
+};
+
+// get all events by user
+
+module.exports.getAllEventsByUserEmail = (email) => {
+  return models.users.findOne({where: {email} })
+  .then((user)=>{
+    return models.events.findAll({where: { creator_user_id: user.id}});
+  })
+  .catch((err) =>{
+    console.log("Error: ", err);
+    throw err;
+  });
+};
+
+module.exports.getEventById = (eventId) => {
+  return models.events.findOne({where: {id:eventId}})
+  .catch((err)=>{
+    console.log("Error: ", err);
+    throw err;
   });
 };
 

@@ -1,4 +1,8 @@
 const axios = require('axios');
+const $ = require('jquery');
+const Promise = require('bluebird');
+const time = require('./time.js')
+
 /*
 * In order to further modularize, functions not directly
 * interacting with the DOM or passed between files are placed
@@ -41,6 +45,19 @@ const getFileSize = function(number) {
   } else if(number > 1048576) {
     return (number/1048576).toFixed(1) + 'MB';
   }
+}
+
+//take array of posts from database, and translate into an array that can be loaded by ImageGallery component
+module.exports.galleryConversion = function(postsFromDatabase) {
+  var galleryposts = postsFromDatabase.map((eachpost) => {
+    return {
+      original: eachpost.image_url,
+      thumbnail: eachpost.image_url,
+      description: `${eachpost.poster.firstname} ${eachpost.poster.lastname} ${eachpost.poster.email}
+                  : ${eachpost.text} ${time.parse(eachpost.createdAt, true)}`
+    };
+  });
+  return galleryposts;
 }
 
 /*
@@ -273,4 +290,80 @@ module.exports.onDragEnd = function (event) {
 
 module.exports.changeSelectedId = function(trailId) {
   this.setState({selectedId: trailId})
+}
+
+//pull relevant weather info for next seven days and store in a state array
+module.exports.leanSevenDayForecastArray = function(detailedArray) {
+  var leanWeatherArray = [];
+  if (detailedArray.length < 7) {
+    return leanWeatherArray;
+  }
+  for (var day = 0; day < 7; day++) {
+    ((day) => {
+      var title = detailedArray.simpleforecast.forecastday[day].date.weekday_short;
+      title += ` ${detailedArray.simpleforecast.forecastday[day].date.day}`;
+      var subtitle = detailedArray.simpleforecast.forecastday[day].high.fahrenheit;
+      subtitle += ` | ${detailedArray.simpleforecast.forecastday[day].low.fahrenheit} F`;
+      var condition = `${detailedArray.simpleforecast.forecastday[day].conditions}`;
+      var dayName = `${detailedArray.txt_forecast.forecastday[day*2].title}`;
+      var daySummary = `${detailedArray.txt_forecast.forecastday[day*2].fcttext}`;
+      var dayImage = `${detailedArray.txt_forecast.forecastday[day*2].icon_url}`;
+      var nightName = `${detailedArray.txt_forecast.forecastday[day*2+1].title}`;
+      var nightSummary = `${detailedArray.txt_forecast.forecastday[day*2+1].fcttext}`;
+      var nightImage = `${detailedArray.txt_forecast.forecastday[day*2+1].icon_url}`;
+
+      var astronomyURL = 'https://api.sunrise-sunset.org/json?';
+      astronomyURL += `lat=${this.props.latitude}`;
+      astronomyURL += `&lng=${this.props.longitude}`;
+      astronomyURL += `&date=${detailedArray.simpleforecast.forecastday[day].date.year}`;
+      astronomyURL += `-${detailedArray.simpleforecast.forecastday[day].date.month}`;
+      astronomyURL += `-${detailedArray.simpleforecast.forecastday[day].date.day}`;
+      astronomyURL += `&formatted=0`;
+      //not using axios because we are getting CORS cross origin issues with astronomy API. Ajax doesn't have problem
+      leanWeatherArray.push(
+        Promise.resolve($.ajax({url: astronomyURL, method: 'GET'}))
+          .then((res) => {
+            var sunrise = new Date(res.results.sunrise)
+            sunrise = sunrise.toString();
+            var sunset = new Date(res.results.sunset)
+            sunset = sunset.toString();
+            return {
+              img: detailedArray.simpleforecast.forecastday[day].icon_url,
+              title: title,
+              subtitle: subtitle,
+              condition: condition,
+              dayName: dayName,
+              daySummary: daySummary,
+              dayImage: dayImage,
+              nightName: nightName,
+              nightSummary: nightSummary,
+              nightImage: nightImage,
+              sunrise: sunrise,
+              sunset: sunset
+            };
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      );
+    })(day);
+  }
+  return Promise.all(leanWeatherArray)
+    .then((leanWeatherArray) => {
+      this.setState({
+        leanWeatherForecast: leanWeatherArray
+      });
+      return leanWeatherArray;
+    });
+}
+
+module.exports.isLoggedIn = function () {
+  return axios.get('/api/currentuser')
+  .then((response) => {
+    if (response.data) {
+      return true;
+    } else {
+      return false;
+    }
+  });
 }

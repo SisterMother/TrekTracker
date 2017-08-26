@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import Posts from '../components/Posts.jsx';
+import 'react-image-gallery/styles/css/image-gallery.css';
+import ImageGallery from 'react-image-gallery';
+import { galleryConversion } from '../helpers/helpers.js';
+import dummyPosts from '../components/dummyPosts.jsx';
 
 class User extends React.Component {
   constructor(props) {
@@ -35,14 +39,29 @@ class User extends React.Component {
   getPosts () {
     return axios.get('/api/posts/users/' + this.state.userEmail)
     .then((response) => {
-      this.setState({posts: response.data});
+//      this.setState({posts: response.data});
+      var galleryposts = galleryConversion(dummyPosts);
+      this.setState({
+        posts: dummyPosts,
+        galleryposts: galleryposts
+      });
     });
   }
 
+  handleImageLoad(event) {
+    console.log('Image loaded ', event.target)
+  }
+
+//        <Posts posts={this.state.posts} />
   render() {
     return (
       <div>
-        <Posts posts={this.state.posts} />
+        <ImageGallery className='imagegallery'
+          items={this.state.galleryposts}
+          slideInterval={2000}
+          onImageLoad={this.handleImageLoad}
+          thumbnailPosition={'top'}
+        />
       </div>
     );
   }

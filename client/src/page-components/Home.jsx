@@ -7,6 +7,8 @@ import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Nav from '../components/Nav.jsx';
 import TrailList from '../components/TrailList.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
+import Calendar from '../components/calender.jsx';
+import FlatButton from 'material-ui/FlatButton'
 
 
 class Home extends React.Component {
@@ -92,6 +94,22 @@ class Home extends React.Component {
     window.location.href = '/auth/google'
   }
 
+  // FOR TESTING ADDING THAT A USER IS INTERESTED IN AN EVENT
+  // interested() {
+  //   console.log('CLICKED');
+  //   axios.post('/event/interested', {
+  //     event: {
+  //       event_id: 1
+  //     }
+  //   })
+  //   .then(function (response) {
+  //     console.log(response);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+  // }
+
   render() {
     return (
       <div>
@@ -110,8 +128,14 @@ class Home extends React.Component {
             changeId={this.changeId}
           />
         </div>
+        {/*   // FOR TESTING ADDING THAT A USER IS INTERESTED IN AN EVENT
+<FlatButton onClick={this.interested}>TEST</FlatButton> */}
+
         <div className='col-narrow'>
           {this.state.markers.length > 0 ? <TrailList onClick={this.trailClick} markers={this.state.markers} /> : <CircularProgress size={200} thickness={10} style={{'width': '50%', 'position': 'relative', 'left': '25%'}} />}
+        </div>
+        <div className='calendar'>
+          <Calendar trails={this.state.markers}></Calendar>
         </div>
       </div>
     );

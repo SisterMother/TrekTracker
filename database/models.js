@@ -2,12 +2,22 @@
 
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config.json')[env];
+
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
+
+if (process.env.JAWSDB_URL) {
+  // the application is executed on Heroku ... use the postgres database
+  sequelize = new Sequelize(process.env.JAWSDB_URL);
+} else {
+  // the application is executed on the local machine
+  var sequelize = new Sequelize(config.database, config.username, config.password, config);
+
+}
 var models = {};
 
 models.sequelize = sequelize;
-models.Sequelize = Sequelize;
+// models.Sequelize = Sequelize; // Kamie commented this out.
+
 
 // ----------------- //
 // ---- SCHEMAS ---- //
@@ -49,7 +59,6 @@ var Trails = sequelize.define('trails', {
   },
   name: {
     type: Sequelize.STRING,
-    unique: true,
     notEmpty: true,
     allowNull: false
   },
@@ -65,6 +74,12 @@ var Trails = sequelize.define('trails', {
   },
   directions: {
     type: Sequelize.TEXT
+  },
+  description: {
+    type: Sequelize.TEXT
+  },
+  traillength: {
+    type: Sequelize.STRING
   }
 });
 models.trails = Trails;
@@ -120,6 +135,66 @@ Posts.belongsTo(Trails, {
   foreignKey: 'trail_id'
 });
 models.posts = Posts;
+
+//EVENTS SCHEMA
+var Events = sequelize.define('events', {
+  id: {
+    primaryKey: true,
+    type: Sequelize.INTEGER,
+    unique: true,
+    autoIncrement:true
+  },
+  title: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
+  },
+  desc: {
+    type: Sequelize.TEXT
+  },
+  trailname: {
+    type: Sequelize.STRING,
+  },
+  date: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
+  },
+  start: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
+  },
+  end: {
+    type: Sequelize.STRING,
+    notEmpty: true,
+    allowNull: false
+  }
+});
+Events.belongsTo(Users, {
+  foreignKey: 'creator_user_id'
+});
+Events.belongsTo(Trails, {
+  foreignKey: 'trail_id'
+});
+models.events = Events;
+
+
+var InterestedInEvent = sequelize.define('interestedInEvent', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    unique: true,
+    autoIncrement:true
+  },
+});
+InterestedInEvent.belongsTo(Users, {
+  foreignKey: 'user_id'
+});
+InterestedInEvent.belongsTo(Events, {
+  foreignKey: 'event_id'
+});
+models.interestedInEvent = InterestedInEvent;
 
 
 // Sync database
