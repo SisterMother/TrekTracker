@@ -16,9 +16,23 @@ class Calendar extends React.Component {
   constructor(props) {
   	super(props);
   	this.state = {
-  	  formStatus: false
+  	  formStatus: false,
+      trails: this.props.trails
   	}
   	this.handleOpen = this.handleOpen.bind(this);
+  }
+
+  // RSVP(event){
+  //   axios.post('/event/interested', {
+  //     event: event
+  //   })
+  //   .then(function(response){
+      
+  //   })
+  // }
+
+  ComponentDidMount(){
+    this.setState({trails: this.props.trails})
   }
 
   handleOpen () {
@@ -27,6 +41,17 @@ class Calendar extends React.Component {
 
   handleClose () {
     this.setState({formStatus: false});
+  }
+
+  getEvents (trails) {
+    axios.get('/event', {
+      params: {
+        trails: trails
+      }
+    })
+    .then(function(response){
+      this.setState({events: response.events})
+    })
   }
 
   render(){
